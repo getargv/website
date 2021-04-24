@@ -18,7 +18,7 @@
 		font-style: normal;
 		font-variant: normal;
 		text-rendering: auto;
-		line-height: 1;
+		line-height: inherit;
 		text-transform: none !important;
 
 		@if ($category == brands) {
@@ -26,6 +26,10 @@
 		}
 		@elseif ($category == solid) {
 			font-family: 'Font Awesome 5 Free';
+			font-weight: 900;
+		}
+                @elseif ($category == self) {
+			font-family: 'Courier New';
 			font-weight: 900;
 		}
 		@else {

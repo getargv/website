@@ -1,0 +1,15 @@
+{
+    "name": "getargv-gh-pages",
+    "version": "0.0.1",
+    "description": "Marketing site for getargv",
+    "main": "index.js",
+    "scripts": {
+        "build": "sass assets/sass/main.scss assets/css/main.css",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "Camden Narzt",
+    "license": "SEE LICENSE IN LICENSE.txt",
+    "dependencies": {
+        "sass": "^1.32.11"
+    }
+}
