@@ -5,6 +5,8 @@
     "main": "index.js",
     "scripts": {
         "build": "sass assets/sass/main.scss assets/css/main.css",
+        "gitlog": "git log master --oneline",
+        "mandoc": "git show master:man/getargv.1 | mandoc -T html -O fragment"
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "author": "Camden Narzt",
