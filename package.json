@@ -4,9 +4,10 @@
     "description": "Marketing site for getargv",
     "main": "index.js",
     "scripts": {
+        "start": "(trap 'kill 0' SIGINT; sass --watch assets/sass/main.scss assets/css/main.css & /usr/bin/python -m SimpleHTTPServer)",
         "build": "sass assets/sass/main.scss assets/css/main.css",
         "gitlog": "git log master --oneline",
-        "mandoc": "git show master:man/getargv.1 | mandoc -T html -O fragment"
+        "mandoc": "git show master:man/getargv.1 | mandoc -T html -O fragment",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "author": "Camden Narzt",
