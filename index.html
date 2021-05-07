@@ -23,10 +23,10 @@
 
             <!-- Header -->
             <header id="header">
-                <h1 id="logo"><a href="index.html">getargv</a></h1>
+                <h1 id="logo"><a href="/index.html">getargv</a></h1>
                 <nav id="nav">
                     <ul>
-                        <li><a href="index.html">Home</a></li>
+                        <li><a href="/index.html">Home</a></li>
                         <li>
                             <a href="#">Layouts</a>
                             <ul>
@@ -112,7 +112,7 @@
                     </header>
                     <p><code>getargv</code> has five flags, three of which are purely information about itself. You use the standard <kbd>-0</kbd> flag to print arguments <samp class="null">␀</samp> separated, the <kbd>-s</kbd> flag to strip leading arguments, the <kbd>-v</kbd> flag to print <code>getargv</code>'s version and either of <kbd>-h</kbd> or <kbd>-?</kbd> to print a usage string. That's it, that's the whole interface.</p>
                     <ul class="actions">
-                        <li><a href="#" class="button">Learn More</a></li>
+                        <li><a href="/interface.html" class="button">Learn More</a></li>
                     </ul>
                 </div>
                 <a href="#three" class="goto-next scrolly">Next</a>
@@ -128,7 +128,7 @@
                     </header>
                     <p><code>getargv</code> runs in approx 1.5ms as measured by <code>hyperfine</code>. It does this by utilizing a zero-copy one-scan algorithm to run in <code>O(n)</code> time where <var>n</var> is the length of the arguments passed to the process you are inspecting. <code>getargv</code> allocates exactly one block of memory, and stops reading the buffer once it finds the end of the process' arguments. <code>getargv</code> also prints the buffer to <var>stdout</var> using pointers back to the original buffer, without copying.</p>
                     <ul class="actions">
-                        <li><a href="#" class="button">Learn More</a></li>
+                        <li><a href="/fast.html" class="button">Learn More</a></li>
                     </ul>
                 </div>
                 <a href="#four" class="goto-next scrolly">Next</a>
@@ -177,7 +177,7 @@
                     </div>
                     <footer class="major">
                         <ul class="actions special">
-                            <li><a href="#" class="button">Learn More</a></li>
+                            <li><a href="/resilient.html" class="button">Learn More</a></li>
                         </ul>
                     </footer>
                 </div>
@@ -210,7 +210,7 @@
                     <li><a href="mailto:getargv@narzt.cam" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
                 </ul>
                 <ul class="copyright">
-                    <li>&copy; Camden Narzt. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+                    <li>&copy; Camden Narzt. All rights reserved.</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
                 </ul>
             </footer>
 
