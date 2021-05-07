@@ -1,230 +1,230 @@
 <!DOCTYPE HTML>
 <!--
-     Landed by HTML5 UP
-     html5up.net | @ajlkn
-     Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
+    Landed by HTML5 UP
+    html5up.net | @ajlkn
+    Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+  -->
 <html>
-    <head>
-        <title>getargv</title>
-        <meta charset="utf-8" />
-        <meta name="Description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-        <link rel="stylesheet" href="assets/css/main.css" />
-        <link rel="icon" type="image/x-icon" href="assets/icon/favicon.ico">
-        <link rel="icon" type="image/svg+xml" href="assets/icon/favicon.svg" sizes="any">
-        <link rel="apple-touch-icon" type="image/png" href="assets/icon/favicon.png">
-        <link rel="mask-icon" href="assets/icon/safari-pinned-tab.svg" color="cf9669">
-        <meta name="theme-color" content="#cf9669">
-        <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-    </head>
-    <body class="is-preload landing">
-        <div id="page-wrapper">
+  <head>
+    <title>getargv</title>
+    <meta charset="utf-8" />
+    <meta name="Description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="icon" type="image/x-icon" href="assets/icon/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="assets/icon/favicon.svg" sizes="any">
+    <link rel="apple-touch-icon" type="image/png" href="assets/icon/favicon.png">
+    <link rel="mask-icon" href="assets/icon/safari-pinned-tab.svg" color="cf9669">
+    <meta name="theme-color" content="#cf9669">
+    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+  </head>
+  <body class="is-preload landing">
+    <div id="page-wrapper">
 
-            <!-- Header -->
-            <header id="header">
-                <h1 id="logo"><a href="/index.html">getargv</a></h1>
-                <nav id="nav">
-                    <ul>
-                        <li><a href="/index.html">Home</a></li>
-                        <li>
-                            <a href="#">Layouts</a>
-                            <ul>
-                                <li><a href="left-sidebar.html">Left Sidebar</a></li>
-                                <li><a href="right-sidebar.html">Right Sidebar</a></li>
-                                <li><a href="no-sidebar.html">No Sidebar</a></li>
-                                <li>
-                                    <a href="#">Submenu</a>
-                                    <ul>
-                                        <li><a href="#">Option 1</a></li>
-                                        <li><a href="#">Option 2</a></li>
-                                        <li><a href="#">Option 3</a></li>
-                                        <li><a href="#">Option 4</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                        <li><a href="elements.html">Elements</a></li>
-                        <li><a href="#" class="button primary">Sign Up</a></li>
-                    </ul>
-                </nav>
-            </header>
+      <!-- Header -->
+      <header id="header">
+        <h1 id="logo"><a href="/index.html">getargv</a></h1>
+        <nav id="nav">
+          <ul>
+            <li><a href="/index.html">Home</a></li>
+            <li>
+              <a href="#">Layouts</a>
+              <ul>
+                <li><a href="left-sidebar.html">Left Sidebar</a></li>
+                <li><a href="right-sidebar.html">Right Sidebar</a></li>
+                <li><a href="no-sidebar.html">No Sidebar</a></li>
+                <li>
+                  <a href="#">Submenu</a>
+                  <ul>
+                    <li><a href="#">Option 1</a></li>
+                    <li><a href="#">Option 2</a></li>
+                    <li><a href="#">Option 3</a></li>
+                    <li><a href="#">Option 4</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li><a href="elements.html">Elements</a></li>
+            <li><a href="#" class="button primary">Sign Up</a></li>
+          </ul>
+        </nav>
+      </header>
 
-            <!-- Banner -->
-            <section id="banner">
-                <div class="content">
-                    <header>
-                        <h2>Read your <abbr title="processes'">procs'</abbr> <abbr title="arguments">args</abbr></h2>
-                        <p>Sometimes you need to know what your<br />
-                            processes' arguments were, exactly.</p>
-                    </header>
-                    <span class="image"><img src="images/logo.svg" alt="" /></span>
-                </div>
-                <a href="#one" class="goto-next scrolly">Next</a>
-            </section>
-
-            <!-- One -->
-            <section id="one" class="spotlight style1 bottom">
-                <span class="image fit main"><img src="images/christopher-burns-Kj2SaNHG-hg-unsplash.jpg" alt="" /></span>
-                <div class="content">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-4 col-12-medium">
-                                <header>
-                                    <h2>Here for when ps just won't cut it</h2>
-                                    <p><code>ps</code> gives you a <samp>space</samp> separated list of arguments, <code>getargv</code> can give you them <samp class="null">␀</samp> separated.</p>
-                                </header>
-                            </div>
-                            <div class="col-4 col-12-medium">
-                                <p>
-                                    If all you need is to see the arguments passed to your process
-                                    <code>ps</code> is often good enough, it can show you what you want unless the
-                                    process was started with <var>argv[0]</var> set to an empty string, which
-                                    is unusual, though still supported by the kernel. In the case where <var>argv[0]</var>
-                                    is an empty string, <code>ps</code> (from 10.3-11.2) will emit one or more environment variables
-                                    which were not part of the process arguments.
-                                </p>
-                            </div>
-                            <div class="col-4 col-12-medium">
-                                <p>
-                                    If you need to parse the arguments passed to a process however,
-                                    that's when you'll need to use <code>getargv</code>. Arguments to a process can contain
-                                    any series of bytes aside from <samp class="null">␀</samp>, which means that arguments can contain
-                                    <samp>space</samp>s. In order to parse the arguments the same way that the process received
-                                    them you need to process <samp class="null">␀</samp> separated byte arrays. In linux that is provided
-                                    by the <kbd>/proc/$PID/cmdline</kbd> <abbr title="proc filesystem">procfs</abbr> path,
-                                    on macOS you need <code>getargv</code>. Or a 3<sup>rd</sup> party <abbr title="proc filesystem">procfs</abbr> such as <a href="https://github.com/osxfuse/filesystems/tree/master/filesystems-c/procfs">this</a> or <a href="https://github.com/alexchandel/procfs">this</a>.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <a href="#two" class="goto-next scrolly">Next</a>
-            </section>
-
-            <!-- Two -->
-            <section id="two" class="spotlight style2 right">
-                <span class="image fit main"><img src="images/screenshot.png" alt="" /></span>
-                <div class="content">
-                    <header>
-                        <h2>Easy to use interface</h2>
-                        <p>Idiomatic flags and no cruft</p>
-                    </header>
-                    <p><code>getargv</code> has five flags, three of which are purely information about itself. You use the standard <kbd>-0</kbd> flag to print arguments <samp class="null">␀</samp> separated, the <kbd>-s</kbd> flag to strip leading arguments, the <kbd>-v</kbd> flag to print <code>getargv</code>'s version and either of <kbd>-h</kbd> or <kbd>-?</kbd> to print a usage string. That's it, that's the whole interface.</p>
-                    <ul class="actions">
-                        <li><a href="/interface.html" class="button">Learn More</a></li>
-                    </ul>
-                </div>
-                <a href="#three" class="goto-next scrolly">Next</a>
-            </section>
-
-            <!-- Three -->
-            <section id="three" class="spotlight style3 left">
-                <span class="image fit main bottom"><img src="images/klim-musalimov-dEimCxkUB-8-unsplash.jpg" alt="" /></span>
-                <div class="content">
-                    <header>
-                        <h2>Fast as possible</h2>
-                        <p>By doing one thing, and doing it well, <code>getargv</code> is as fast as it can be</p>
-                    </header>
-                    <p><code>getargv</code> runs in approx 1.5ms as measured by <code>hyperfine</code>. It does this by utilizing a zero-copy one-scan algorithm to run in <code>O(n)</code> time where <var>n</var> is the length of the arguments passed to the process you are inspecting. <code>getargv</code> allocates exactly one block of memory, and stops reading the buffer once it finds the end of the process' arguments. <code>getargv</code> also prints the buffer to <var>stdout</var> using pointers back to the original buffer, without copying.</p>
-                    <ul class="actions">
-                        <li><a href="/fast.html" class="button">Learn More</a></li>
-                    </ul>
-                </div>
-                <a href="#four" class="goto-next scrolly">Next</a>
-            </section>
-
-            <!-- Four -->
-            <section id="four" class="wrapper style1 special fade-up">
-                <div class="container">
-                    <header class="major">
-                        <h2>Resiliant to surprising situations</h2>
-                        <p>I've spent a lot of time making <code>getargv</code> able to handle edge cases</p>
-                    </header>
-                    <div class="box alt">
-                        <div class="row gtr-uniform">
-                            <section class="col-4 col-6-medium col-12-xsmall">
-                                <span class="icon solid alt major fa-mask"></span>
-                                <h3>Empty argv[0]</h3>
-                                <p><code>getargv</code> can handle the case where the process you are inspecting has an empty or no <var>argv[0]</var>.</p>
-                            </section>
-                            <section class="col-4 col-6-medium col-12-xsmall">
-                                <span class="icon solid alt major quote-icon"></span>
-                                <h3>Empty Arguments</h3>
-                                <p><code>getargv</code> can handle the process you are inspecting having been called with empty arguments.</p>
-                            </section>
-                            <section class="col-4 col-6-medium col-12-xsmall">
-                                <span class="icon solid alt major null-icon"></span>
-                                <h3>No Arguments</h3>
-                                <p><code>getargv</code> can handle the case where the process you are inspecting has no arguments at all.</p>
-                            </section>
-                            <section class="col-4 col-6-medium col-12-xsmall">
-                                <span class="icon solid alt major fa-exclamation"></span>
-                                <h3>Invalid <abbr title="Process ID">PID</abbr></h3>
-                                <p><code>getargv</code> knows that the <var title="maximum process id">PID_MAX</var> differs based on the macOS version, and checks accordingly.</p>
-                            </section>
-                            <section class="col-4 col-6-medium col-12-xsmall">
-                                <span class="icon solid alt major fa-terminal"></span>
-                                <h3>Incorrect args</h3>
-                                <p><code>getargv</code> handles being called with incorrect arguments, and prints helpful error messages.</p>
-                            </section>
-                            <section class="col-4 col-6-medium col-12-xsmall">
-                                <span class="icon solid alt major fa-lock"></span>
-                                <h3>Insufficient Permissions</h3>
-                                <p>The <var>KERN_PROCARGS2</var> <code>sysctl</code> does not differentiate between a <abbr title="Process id">PID</abbr> not existing or your user not having permission to examine it, <code>getargv</code> does.</p>
-                            </section>
-                        </div>
-                    </div>
-                    <footer class="major">
-                        <ul class="actions special">
-                            <li><a href="/resilient.html" class="button">Learn More</a></li>
-                        </ul>
-                    </footer>
-                </div>
-            </section>
-
-            <!-- Five -->
-            <section id="five" class="wrapper style2 special fade">
-                <div class="container">
-                    <header>
-                        <h2>Subscribe to my newsletter</h2>
-                        <p>I've never actually sent one, but you can subscribe anyway</p>
-                    </header>
-                    <form method="post" action="#" class="cta">
-                        <div class="row gtr-uniform gtr-50">
-                            <div class="col-8 col-12-xsmall"><input type="email" name="email" id="email" placeholder="Your Email Address" /></div>
-                            <div class="col-4 col-12-xsmall"><input type="submit" value="Get Started" class="fit primary" /></div>
-                        </div>
-                    </form>
-                </div>
-            </section>
-
-            <!-- Footer -->
-            <footer id="footer">
-                <ul class="icons">
-                    <li><a href="https://twitter.com/CamJN" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
-                    <li><a href="https://www.facebook.com/camden.narzt" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
-                    <li><a href="www.linkedin.com/in/camden-narzt" class="icon brands alt fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
-                    <li><a href="https://keybase.io/camjn" class="icon brands alt fa-keybase"><span class="label">Keybase</span></a></li>
-                    <li><a href="https://github.com/CamJN" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
-                    <li><a href="mailto:getargv@narzt.cam" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
-                </ul>
-                <ul class="copyright">
-                    <li>&copy; Camden Narzt. All rights reserved.</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
-                </ul>
-            </footer>
-
+      <!-- Banner -->
+      <section id="banner">
+        <div class="content">
+          <header>
+            <h2>Read your <abbr title="processes'">procs'</abbr> <abbr title="arguments">args</abbr></h2>
+            <p>Sometimes you need to know what your<br />
+              processes' arguments were, exactly.</p>
+          </header>
+          <span class="image"><img src="images/logo.svg" alt="" /></span>
         </div>
+        <a href="#one" class="goto-next scrolly">Next</a>
+      </section>
 
-        <!-- Scripts -->
-        <script src="assets/js/jquery.min.js"></script>
-        <script src="assets/js/jquery.scrolly.min.js"></script>
-        <script src="assets/js/jquery.dropotron.min.js"></script>
-        <script src="assets/js/jquery.scrollex.min.js"></script>
-        <script src="assets/js/browser.min.js"></script>
-        <script src="assets/js/breakpoints.min.js"></script>
-        <script src="assets/js/util.js"></script>
-        <script src="assets/js/main.js"></script>
+      <!-- One -->
+      <section id="one" class="spotlight style1 bottom">
+        <span class="image fit main"><img src="images/christopher-burns-Kj2SaNHG-hg-unsplash.jpg" alt="" /></span>
+        <div class="content">
+          <div class="container">
+            <div class="row">
+              <div class="col-4 col-12-medium">
+                <header>
+                  <h2>Here for when ps just won't cut it</h2>
+                  <p><code>ps</code> gives you a <samp>space</samp> separated list of arguments, <code>getargv</code> can give you them <samp class="null">␀</samp> separated.</p>
+                </header>
+              </div>
+              <div class="col-4 col-12-medium">
+                <p>
+                  If all you need is to see the arguments passed to your process
+                  <code>ps</code> is often good enough, it can show you what you want unless the
+                  process was started with <var>argv[0]</var> set to an empty string, which
+                  is unusual, though still supported by the kernel. In the case where <var>argv[0]</var>
+                  is an empty string, <code>ps</code> (from 10.3-11.2) will emit one or more environment variables
+                  which were not part of the process arguments.
+                </p>
+              </div>
+              <div class="col-4 col-12-medium">
+                <p>
+                  If you need to parse the arguments passed to a process however,
+                  that's when you'll need to use <code>getargv</code>. Arguments to a process can contain
+                  any series of bytes aside from <samp class="null">␀</samp>, which means that arguments can contain
+                  <samp>space</samp>s. In order to parse the arguments the same way that the process received
+                  them you need to process <samp class="null">␀</samp> separated byte arrays. In linux that is provided
+                  by the <kbd>/proc/$PID/cmdline</kbd> <abbr title="proc filesystem">procfs</abbr> path,
+                  on macOS you need <code>getargv</code>. Or a 3<sup>rd</sup> party <abbr title="proc filesystem">procfs</abbr> such as <a href="https://github.com/osxfuse/filesystems/tree/master/filesystems-c/procfs">this</a> or <a href="https://github.com/alexchandel/procfs">this</a>.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <a href="#two" class="goto-next scrolly">Next</a>
+      </section>
 
-    </body>
+      <!-- Two -->
+      <section id="two" class="spotlight style2 right">
+        <span class="image fit main"><img src="images/screenshot.png" alt="" /></span>
+        <div class="content">
+          <header>
+            <h2>Easy to use interface</h2>
+            <p>Idiomatic flags and no cruft</p>
+          </header>
+          <p><code>getargv</code> has five flags, three of which are purely information about itself. You use the standard <kbd>-0</kbd> flag to print arguments <samp class="null">␀</samp> separated, the <kbd>-s</kbd> flag to strip leading arguments, the <kbd>-v</kbd> flag to print <code>getargv</code>'s version and either of <kbd>-h</kbd> or <kbd>-?</kbd> to print a usage string. That's it, that's the whole interface.</p>
+          <ul class="actions">
+            <li><a href="/interface.html" class="button">Learn More</a></li>
+          </ul>
+        </div>
+        <a href="#three" class="goto-next scrolly">Next</a>
+      </section>
+
+      <!-- Three -->
+      <section id="three" class="spotlight style3 left">
+        <span class="image fit main bottom"><img src="images/klim-musalimov-dEimCxkUB-8-unsplash.jpg" alt="" /></span>
+        <div class="content">
+          <header>
+            <h2>Fast as possible</h2>
+            <p>By doing one thing, and doing it well, <code>getargv</code> is as fast as it can be</p>
+          </header>
+          <p><code>getargv</code> runs in approx 1.5ms as measured by <code>hyperfine</code>. It does this by utilizing a zero-copy one-scan algorithm to run in <code>O(n)</code> time where <var>n</var> is the length of the arguments passed to the process you are inspecting. <code>getargv</code> allocates exactly one block of memory, and stops reading the buffer once it finds the end of the process' arguments. <code>getargv</code> also prints the buffer to <var>stdout</var> using pointers back to the original buffer, without copying.</p>
+          <ul class="actions">
+            <li><a href="/fast.html" class="button">Learn More</a></li>
+          </ul>
+        </div>
+        <a href="#four" class="goto-next scrolly">Next</a>
+      </section>
+
+      <!-- Four -->
+      <section id="four" class="wrapper style1 special fade-up">
+        <div class="container">
+          <header class="major">
+            <h2>Resiliant to surprising situations</h2>
+            <p>I've spent a lot of time making <code>getargv</code> able to handle edge cases</p>
+          </header>
+          <div class="box alt">
+            <div class="row gtr-uniform">
+              <section class="col-4 col-6-medium col-12-xsmall">
+                <span class="icon solid alt major fa-mask"></span>
+                <h3>Empty argv[0]</h3>
+                <p><code>getargv</code> can handle the case where the process you are inspecting has an empty or no <var>argv[0]</var>.</p>
+              </section>
+              <section class="col-4 col-6-medium col-12-xsmall">
+                <span class="icon solid alt major quote-icon"></span>
+                <h3>Empty Arguments</h3>
+                <p><code>getargv</code> can handle the process you are inspecting having been called with empty arguments.</p>
+              </section>
+              <section class="col-4 col-6-medium col-12-xsmall">
+                <span class="icon solid alt major null-icon"></span>
+                <h3>No Arguments</h3>
+                <p><code>getargv</code> can handle the case where the process you are inspecting has no arguments at all.</p>
+              </section>
+              <section class="col-4 col-6-medium col-12-xsmall">
+                <span class="icon solid alt major fa-exclamation"></span>
+                <h3>Invalid <abbr title="Process ID">PID</abbr></h3>
+                <p><code>getargv</code> knows that the <var title="maximum process id">PID_MAX</var> differs based on the macOS version, and checks accordingly.</p>
+              </section>
+              <section class="col-4 col-6-medium col-12-xsmall">
+                <span class="icon solid alt major fa-terminal"></span>
+                <h3>Incorrect args</h3>
+                <p><code>getargv</code> handles being called with incorrect arguments, and prints helpful error messages.</p>
+              </section>
+              <section class="col-4 col-6-medium col-12-xsmall">
+                <span class="icon solid alt major fa-lock"></span>
+                <h3>Insufficient Permissions</h3>
+                <p>The <var>KERN_PROCARGS2</var> <code>sysctl</code> does not differentiate between a <abbr title="Process id">PID</abbr> not existing or your user not having permission to examine it, <code>getargv</code> does.</p>
+              </section>
+            </div>
+          </div>
+          <footer class="major">
+            <ul class="actions special">
+              <li><a href="/resilient.html" class="button">Learn More</a></li>
+            </ul>
+          </footer>
+        </div>
+      </section>
+
+      <!-- Five -->
+      <section id="five" class="wrapper style2 special fade">
+        <div class="container">
+          <header>
+            <h2>Subscribe to my newsletter</h2>
+            <p>I've never actually sent one, but you can subscribe anyway</p>
+          </header>
+          <form method="post" action="#" class="cta">
+            <div class="row gtr-uniform gtr-50">
+              <div class="col-8 col-12-xsmall"><input type="email" name="email" id="email" placeholder="Your Email Address" /></div>
+              <div class="col-4 col-12-xsmall"><input type="submit" value="Get Started" class="fit primary" /></div>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer id="footer">
+        <ul class="icons">
+          <li><a href="https://twitter.com/CamJN" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
+          <li><a href="https://www.facebook.com/camden.narzt" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
+          <li><a href="www.linkedin.com/in/camden-narzt" class="icon brands alt fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
+          <li><a href="https://keybase.io/camjn" class="icon brands alt fa-keybase"><span class="label">Keybase</span></a></li>
+          <li><a href="https://github.com/CamJN" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+          <li><a href="mailto:getargv@narzt.cam" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
+        </ul>
+        <ul class="copyright">
+          <li>&copy; Camden Narzt. All rights reserved.</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+        </ul>
+      </footer>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.scrolly.min.js"></script>
+    <script src="assets/js/jquery.dropotron.min.js"></script>
+    <script src="assets/js/jquery.scrollex.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+
+  </body>
 </html>
