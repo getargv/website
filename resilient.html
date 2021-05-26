@@ -82,18 +82,21 @@
                             <!-- Content -->
                             <section id="content">
                                 <a href="#" class="image fit"><img src="images/pic05.jpg" alt="" /></a>
-                                <h3>Dolore Amet Consequat</h3>
-                                <p>Aliquam massa urna, imperdiet sit amet mi non, bibendum euismod est. Curabitur mi justo, tincidunt vel eros ullamcorper, porta cursus justo. Cras vel neque eros. Vestibulum diam quam, mollis at magna consectetur non, malesuada quis augue. Morbi tincidunt pretium interdum est. Curabitur mi justo, tincidunt vel eros ullamcorper, porta cursus justo. Cras vel neque eros. Vestibulum diam.</p>
-                                <p>Vestibulum diam quam, mollis at consectetur non, malesuada quis augue. Morbi tincidunt pretium interdum. Morbi mattis elementum orci, nec dictum porta cursus justo. Quisque ultricies lorem in ligula condimentum, et egestas turpis sagittis. Cras ac nunc urna. Nullam eget lobortis purus. Phasellus vitae tortor non est placerat tristique.</p>
-                                <h3>Sed Magna Ornare</h3>
-                                <p>In vestibulum massa quis arcu lobortis tempus. Nam pretium arcu in odio vulputate luctus. Suspendisse euismod lorem eget lacinia fringilla. Sed sed felis justo. Nunc sodales elit in laoreet aliquam. Nam gravida, nisl sit amet iaculis porttitor, risus nisi rutrum metus.</p>
+                                <h3>Correctness as the First Priority</h3>
+                                <p>My impetus for <abbr title="I wound up adapting it from existing code, but I set out to create a tool">building</abbr> getargv was to parse a PID's arguments that I didn't control in a script, which required me to consider the different ways that the process could have been created. In doing so I found some surprising edge cases which no-one else seems to have handled correctly, but getargv does.</p>
+                                <p>Out of curiosity I went and looked for every use of KERN_PROCARGS2 I could find on the internet. Every single case where the arguments are considered, is incorrect. 90 projects, and every project that uses them, all wrong.</p>
+                                <h3>Hall of shame</h3>
+                                <p>I've collected the projects that are incorrectly using the output of KERN_PROCARGS2 <a href="/hallofshame.html">here</a>.</p>
+                                <h3>Edge cases handled by getargv</h3>
                                 <ul>
-                                    <li>Empty argv[0]</li>
-                                    <li>Empty Arguments</li>
-                                    <li>No Arguments</li>
-                                    <li>Invalid <abbr title="Process ID">PID</abbr></li>
-                                    <li>Incorrect args</li>
-                                    <li>Insufficient Permissions</li>
+                                    <li>Target has an empty argv[0]</li>
+                                    <li>Target has empty arguments</li>
+                                    <li>Target has no arguments</li>
+                                    <li>Target has huge arguments</li>
+                                    <li>Invalid target <abbr title="Process ID">PID</abbr></li>
+                                    <li>Insufficient permissions to target PID</li>
+                                    <li>Incorrect flags for getargv</li>
+                                    <li>System out of memory</li>
                                 </ul>
                             </section>
 
