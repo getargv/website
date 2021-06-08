@@ -7,7 +7,7 @@
         "start": "(trap 'kill 0' SIGINT; sass --watch assets/sass/main.scss assets/css/main.css & /usr/bin/python -m SimpleHTTPServer)",
         "build":"npm run css && npm run html && npm run mandoc",
         "css": "sass assets/sass/main.scss assets/css/main.css",
-        "html": "awk -v body_file=index-body.html -f build.awk template.html > index.html && awk -v body_file=fast-body.html -f build.awk template.html > fast.html && awk -v body_file=interface-body.html -f build.awk template.html > interface.html && awk -v body_file=resilient-body.html -f build.awk template.html > resilient.html ",
+        "html": "for file in *-body.html; do awk -v body_file=$file -f build.awk template.html > ${file%-body.html}.html ; done",
         "gitlog": "git log master --oneline",
         "mandoc": "git show master:man/getargv.1 | mandoc -T html -O style=mandoc.css > man.html && /usr/bin/curl -sSL https://mandoc.bsd.lv/snapshots/mandoc.tar.gz | /usr/bin/tar -x --strip-components=1 --include='*mandoc.css' --file -",
         "test": "echo \"Error: no test specified\" && exit 1"
