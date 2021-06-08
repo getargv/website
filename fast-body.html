@@ -1,0 +1,61 @@
+<div id="main" class="wrapper style1">
+  <div class="container">
+    <header class="major">
+      <h2>Fast</h2>
+      <p>The only way to be faster would be to vectorize</p>
+    </header>
+    <div class="row gtr-150">
+      <div class="col-8 col-12-medium">
+
+        <!-- Content -->
+        <section id="content">
+          <a href="#" class="image fit"><img src="images/benchmark.png" alt="" /></a>
+
+          <h3>Zero-Copy</h3>
+          <p>getargv allocates exactly one block of memory</p>
+          <p>By allocating just one relatively small block of memory for the KERN_PROCARGS2 sysctl, and then only ever indexing into but never copying out of that buffer even when writing to stdout, getargv does not have to worry about allocator performance.</p>
+
+          <h3>No backtracking / Single Scan / One Scan / Linear Time / O(n)</h3>
+          <p>getargv will look at each byte of the procargs buffer no more than once. It does not backtrack, and it does not lookahead. There is no additional time complexity beyond the size of the target process' arguments. getargv eagerly stops when it exhausts the argument count of the target process, and skips bytes intelligently where possible.</p>
+
+          <ul>
+            <li>no backtracking</li>
+            <li>O(n) time complexity</li>
+            <li>zero-copy</li>
+            <li>O(1) space complexity</li>
+            <li>getargv runs in approx 1.2ms as measured by hyperfine</li>
+            <li>some other claim</li>
+          </ul>
+        </section>
+
+      </div>
+      <div class="col-4 col-12-medium">
+
+        <!-- Sidebar -->
+        <section id="sidebar">
+          <section>
+            <h3>Resilient</h3>
+            <p>Beyond being fast, getargv is also more correct than any other code I've been able to find online that does the same or similar things.</p>
+            <footer>
+              <ul class="actions">
+                <li><a href="/resilient.html" class="button">Learn More</a></li>
+              </ul>
+            </footer>
+          </section>
+          <hr />
+          <section>
+            <a href="/interface.html" class="image fit"><img src="images/flags.png" alt="" /></a>
+            <h3>Easy to use interface</h3>
+            <p><code>getargv</code> has five flags, three of which are purely information about itself. You use the standard <kbd>-0</kbd> flag to print arguments <samp class="null">␀</samp> separated, the <kbd>-s</kbd> flag to strip leading arguments, the <kbd>-v</kbd> flag to print <code>getargv</code>'s version and either of <kbd>-h</kbd> or <kbd>-?</kbd> to print a usage string. That's it, that's the whole interface.</p>
+            <footer>
+              <ul class="actions">
+                <li><a href="/interface.html" class="button">Learn More</a></li>
+              </ul>
+            </footer>
+          </section>
+        </section>
+
+      </div>
+    </div>
+  </div>
+</div>
