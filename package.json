@@ -15,6 +15,6 @@
     "author": "Camden Narzt",
     "license": "SEE LICENSE IN LICENSE.txt",
     "dependencies": {
-        "sass": "^1.32.11"
+        "sass": "^1.37.5"
     }
 }
