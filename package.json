@@ -4,7 +4,7 @@
     "description": "Marketing site for getargv",
     "main": "index.js",
     "scripts": {
-        "start": "(trap 'kill 0' SIGINT; sass --watch assets/sass/main.scss assets/css/main.css & /usr/bin/python -m SimpleHTTPServer)",
+        "start": "(trap 'kill 0' SIGINT; sass --watch assets/sass/main.scss assets/css/main.css & /usr/bin/python3 -m http.server)",
         "build":"npm run changelog && npm run css && npm run html && npm run mandoc",
         "css": "sass assets/sass/main.scss assets/css/main.css",
         "html": "for file in *-body.html; do awk -v body_file=$file -f build.awk template.html > ${file%-body.html}.html ; done",
