@@ -9,7 +9,7 @@
         "css": "sass assets/sass/main.scss assets/css/main.css",
         "html": "for file in *-body.html; do awk -v body_file=$file -f build.awk template.html > ${file%-body.html}.html ; done",
         "changelog": "echo '<pre>' > changelog-body.html && git log master --oneline | awk '{a=$1;$1=\"\";print \"<a href=\\\"https://github.com/CamJN/getargv/commit/\"a\"\\\">\"a\"</a>\"$0}' >> changelog-body.html && echo '</pre>' >> changelog-body.html",
-        "mandoc": "git show master:man/getargv.1 | mandoc -T html -O style=mandoc.css > man.html && /usr/bin/curl -sSL https://mandoc.bsd.lv/snapshots/mandoc.tar.gz | /usr/bin/tar -x --strip-components=1 --include='*mandoc.css' --file -",
+        "mandoc": "git show master:man/getargv.1 | mandoc -T html -O style=mandoc.css > man.html && /usr/bin/curl -sSL https://mandoc.bsd.lv/snapshots/mandoc.tar.gz | /usr/bin/tar -x --strip-components=1 --include='*mandoc.css' --file - && patch -p1 < mandoc.css.patch",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "author": "Camden Narzt",
