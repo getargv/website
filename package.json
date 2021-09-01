@@ -2,12 +2,12 @@
     "name": "getargv-gh-pages",
     "version": "0.0.1",
     "description": "Marketing site for getargv",
-    "main": "index.js",
+    "main": "build.mjs",
     "scripts": {
         "start": "(trap 'kill 0' SIGINT; sass --watch assets/sass/main.scss assets/css/main.css & /usr/bin/python3 -m http.server)",
         "build":"npm run changelog && npm run css && npm run html && npm run mandoc",
         "css": "sass assets/sass/main.scss assets/css/main.css",
-        "html": "for file in *-body.html; do awk -v body_file=$file -f build.awk template.html > ${file%-body.html}.html ; done",
+        "html": "for file in *-body.html; do node build.mjs \"$file\" > ${file%-body.html}.html ; done",
         "changelog": "echo '<pre>' > changelog-body.html && git log master --oneline | awk '{a=$1;$1=\"\";print \"<a href=\\\"https://github.com/CamJN/getargv/commit/\"a\"\\\">\"a\"</a>\"$0}' >> changelog-body.html && echo '</pre>' >> changelog-body.html",
         "mandoc": "git show master:man/getargv.1 | mandoc -T html -O style=mandoc.css > man.html && /usr/bin/curl -sSL https://mandoc.bsd.lv/snapshots/mandoc.tar.gz | /usr/bin/tar -x --strip-components=1 --include='*mandoc.css' --file - && patch -p1 < mandoc.css.patch",
         "test": "echo \"Error: no test specified\" && exit 1"
