@@ -481,6 +481,14 @@ samp {
 			margin: 0 0 (_size(element-margin) * 0.75) 0;
 		}
 
+                h1, .logo {
+                    a {
+                        img {
+                            height: 100%;
+                        }
+                    }
+                }
+
 		h2 + p {
 			font-size: 1.25em;
 			margin-top: (_size(element-margin) * -0.5);
@@ -820,6 +828,10 @@ samp {
 
 			img {
 				width: 100%;
+                                &[src^="images/luba"] {
+                                    height: 250px;
+                                    object-fit: cover;
+                                }
 			}
 		}
 	}

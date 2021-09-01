@@ -12,19 +12,19 @@
           <a href="#" class="image fit"><img src="images/benchmark.png" alt="" /></a>
 
           <h3>Zero-Copy</h3>
-          <p>getargv allocates exactly one block of memory</p>
-          <p>By allocating just one relatively small block of memory for the KERN_PROCARGS2 sysctl, and then only ever indexing into but never copying out of that buffer even when writing to stdout, getargv does not have to worry about allocator performance.</p>
+          <p><code>getargv</code> allocates exactly one block of memory.</p>
+          <p>By allocating just one relatively small block of memory for the <var>KERN_PROCARGS2</var> <code>sysctl</code>, and then only ever indexing into but never copying out of that buffer even when writing to stdout, <code>getargv</code> does not have to worry about allocator performance.</p>
 
-          <h3>No backtracking / Single Scan / One Scan / Linear Time / O(n)</h3>
-          <p>getargv will look at each byte of the procargs buffer no more than once. It does not backtrack, and it does not lookahead. There is no additional time complexity beyond the size of the target process' arguments. getargv eagerly stops when it exhausts the argument count of the target process, and skips bytes intelligently where possible.</p>
+          <h3>No backtracking / Single Scan / Linear Time Algorithm</h3>
+          <p><code>getargv</code> will look at each byte of the procargs buffer no more than once. It does not backtrack, and it does not lookahead. There is no additional time complexity beyond the size of the target process' arguments. <code>getargv</code> eagerly stops when it exhausts the argument count of the target process, and skips bytes intelligently where possible.</p>
 
           <ul>
             <li>no backtracking</li>
-            <li>O(n) time complexity</li>
-            <li>zero-copy</li>
-            <li>O(1) space complexity</li>
-            <li>getargv runs in approx 1.2ms as measured by hyperfine</li>
-            <li>some other claim</li>
+            <li><abbr title="Linear time in the length of the target process' arguments">O(n)</abbr> time complexity</li>
+            <li><abbr title="Ok, there is one copy to avoid an unaligned load, but it's 4 bytes">zero-copy</abbr></li>
+            <li><abbr title="Constant memory complexity due to one, constant sized, allocation">O(1)</abbr> space complexity</li>
+            <li><code>getargv</code> runs in approx <samp>1.2ms</samp> as measured by <code>hyperfine</code></li>
+            <li>I'm still looking into vectorizing the code, if I can</li>
           </ul>
         </section>
 
@@ -35,7 +35,7 @@
         <section id="sidebar">
           <section>
             <h3>Resilient</h3>
-            <p>Beyond being fast, getargv is also more correct than any other code I've been able to find online that does the same or similar things.</p>
+            <p>Beyond being fast, <code>getargv</code> is also more correct than any other code I've been able to find online that does the same or similar things.</p>
             <footer>
               <ul class="actions">
                 <li><a href="/resilient.html" class="button">Learn More</a></li>

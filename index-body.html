@@ -29,8 +29,8 @@
             <code>ps</code> is often good enough, it can show you what you want unless the
             process was started with <var>argv[0]</var> set to an empty string, which
             is unusual, though still supported by the kernel. In the case where <var>argv[0]</var>
-            is an empty string, <code>ps</code> (from 10.3-11.2) will emit one or more environment variables
-            which were not part of the process arguments.
+            is an empty string, <code>ps</code> (from <a href="https://opensource.apple.com/source/adv_cmds/adv_cmds-63/ps.tproj/print.c.auto.html">10.3</a>-<a href="https://opensource.apple.com/source/adv_cmds/adv_cmds-176.100.1/ps/print.c.auto.html">11.5</a>) will emit one or more environment variables
+            which were not part of the process' arguments.
           </p>
         </div>
         <div class="col-4 col-12-medium">
@@ -94,12 +94,12 @@
         <section class="col-4 col-6-medium col-12-xsmall">
           <span class="icon solid alt major fa-mask"></span>
           <h3>Empty argv[0]</h3>
-          <p><code>getargv</code> can handle the case where the process you are inspecting has an empty or no <var>argv[0]</var>.</p>
+          <p><code>getargv</code> can handle the case where the process you are inspecting has an empty or missing <var>argv[0]</var>.</p>
         </section>
         <section class="col-4 col-6-medium col-12-xsmall">
           <span class="icon solid alt major quote-icon"></span>
           <h3>Empty Arguments</h3>
-          <p><code>getargv</code> can handle the process you are inspecting having been called with empty arguments.</p>
+          <p><code>getargv</code> can handle the process you are inspecting having been called with empty arguments in all positions.</p>
         </section>
         <section class="col-4 col-6-medium col-12-xsmall">
           <span class="icon solid alt major null-icon"></span>
@@ -109,7 +109,7 @@
         <section class="col-4 col-6-medium col-12-xsmall">
           <span class="icon solid alt major fa-exclamation"></span>
           <h3>Invalid <abbr title="Process ID">PID</abbr></h3>
-          <p><code>getargv</code> knows that the <var title="maximum process id">PID_MAX</var> differs based on the macOS version, and checks accordingly.</p>
+          <p><code>getargv</code> knows that the <var title="Maximum Process ID">PID_MAX</var> differs based on the macOS version, and checks accordingly.</p>
         </section>
         <section class="col-4 col-6-medium col-12-xsmall">
           <span class="icon solid alt major fa-terminal"></span>
@@ -119,7 +119,7 @@
         <section class="col-4 col-6-medium col-12-xsmall">
           <span class="icon solid alt major fa-lock"></span>
           <h3>Insufficient Permissions</h3>
-          <p>The <var>KERN_PROCARGS2</var> <code>sysctl</code> does not differentiate between a <abbr title="Process id">PID</abbr> not existing or your user not having permission to examine it, <code>getargv</code> does.</p>
+          <p>The <var>KERN_PROCARGS2</var> <code>sysctl</code> does not differentiate between a <abbr title="Process ID">PID</abbr> not existing or your user not having permission to examine it, <code>getargv</code> does.</p>
         </section>
       </div>
     </div>
