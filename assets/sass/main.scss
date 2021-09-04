@@ -474,14 +474,14 @@ samp {
 		}
 	}
 
-	header {
+	header, #titleBar {
 		p {
 			color: _palette(fg-bold);
 			position: relative;
 			margin: 0 0 (_size(element-margin) * 0.75) 0;
 		}
 
-                h1, .logo {
+                h1, .logo, .title {
                     a {
                         img {
                             height: 100%;
