@@ -2,7 +2,6 @@
 /fast.html
 /index.html
 /interface.html
-/man.html
 /resilient.html
 /assets/css/main.css
 /assets/css/main.css.map
@@ -12,3 +11,9 @@
 /test
 /hallofshame.html
 /mandoc.css
+/man1.html
+/man3.html
+/license.html
+/projects.html
+/stats.html
+/dylib.html

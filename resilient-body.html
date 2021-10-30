@@ -22,10 +22,10 @@
           <a class="image fit"><img src="images/luba-ertel-WlL8aHeMcVM-unsplash.jpg" alt="clipboard hanging on wall" /></a>
           <h3>Correctness as the First Priority</h3>
           <p>My impetus for <abbr title="I wound up adapting it from existing code, but I set out to create a tool">building</abbr> <code>getargv</code> was to parse a <abbr title="Process ID">PID</abbr>'s arguments that I didn't control, in a script; which required me to consider the different ways that the process could have been created. In doing so, I found some surprising edge cases which no-one else seems to have handled correctly, but <code>getargv</code> does.</p>
-          <p>The test suite for <code>getargv</code> is currently <samp>1.92×</samp> <abbr title="as measured in lines">as big</abbr> as the source for the program itself. With <samp>100%</samp> line, function, and branch coverage. And I'm still expanding the test suite.</p>
-          <p>Out of curiosity I went and looked for every use of <var>KERN_PROCARGS2</var> I could find on the internet. Every single case where the arguments are considered, is incorrect. 88 projects, and every project that uses them as dependencies, all wrong.</p>
+          <p>The test suite for <code>getargv</code> is currently <samp><getargv-stats />×</samp> <abbr title="as measured in lines">as big</abbr> as the source for the program itself. With <samp>100%</samp> line, function, and branch coverage. And I'm still expanding the test suite.</p>
+          <p>Out of curiosity I went and looked for every use of <var>KERN_PROCARGS2</var> I could find on the internet. Every single case where the arguments are considered, is incorrect. <getargv-projects /> projects, and every project that uses them as dependencies, all wrong.</p>
           <h3>Hall of shame</h3>
-          <p>I've collected the projects that are incorrectly using the output of <var>KERN_PROCARGS2</var> <a href="/hallofshame.html">here</a>.</p>
+          <p>I've collected the projects that are incorrectly using the output of <var>KERN_PROCARGS2</var> <a href="/hallofshame.html">here</a>. If you are a developer working on one of these projects, perhaps you'd be interested in using <a href="/dylib.html">libgetargv</a> to provide this functionality in a more reliable way.</p>
           <h3>Edge cases handled by <code>getargv</code></h3>
           <ul>
             <li>Target process has an empty <code>argv[0]</code></li>
@@ -36,6 +36,7 @@
             <li>Insufficient permissions to target <abbr title="Process ID">PID</abbr></li>
             <li>Incorrect flags for <code>getargv</code></li>
             <li>System out of memory</li>
+            <li>Any argument encoding that doesn't use <samp class="null">␀</samp> as a valid char</li>
           </ul>
         </section>
 
