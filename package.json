@@ -7,7 +7,7 @@
         "start": "(trap 'kill 0' SIGINT; sass --watch assets/sass/main.scss assets/css/main.css & tsc --watch & /usr/bin/python3 -m http.server 0)",
         "build": "npm run js && npm run css && npm run html && npm run mandoc1 && npm run mandoc3",
         "css": "sass assets/sass/main.scss assets/css/main.css",
-        "js": "tsc",
+        "js": "tsc && for file in assets/js/*.js; do uglifyjs  --compress --mangle  --source-map \"content='${file}.map',filename='${file/.js/.min.js}.map'\" --output \"${file/.js/.min.js}\" -- \"$file\"; done",
         "html": "npm run stats && npm run projects && npm run license && npm run changelog && for file in *-body.html; do node build.mjs \"$file\" > ${file%-body.html}.html ; done",
         "changelog": "echo '<pre>' > changelog-body.html && git log master --oneline | awk '{a=$1;$1=\"\";print \"<a href=\\\"https://github.com/CamJN/getargv/commit/\"a\"\\\">\"a\"</a>\"$0}' >> changelog-body.html && echo '</pre>' >> changelog-body.html",
         "projects": "fgrep '<li>' hallofshame-body.html | wc -l > projects.html",
@@ -23,6 +23,7 @@
     "dependencies": {
         "@tsconfig/recommended": "^1.0.1",
         "sass": "^1.39.0",
-        "typescript": "^4.5.4"
+        "typescript": "^4.5.4",
+        "uglify-js": "^3.15.0"
     }
 }
