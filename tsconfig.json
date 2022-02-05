@@ -1,0 +1,16 @@
+{
+    "extends": "@tsconfig/recommended/tsconfig.json",
+    "compileOnSave": true,
+    "compilerOptions": {
+        "rootDir": "./assets/ts/",
+        "noImplicitAny": true,
+        "removeComments": true,
+        "preserveConstEnums": true,
+        "sourceMap": true,
+        "lib": ["esnext", "dom", "dom.Iterable"],
+        "outDir": "./assets/js/",
+        "newLine": "lf"
+    },
+    "include": ["assets/ts/*.ts"],
+    "exclude": ["node_modules"]
+}
