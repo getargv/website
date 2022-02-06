@@ -6,17 +6,17 @@ type CompletionHandler = (this: Animation, ev: AnimationPlaybackEvent) => any;
 
 const noop = () => { };
 function fade(el: HTMLElement, keyframes: Keyframe[], completionHandler: CompletionHandler = noop) {
-    if (el.style.getPropertyValue('display') == 'none') el.style.setProperty('display', '');
     el.animate(keyframes, { duration: 200, fill: "both" }).addEventListener('finish', completionHandler);
 }
 
 function fadeIn(el: HTMLElement) {
     if (el.style.getPropertyValue('opacity') == '1') return;
+    if (el.style.getPropertyValue('display') == 'none') el.style.setProperty('display', '');
     fade(el, [{ opacity: '0' }, { opacity: '1' }]);
 }
 
 function fadeOut(el: HTMLElement) {
-    if (el.style.getPropertyValue('opacity') == '0') return;
+    if (el.style.getPropertyValue('opacity') == '0' || el.style.getPropertyValue('display') == 'none') return;
     fade(el, [{ opacity: '1' }, { opacity: '0' }], () => el.style.setProperty('display', 'none'));
 }
 
@@ -41,20 +41,16 @@ addEventListener('DOMContentLoaded', () => {
     for (const el of nav?.getElementsByClassName('dropdown')!) {
         const dropdown = createDropdown(el);
         const parent = el.parentElement;
-        const fadeOutHandler = () => {
+        const fadeOutHandler = (_ev: Event) => {
             window.clearTimeout(fadeTimeout);
             fadeTimeout = window.setTimeout(() => { fadeOut(dropdown) }, 350);
         };
-        const fadeInHandler = () => {
+        const fadeInHandler = (_ev: Event) => {
             window.clearTimeout(fadeTimeout);
             fadeIn(dropdown);
         };
         const hoverHandler = () => window.clearTimeout(fadeTimeout);
 
-        dropdown.addEventListener('mouseleave', fadeOutHandler);
-        dropdown.addEventListener('mouseenter', hoverHandler);
-        parent?.addEventListener('mouseenter', fadeInHandler);
-        parent?.addEventListener('mouseleave', fadeOutHandler);
         window.addEventListener('keypress', ev => {
             if (ev.key == 'Escape') {
                 ev.stopPropagation();
@@ -64,18 +60,27 @@ addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // above probably doesn't work on touch devices, need to handle clicks/scroll too
         if (document.body.classList.contains('is-touch')) {
-            parent?.addEventListener('click', fadeInHandler);
-            window.addEventListener('click', (ev: MouseEvent) => {
+            parent?.addEventListener('click', (ev: MouseEvent) => {
                 if (parent?.contains(ev.target as Node) || dropdown.contains(ev.target as Node)) {
                     ev.stopPropagation();
                     ev.preventDefault();
-                    window.clearTimeout(fadeTimeout);
-                    fadeOut(dropdown);
+                    fadeInHandler(ev);
+                }
+            });
+            window.addEventListener('click', (ev: MouseEvent) => {
+                if (!(parent?.contains(ev.target as Node) || dropdown.contains(ev.target as Node))) {
+                    ev.stopPropagation();
+                    ev.preventDefault();
+                    fadeOutHandler(ev);
                 }
             });
             window.addEventListener('scroll', fadeOutHandler);
+        } else {
+            dropdown.addEventListener('mouseleave', fadeOutHandler);
+            dropdown.addEventListener('mouseenter', hoverHandler);
+            parent?.addEventListener('mouseenter', fadeInHandler);
+            parent?.addEventListener('mouseleave', fadeOutHandler);
         }
         document.body.appendChild(dropdown);
     }
