@@ -11,4 +11,14 @@ addEventListener('DOMContentLoaded', () => {
         el.classList.add('inactive');
         observer.observe(el);
     }
+
+    Array.from(document.getElementsByClassName('scrolly')).forEach(anchor => {
+        anchor.addEventListener('click', (e: Event) => {
+            e.preventDefault();
+            const id = anchor.getAttribute('href')!.slice(1);
+            document.getElementById(id)?.scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
 });
