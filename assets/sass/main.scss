@@ -163,6 +163,17 @@ body {
             @include vendor('animation', 'none !important');
             @include vendor('transition', 'none !important');
         }
+        .spotlight {
+            .image.main {
+                display: block;
+            }
+            &:before{
+                position: absolute;
+            }
+        }
+        #titleBar .toggle{
+            display:none;
+        }
     }
 
 }
