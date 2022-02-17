@@ -92,7 +92,9 @@
     <div class="box alt">
       <div class="row gtr-uniform">
         <section class="col-4 col-6-medium col-12-xsmall">
-          <span class="icon solid alt major fa-mask"></span>
+          <span class="icon alt major">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="-10 0 596 512"><path d="M288 64C39.52 64 0 182.1 0 273.5C0 379.5 78.8 448 176 448c27.33 0 51.21-6.516 66.11-36.79l19.93-40.5C268.3 358.6 278.1 352.4 288 352.1c9.9 .3711 19.7 6.501 25.97 18.63l19.93 40.5C348.8 441.5 372.7 448 400 448c97.2 0 176-68.51 176-174.5C576 182.1 536.5 64 288 64zM160 320c-35.35 0-64-28.65-64-64s28.65-64 64-64c35.35 0 64 28.65 64 64S195.3 320 160 320zM416 320c-35.35 0-64-28.65-64-64s28.65-64 64-64c35.35 0 64 28.65 64 64S451.3 320 416 320z"/></svg>
+          </span>
           <h3>Empty argv[0]</h3>
           <p><code>getargv</code> can handle the case where the process you are inspecting has an empty or missing <var>argv[0]</var>.</p>
         </section>
@@ -107,17 +109,23 @@
           <p><code>getargv</code> can handle the case where the process you are inspecting has no arguments at all.</p>
         </section>
         <section class="col-4 col-6-medium col-12-xsmall">
-          <span class="icon solid alt major fa-exclamation"></span>
+          <span class="icon alt major">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 512"><path d="M64 352c17.69 0 32-14.32 32-31.1V64.01c0-17.67-14.31-32.01-32-32.01S32 46.34 32 64.01v255.1C32 337.7 46.31 352 64 352zM64 400c-22.09 0-40 17.91-40 40s17.91 39.1 40 39.1s40-17.9 40-39.1S86.09 400 64 400z"/></svg>
+          </span>
           <h3>Invalid <abbr title="Process ID">PID</abbr></h3>
           <p><code>getargv</code> knows that the <var title="Maximum Process ID">PID_MAX</var> differs based on the macOS version, and checks accordingly.</p>
         </section>
         <section class="col-4 col-6-medium col-12-xsmall">
-          <span class="icon solid alt major fa-terminal"></span>
+          <span class="icon alt major">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="-10 0 596 512"><path d="M9.372 86.63C-3.124 74.13-3.124 53.87 9.372 41.37C21.87 28.88 42.13 28.88 54.63 41.37L246.6 233.4C259.1 245.9 259.1 266.1 246.6 278.6L54.63 470.6C42.13 483.1 21.87 483.1 9.372 470.6C-3.124 458.1-3.124 437.9 9.372 425.4L178.7 256L9.372 86.63zM544 416C561.7 416 576 430.3 576 448C576 465.7 561.7 480 544 480H256C238.3 480 224 465.7 224 448C224 430.3 238.3 416 256 416H544z"/></svg>
+          </span>
           <h3>Incorrect args</h3>
           <p><code>getargv</code> handles being called with incorrect arguments, and prints helpful error messages.</p>
         </section>
         <section class="col-4 col-6-medium col-12-xsmall">
-          <span class="icon solid alt major fa-lock"></span>
+          <span class="icon alt major">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="-10 -10 468 532"><path d="M80 192V144C80 64.47 144.5 0 224 0C303.5 0 368 64.47 368 144V192H384C419.3 192 448 220.7 448 256V448C448 483.3 419.3 512 384 512H64C28.65 512 0 483.3 0 448V256C0 220.7 28.65 192 64 192H80zM144 192H304V144C304 99.82 268.2 64 224 64C179.8 64 144 99.82 144 144V192z"/></svg>
+          </span>
           <h3>Insufficient Permissions</h3>
           <p>The <var>KERN_PROCARGS2</var> <code>sysctl</code> does not differentiate between a <abbr title="Process ID">PID</abbr> not existing or your user not having permission to examine it, <code>getargv</code> does.</p>
         </section>

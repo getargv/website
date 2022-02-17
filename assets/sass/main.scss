@@ -4,7 +4,6 @@
 @import 'libs/vendor';
 @import 'libs/breakpoints';
 @import 'libs/html-grid';
-@import url('fontawesome-all.min.css');
 @import url("https://fonts.googleapis.com/css?family=Roboto:100,300,100italic,300italic");
 
 dl {
@@ -16,12 +15,12 @@ dl {
 .quote-icon::before {
     content: "❝❞";
     font-family: _font(family-fixed) !important;
-    margin-top: 0.5em;
+    margin-top: 0.3em;
 }
 .null-icon::before {
     content: "∅";
     font-family: _font(family-fixed) !important;
-    margin-top: 0.25em;
+    margin-top: 0.2em;
 }
 samp {
     &.null {
@@ -56,6 +55,14 @@ samp {
     @include icon;
     $size: 1px;
 
+    & > svg {
+        height: 2em;
+        & > path {
+            fill: $bg !important;
+            stroke: rgba($fg,0.5);
+            stroke-width: 4%;
+        }
+    }
     &:before {
         color: $bg !important;
         text-shadow:	$size 0 0 $fg,
@@ -748,18 +755,6 @@ input[type="radio"] {
         line-height: inherit;
     }
 
-    &.solid {
-        &:before {
-            font-weight: 900 !important;
-        }
-    }
-
-    &.brands {
-        &:before {
-            font-family: 'Font Awesome 5 Brands' !important;
-        }
-    }
-
     &.alt {
         @include line-icon;
     }
@@ -780,7 +775,8 @@ input[type="radio"] {
         }
 
         &.alt {
-            @include line-icon(_palette(accent2));
+            @include line-icon(_palette(accent2), _palette(fg-light));
+            svg { margin-top: 2em; }
         }
     }
 }
