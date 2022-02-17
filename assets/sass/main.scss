@@ -55,10 +55,17 @@ samp {
     @include icon;
     $size: 1px;
 
+    &[href^="https://twitter.com/"]:hover > svg > path{fill: #1d9bf0;}
+    &[href^="https://www.facebook.com/"]:hover > svg > path{fill: #1877f2;}
+    &[href^="https://www.linkedin.com/"]:hover > svg > path{fill: #0a66c2;}
+    &[href^="https://keybase.io/"]:hover > svg > path{fill: #ff6f21;}
+    &[href^="https://github.com/"]:hover > svg > path{fill: #f0f6fc;}
+    &[href^="mailto:"]:hover > svg > path{fill: white;}
+
     & > svg {
         height: 2em;
         & > path {
-            fill: $bg !important;
+            fill: $bg;
             stroke: rgba($fg,0.5);
             stroke-width: 4%;
         }
