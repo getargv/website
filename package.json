@@ -25,6 +25,9 @@
         "license": "git show master:LICENSE | sed -e 's/</\\&lt;/g' -e 's/>/\\&gt;/g' >> license-body.html",
         "postlicense": "echo '</pre>' >> license-body.html",
         "clean": "sed -e 's|^/||g' .gitignore | xargs rm -rf",
+        "predeploy":"npm run build",
+        "deploy":"/usr/bin/python3 -m http.server 0",
+        "postdeploy":"find . -name '*.html' \\! \\( -name '*-body.html' -o -name '*-sidebar.html' -o -name 'template.html' \\) -depth 1 -exec fgrep -l '<html' {} \\; | xargs -J {} cp -r {} assets images mandoc.css dist && rm -rf dist/assets/sass dist/assets/ts dist/images/Full-Res $(find dist/assets/ -name '*.map' -o \\( -name '*.js' \\! -name '*.min.js' \\))",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "author": "Camden Narzt",
