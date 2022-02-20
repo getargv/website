@@ -1,5 +1,14 @@
 {
     "name": "getargv-gh-pages",
+    "homepage":"https://getargv.narzt.cam",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/CamJN/getargv.git"
+    },
+    "funding": {
+        "type" : "github",
+        "url" : "https://github.com/CamJN"
+    },
     "version": "0.0.1",
     "description": "Marketing site for getargv",
     "main": "build.mjs",
@@ -25,7 +34,10 @@
         "license": "git show master:LICENSE | sed -e 's/</\\&lt;/g' -e 's/>/\\&gt;/g' >> license-body.html",
         "postlicense": "echo '</pre>' >> license-body.html",
         "clean": "sed -e 's|^/||g' .gitignore | xargs rm -rf",
-        "predeploy": "npm version minor && npm run build && mkdir -p dist",
+        "preversion": "npm run build",
+        "version": "echo bumped to $npm_package_version",
+        "postversion": "mkdir -p dist",
+        "predeploy": "npm version minor",
         "deploy": "find . -name '*.html' \\! \\( -name '*-body.html' -o -name '*-sidebar.html' -o -name 'template.html' \\) -depth 1 -exec fgrep -l '<html' {} \\; | xargs -J {} cp -r {} assets images mandoc.css dist && rm -rf dist/assets/sass dist/assets/ts dist/images/Full-Res $(find dist/assets/ -name '*.map' -o \\( -name '*.js' \\! -name '*.min.js' \\))",
         "postdeploy": "git checkout gh-pages && git commit -am \"deploy $npm_package_version\"",
         "test": "echo \"Error: no test specified\" && exit 1"
