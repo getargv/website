@@ -1,15 +1,15 @@
 {
     "name": "getargv-gh-pages",
-    "homepage":"https://getargv.narzt.cam",
+    "homepage": "https://getargv.narzt.cam",
     "repository": {
         "type": "git",
         "url": "https://github.com/CamJN/getargv.git"
     },
     "funding": {
-        "type" : "github",
-        "url" : "https://github.com/CamJN"
+        "type": "github",
+        "url": "https://github.com/CamJN"
     },
-    "version": "0.0.1",
+    "version": "0.1.0",
     "description": "Marketing site for getargv",
     "main": "build.mjs",
     "scripts": {
