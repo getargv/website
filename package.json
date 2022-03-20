@@ -39,7 +39,7 @@
         "postversion": "mkdir -p docs",
         "predeploy": "npm version minor",
         "deploy": "find . -name '*.html' \\! \\( -name '*-body.html' -o -name '*-sidebar.html' -o -name 'template.html' \\) -depth 1 -exec fgrep -l '<html' {} \\; | xargs -J {} cp -r {} assets images mandoc.css docs && rm -rf docs/assets/sass docs/assets/ts docs/images/Full-Res $(find docs/assets/ -name '*.map' -o \\( -name '*.js' \\! -name '*.min.js' \\))",
-        "postdeploy": "git checkout gh-pages && git commit -am \"deploy $npm_package_version\"",
+        "postdeploy": "git commit -am \"deploy $npm_package_version\"",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "author": "Camden Narzt",
