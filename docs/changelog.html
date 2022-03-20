@@ -1,0 +1,337 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>getargv</title>
+    <meta charset="utf-8" />
+    <meta name="Description" content="getargv is a utility to print the arguments of processes on macOS">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="icon" type="image/x-icon" href="assets/icon/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="assets/icon/favicon.svg" sizes="any">
+    <link rel="apple-touch-icon" type="image/png" href="assets/icon/favicon.png">
+    <link rel="mask-icon" href="assets/icon/safari-pinned-tab.svg" color="cf9669">
+    <meta name="theme-color" content="#cf9669">
+    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+  </head>
+  <body class="is-preload">
+    <div id="page-wrapper">
+
+      <!-- Header -->
+      <header id="header">
+  <h1 id="logo"><a href="/index.html"><img src="images/title.svg"></a></h1>
+  <nav id="nav">
+    <ul>
+      <li><a href="/index.html">Home</a></li>
+      <li><a href="/resilient.html">Resilient</a></li>
+      <li><a href="/fast.html">Fast</a></li>
+      <li><a href="/interface.html">Interface</a></li>
+      <li><a href="/dylib.html">Library</a></li>
+      <li>
+        <a href="#">Docs</a>
+        <ul class="dropdown">
+          <li><a href="man1.html">Tool Manpage</a></li>
+          <li><a href="man3.html">Library Manpage</a></li>
+          <li><a href="changelog.html">Changelog</a></li>
+          <li><a href="license.html">License</a></li>
+        </ul>
+      </li>
+      <li><iframe src="https://github.com/sponsors/CamJN/button" title="Sponsor CamJN" height="35" width="116" style="border: 0;"></iframe></li>
+    </ul>
+  </nav>
+</header>
+
+      <!-- Main -->
+      <pre>
+<a href="https://github.com/CamJN/getargv/commit/78d0856">78d0856</a> tmp
+<a href="https://github.com/CamJN/getargv/commit/dfb2497">dfb2497</a> temporarily turn off coverage report to reduce log spam
+<a href="https://github.com/CamJN/getargv/commit/163d48f">163d48f</a> support build envs without min sdk set
+<a href="https://github.com/CamJN/getargv/commit/f003970">f003970</a> use xcrun to find more tools
+<a href="https://github.com/CamJN/getargv/commit/68142e2">68142e2</a> try to fix homebrew again
+<a href="https://github.com/CamJN/getargv/commit/0459959">0459959</a> fix conditional codesigning and remove some github actions debugging
+<a href="https://github.com/CamJN/getargv/commit/23a4b07">23a4b07</a> try to figure out env issues with homebrew on github actions
+<a href="https://github.com/CamJN/getargv/commit/aee2620">aee2620</a> fix github actions failures
+<a href="https://github.com/CamJN/getargv/commit/b199c49">b199c49</a> add github actions workflow
+<a href="https://github.com/CamJN/getargv/commit/b98d657">b98d657</a> make makefiles a tiny bit more adaptive to other computers
+<a href="https://github.com/CamJN/getargv/commit/c24da3d">c24da3d</a> fixup readme to be a bit clearer
+<a href="https://github.com/CamJN/getargv/commit/c2f470b">c2f470b</a> note desire to perform error handling on write
+<a href="https://github.com/CamJN/getargv/commit/35567cc">35567cc</a> make library not exit on failure
+<a href="https://github.com/CamJN/getargv/commit/8efc3c9">8efc3c9</a> add succeed function
+<a href="https://github.com/CamJN/getargv/commit/8265210">8265210</a> mention how to deal with redefined bool
+<a href="https://github.com/CamJN/getargv/commit/6630052">6630052</a> license year
+<a href="https://github.com/CamJN/getargv/commit/f3046ca">f3046ca</a> post release version bump
+<a href="https://github.com/CamJN/getargv/commit/f409ba5">f409ba5</a> cover last branch in tests
+<a href="https://github.com/CamJN/getargv/commit/cb09784">cb09784</a> cr_malloc limit bug fixed in upcoming criterion release
+<a href="https://github.com/CamJN/getargv/commit/80223cd">80223cd</a> allow building on arm macs
+<a href="https://github.com/CamJN/getargv/commit/d35f799">d35f799</a> more improved error messages
+<a href="https://github.com/CamJN/getargv/commit/6d9a2c4">6d9a2c4</a> cover more branches with tests
+<a href="https://github.com/CamJN/getargv/commit/901082e">901082e</a> improve error messages on parsing pids
+<a href="https://github.com/CamJN/getargv/commit/e0369e6">e0369e6</a> show missed branches in coverage report
+<a href="https://github.com/CamJN/getargv/commit/fafdfc8">fafdfc8</a> fix coverage check
+<a href="https://github.com/CamJN/getargv/commit/f05df91">f05df91</a> fix version test
+<a href="https://github.com/CamJN/getargv/commit/0133363">0133363</a> convert simple case to use spawn
+<a href="https://github.com/CamJN/getargv/commit/6c90b62">6c90b62</a> make spawn into a macro that terminates the arg list
+<a href="https://github.com/CamJN/getargv/commit/797d98c">797d98c</a> initial use of spawn in tests
+<a href="https://github.com/CamJN/getargv/commit/16984c8">16984c8</a> fix spawn issue
+<a href="https://github.com/CamJN/getargv/commit/15084ee">15084ee</a> tweak manpage language
+<a href="https://github.com/CamJN/getargv/commit/8a14dfb">8a14dfb</a> use new understanding of makefile wildcard to improve reliability
+<a href="https://github.com/CamJN/getargv/commit/cbc413e">cbc413e</a> reintroduce missing LIB_OBJ variable
+<a href="https://github.com/CamJN/getargv/commit/34e41b0">34e41b0</a> do a more limited include for pid_t
+<a href="https://github.com/CamJN/getargv/commit/2d86be1">2d86be1</a> better check the c version (someone might use a C94 compiler)
+<a href="https://github.com/CamJN/getargv/commit/d13b1fc">d13b1fc</a> fix manpage now that options is renamed
+<a href="https://github.com/CamJN/getargv/commit/97d5138">97d5138</a> Merge branch 'library'
+<a href="https://github.com/CamJN/getargv/commit/ddf7416">ddf7416</a> huge makefiles refactoring
+<a href="https://github.com/CamJN/getargv/commit/4af0704">4af0704</a> tidy makefiles a bit
+<a href="https://github.com/CamJN/getargv/commit/4defe88">4defe88</a> fixup lib id on install so -l getargv works
+<a href="https://github.com/CamJN/getargv/commit/6cf076a">6cf076a</a> improve compiling libtest
+<a href="https://github.com/CamJN/getargv/commit/3e4f71a">3e4f71a</a> rename Options for greater compatibility
+<a href="https://github.com/CamJN/getargv/commit/57d5492">57d5492</a> improve compatibility info
+<a href="https://github.com/CamJN/getargv/commit/20a9296">20a9296</a> make a dynamic library for others to use
+<a href="https://github.com/CamJN/getargv/commit/236616b">236616b</a> bump version
+<a href="https://github.com/CamJN/getargv/commit/6151ec6">6151ec6</a> set default target
+<a href="https://github.com/CamJN/getargv/commit/ba0b670">ba0b670</a> note on loading criterion dSYM in lldb
+<a href="https://github.com/CamJN/getargv/commit/9b8fb93">9b8fb93</a> update compile commands db
+<a href="https://github.com/CamJN/getargv/commit/a596b7c">a596b7c</a> missed renaming during refactoring
+<a href="https://github.com/CamJN/getargv/commit/0e6c2ee">0e6c2ee</a> use much better lldbinit file from the gdbinit project
+<a href="https://github.com/CamJN/getargv/commit/c5b819a">c5b819a</a> remove notes, don't need them anymore
+<a href="https://github.com/CamJN/getargv/commit/ad2348b">ad2348b</a> make debug makefile use linker flags if i ever add any
+<a href="https://github.com/CamJN/getargv/commit/0e31fb6">0e31fb6</a> remove unneeded .gitmodules file
+<a href="https://github.com/CamJN/getargv/commit/ca6bc9d">ca6bc9d</a> fix codesigning, must be after all stripping thus in install step
+<a href="https://github.com/CamJN/getargv/commit/91cd178">91cd178</a> tidy makefile
+<a href="https://github.com/CamJN/getargv/commit/c7d8de2">c7d8de2</a> use link macro in manpage
+<a href="https://github.com/CamJN/getargv/commit/1748ac3">1748ac3</a> comments and clang tidy
+<a href="https://github.com/CamJN/getargv/commit/34f1f98">34f1f98</a> more tests, working
+<a href="https://github.com/CamJN/getargv/commit/3781405">3781405</a> add more test cases
+<a href="https://github.com/CamJN/getargv/commit/d87d7fb">d87d7fb</a> rearrange code for better organization
+<a href="https://github.com/CamJN/getargv/commit/8aa67a8">8aa67a8</a> make clang tidy happy
+<a href="https://github.com/CamJN/getargv/commit/6b1bdbc">6b1bdbc</a> more tests
+<a href="https://github.com/CamJN/getargv/commit/03f1a69">03f1a69</a> debugger QOL
+<a href="https://github.com/CamJN/getargv/commit/d8db715">d8db715</a> add another test case
+<a href="https://github.com/CamJN/getargv/commit/8c93c77">8c93c77</a> make test makefile more automatic
+<a href="https://github.com/CamJN/getargv/commit/a0afc94">a0afc94</a> make include guard not "reserved"
+<a href="https://github.com/CamJN/getargv/commit/36915af">36915af</a> don't modify options struct
+<a href="https://github.com/CamJN/getargv/commit/7c8dba4">7c8dba4</a> move linker flag to LDFLAGS
+<a href="https://github.com/CamJN/getargv/commit/1c0646a">1c0646a</a> note how to print memory via xxd
+<a href="https://github.com/CamJN/getargv/commit/982b049">982b049</a> format clangd config more neatly
+<a href="https://github.com/CamJN/getargv/commit/8d6d1db">8d6d1db</a> consistant use of snake_case
+<a href="https://github.com/CamJN/getargv/commit/9154b51">9154b51</a> blocks don't need to be copied if they don't outlive the function that defined them
+<a href="https://github.com/CamJN/getargv/commit/31475b3">31475b3</a> fix test not having stdout flushed before reading
+<a href="https://github.com/CamJN/getargv/commit/57569ba">57569ba</a> switch to blocks instead of fn ptr for wrap_exit extra checks
+<a href="https://github.com/CamJN/getargv/commit/8b0804e">8b0804e</a> note how to connect to lldb debugserver
+<a href="https://github.com/CamJN/getargv/commit/094b2ec">094b2ec</a> use clangd for clang-tidy
+<a href="https://github.com/CamJN/getargv/commit/4afd4ed">4afd4ed</a> use results of benchmarking
+<a href="https://github.com/CamJN/getargv/commit/0efb6dd">0efb6dd</a> better benchmarking
+<a href="https://github.com/CamJN/getargv/commit/2078485">2078485</a> appease the formatter
+<a href="https://github.com/CamJN/getargv/commit/3a81a9f">3a81a9f</a> configure clangd
+<a href="https://github.com/CamJN/getargv/commit/f56b535">f56b535</a> remove debug function, just use a debugger
+<a href="https://github.com/CamJN/getargv/commit/a4139e8">a4139e8</a> warn if print/search methods not defined (vs wrong value)
+<a href="https://github.com/CamJN/getargv/commit/10091c9">10091c9</a> move comment next to related variable
+<a href="https://github.com/CamJN/getargv/commit/e0549d5">e0549d5</a> rough initial benchmarking
+<a href="https://github.com/CamJN/getargv/commit/abf9f51">abf9f51</a> switch to more mock-like sysctl wrapper
+<a href="https://github.com/CamJN/getargv/commit/b4f25ea">b4f25ea</a> some more clangd integration (needs clangd 12 though, which comes with the next xcode CLT)
+<a href="https://github.com/CamJN/getargv/commit/746daa9">746daa9</a> more clang tidy annoyances
+<a href="https://github.com/CamJN/getargv/commit/b92ac20">b92ac20</a> rough clangd setup, not quite working yet
+<a href="https://github.com/CamJN/getargv/commit/645a7b2">645a7b2</a> enable another test
+<a href="https://github.com/CamJN/getargv/commit/c082eef">c082eef</a> address some clangd complaints
+<a href="https://github.com/CamJN/getargv/commit/0efb9cd">0efb9cd</a> ignore clangd cache dir
+<a href="https://github.com/CamJN/getargv/commit/7e06586">7e06586</a> ignore mandoc.css
+<a href="https://github.com/CamJN/getargv/commit/3c2c9a0">3c2c9a0</a> initial sanitizer use
+<a href="https://github.com/CamJN/getargv/commit/1990616">1990616</a> bump version for future work
+<a href="https://github.com/CamJN/getargv/commit/fbb6403">fbb6403</a> fixup tests some more
+<a href="https://github.com/CamJN/getargv/commit/eaee50a">eaee50a</a> add spawn helper function, but criterion breaks it
+<a href="https://github.com/CamJN/getargv/commit/0da67b4">0da67b4</a> harden runtime
+<a href="https://github.com/CamJN/getargv/commit/6a71628">6a71628</a> shut up output from test
+<a href="https://github.com/CamJN/getargv/commit/9afb31c">9afb31c</a> more tests
+<a href="https://github.com/CamJN/getargv/commit/b342cc1">b342cc1</a> crash hook hangs if you use cr_log_* functions, use fprintf instead
+<a href="https://github.com/CamJN/getargv/commit/78dc957">78dc957</a> attempt to test invalid procargs buffer
+<a href="https://github.com/CamJN/getargv/commit/411e460">411e460</a> fix cr_strdup to magically handle strings with nulls
+<a href="https://github.com/CamJN/getargv/commit/2d7cc2f">2d7cc2f</a> more tests
+<a href="https://github.com/CamJN/getargv/commit/05da65f">05da65f</a> move example data into test dir
+<a href="https://github.com/CamJN/getargv/commit/6b6d5b8">6b6d5b8</a> more tests
+<a href="https://github.com/CamJN/getargv/commit/65d0e75">65d0e75</a> Fix compiler warning about search method
+<a href="https://github.com/CamJN/getargv/commit/a9788f1">a9788f1</a> use expect when testing multiple conditions
+<a href="https://github.com/CamJN/getargv/commit/942e3c6">942e3c6</a> a bunch more tests
+<a href="https://github.com/CamJN/getargv/commit/ca9c27d">ca9c27d</a> add report to end of coverage
+<a href="https://github.com/CamJN/getargv/commit/29bf70a">29bf70a</a> shorten output of run_coverage
+<a href="https://github.com/CamJN/getargv/commit/ef75f19">ef75f19</a> use asprintf to handle mallocing memory for strings
+<a href="https://github.com/CamJN/getargv/commit/cc1b378">cc1b378</a> fixup tests, improve coverage
+<a href="https://github.com/CamJN/getargv/commit/af077a6">af077a6</a> Merge branch 'criterion'
+<a href="https://github.com/CamJN/getargv/commit/3b05c4d">3b05c4d</a> initial coverage support
+<a href="https://github.com/CamJN/getargv/commit/834439d">834439d</a> improve top level makefile for running tests
+<a href="https://github.com/CamJN/getargv/commit/2dfb71c">2dfb71c</a> add crash reporting hook
+<a href="https://github.com/CamJN/getargv/commit/487d7d6">487d7d6</a> remove mimick
+<a href="https://github.com/CamJN/getargv/commit/fb99365">fb99365</a> initial working tests
+<a href="https://github.com/CamJN/getargv/commit/cb53edf">cb53edf</a> cleanup better
+<a href="https://github.com/CamJN/getargv/commit/def2906">def2906</a> add criterion & mimick
+<a href="https://github.com/CamJN/getargv/commit/36a76f3">36a76f3</a> define inline with actual attribute if not defined
+<a href="https://github.com/CamJN/getargv/commit/594b260">594b260</a> Fix parseInt errno setting
+<a href="https://github.com/CamJN/getargv/commit/81a5206">81a5206</a> note tested versions of macOS
+<a href="https://github.com/CamJN/getargv/commit/e980a66">e980a66</a> cleanup makefile, make adding flags easier, set FORTIFY_SOURCE based on platform
+<a href="https://github.com/CamJN/getargv/commit/bf780f0">bf780f0</a> make applying unused attribute tidier
+<a href="https://github.com/CamJN/getargv/commit/a378953">a378953</a> define noreturn for 10.7
+<a href="https://github.com/CamJN/getargv/commit/a298372">a298372</a> make plist editing more backwards compatible
+<a href="https://github.com/CamJN/getargv/commit/0714c13">0714c13</a> note issue with header guard
+<a href="https://github.com/CamJN/getargv/commit/772777c">772777c</a> allow updating compile_commands.json from makefile
+<a href="https://github.com/CamJN/getargv/commit/48cd9fc">48cd9fc</a> extract clang tidy config file
+<a href="https://github.com/CamJN/getargv/commit/ed4f845">ed4f845</a> ignore assets from gh-pages branch
+<a href="https://github.com/CamJN/getargv/commit/8472844">8472844</a> example data
+<a href="https://github.com/CamJN/getargv/commit/b5d6f3b">b5d6f3b</a> optimization research
+<a href="https://github.com/CamJN/getargv/commit/4ba6abe">4ba6abe</a> clang-tidy
+<a href="https://github.com/CamJN/getargv/commit/cc46fa8">cc46fa8</a> fix debugPrinting null calculation
+<a href="https://github.com/CamJN/getargv/commit/900489e">900489e</a> add more search methods
+<a href="https://github.com/CamJN/getargv/commit/9992c8b">9992c8b</a> svgcleaner logo
+<a href="https://github.com/CamJN/getargv/commit/1df6e37">1df6e37</a> fix argc==0 crash in getopt
+<a href="https://github.com/CamJN/getargv/commit/e6b6861">e6b6861</a> adjust style
+<a href="https://github.com/CamJN/getargv/commit/0e21fe5">0e21fe5</a> bump version for future work
+<a href="https://github.com/CamJN/getargv/commit/37614fb">37614fb</a> std args format improvement
+<a href="https://github.com/CamJN/getargv/commit/dd8b079">dd8b079</a> extract makefile variables
+<a href="https://github.com/CamJN/getargv/commit/a1e9a51">a1e9a51</a> improve gitignore
+<a href="https://github.com/CamJN/getargv/commit/4ded687">4ded687</a> update readme
+<a href="https://github.com/CamJN/getargv/commit/f95ad9e">f95ad9e</a> Add logo
+<a href="https://github.com/CamJN/getargv/commit/e2bb0c3">e2bb0c3</a> use Designated Initialization to ensure struct members assigned in intended order
+<a href="https://github.com/CamJN/getargv/commit/84c3754">84c3754</a> finish extracting debug makefile
+<a href="https://github.com/CamJN/getargv/commit/b4349c5">b4349c5</a> bump version for future work
+<a href="https://github.com/CamJN/getargv/commit/e42f268">e42f268</a> fix tagging in make version
+<a href="https://github.com/CamJN/getargv/commit/3e9eb90">3e9eb90</a> fixup backwards compatibility a bit more
+<a href="https://github.com/CamJN/getargv/commit/75bca24">75bca24</a> refactor makefile
+<a href="https://github.com/CamJN/getargv/commit/b7fa386">b7fa386</a> add codesigning and Info.plist
+<a href="https://github.com/CamJN/getargv/commit/b7533d9">b7533d9</a> extract options struct
+<a href="https://github.com/CamJN/getargv/commit/70ab625">70ab625</a> extract arg parsing fn
+<a href="https://github.com/CamJN/getargv/commit/af2686d">af2686d</a> put in brackets to ensure end_pointer isn’t added to
+<a href="https://github.com/CamJN/getargv/commit/9c60c77">9c60c77</a> rename makefile targets again
+<a href="https://github.com/CamJN/getargv/commit/b82fc17">b82fc17</a> argc can be 0
+<a href="https://github.com/CamJN/getargv/commit/1a7dd50">1a7dd50</a> extract main function for test compat
+<a href="https://github.com/CamJN/getargv/commit/7dc0b7e">7dc0b7e</a> add diagnostic printing to debug build
+<a href="https://github.com/CamJN/getargv/commit/bb8255b">bb8255b</a> improve makefile debug build
+<a href="https://github.com/CamJN/getargv/commit/ade65c2">ade65c2</a> fix makefile
+<a href="https://github.com/CamJN/getargv/commit/bdef2bb">bdef2bb</a> improve test setup
+<a href="https://github.com/CamJN/getargv/commit/a9055f9">a9055f9</a> improve man page
+<a href="https://github.com/CamJN/getargv/commit/a353a9c">a353a9c</a> expand on why getargv is useful
+<a href="https://github.com/CamJN/getargv/commit/6d1810d">6d1810d</a> improve memory layout diagram commentary
+<a href="https://github.com/CamJN/getargv/commit/afaf80c">afaf80c</a> more test cases
+<a href="https://github.com/CamJN/getargv/commit/a71b7e4">a71b7e4</a> make test program more flexible
+<a href="https://github.com/CamJN/getargv/commit/df77cfe">df77cfe</a> bump version for next work
+<a href="https://github.com/CamJN/getargv/commit/4df1e33">4df1e33</a> bump version
+<a href="https://github.com/CamJN/getargv/commit/f4ef37a">f4ef37a</a> fix makefile version target
+<a href="https://github.com/CamJN/getargv/commit/e198753">e198753</a> improve backwards compat
+<a href="https://github.com/CamJN/getargv/commit/97522f6">97522f6</a> clearer pointer alignment code
+<a href="https://github.com/CamJN/getargv/commit/f9c9db6">f9c9db6</a> pedantic errors
+<a href="https://github.com/CamJN/getargv/commit/e8a37b4">e8a37b4</a> ignore c++ incompatibility
+<a href="https://github.com/CamJN/getargv/commit/d372179">d372179</a> sanitize debug builds
+<a href="https://github.com/CamJN/getargv/commit/7d00e59">7d00e59</a> indicate possible UB
+<a href="https://github.com/CamJN/getargv/commit/a621c23">a621c23</a> silence compiler complaint
+<a href="https://github.com/CamJN/getargv/commit/b05be5c">b05be5c</a> deal with NUL byte padding bug
+<a href="https://github.com/CamJN/getargv/commit/37b67cf">37b67cf</a> add no argv[0] test case
+<a href="https://github.com/CamJN/getargv/commit/4d066e9">4d066e9</a> add lldbinit file
+<a href="https://github.com/CamJN/getargv/commit/6eb0190">6eb0190</a> more notes on memory diagram
+<a href="https://github.com/CamJN/getargv/commit/9113229">9113229</a> argc not always > 0
+<a href="https://github.com/CamJN/getargv/commit/4d8cea2">4d8cea2</a> fix mem layout diagram missing nulls
+<a href="https://github.com/CamJN/getargv/commit/4368cfc">4368cfc</a> rename end pointer
+<a href="https://github.com/CamJN/getargv/commit/d743577">d743577</a> fix check for minimum args
+<a href="https://github.com/CamJN/getargv/commit/0dbcbe7">0dbcbe7</a> prettier error handling
+<a href="https://github.com/CamJN/getargv/commit/4ddd737">4ddd737</a> add check for minimum args
+<a href="https://github.com/CamJN/getargv/commit/16748bf">16748bf</a> move PID_MAX into makefile
+<a href="https://github.com/CamJN/getargv/commit/6784b59">6784b59</a> notes on makefiles
+<a href="https://github.com/CamJN/getargv/commit/46a14a9">46a14a9</a> add debug build to makefile
+<a href="https://github.com/CamJN/getargv/commit/49abfef">49abfef</a> makefile improvements
+<a href="https://github.com/CamJN/getargv/commit/8c80733">8c80733</a> add version tagging
+<a href="https://github.com/CamJN/getargv/commit/5281495">5281495</a> add version flag to manpage, and tidy up
+<a href="https://github.com/CamJN/getargv/commit/2791ad8">2791ad8</a> add some tests
+<a href="https://github.com/CamJN/getargv/commit/7e41207">7e41207</a> add version and version bump support
+<a href="https://github.com/CamJN/getargv/commit/d5de9d8">d5de9d8</a> comment
+<a href="https://github.com/CamJN/getargv/commit/b693db1">b693db1</a> factor out functions to ready for testing
+<a href="https://github.com/CamJN/getargv/commit/187c4eb">187c4eb</a> output error handling
+<a href="https://github.com/CamJN/getargv/commit/4f357da">4f357da</a> document incorrect type use and warn if might break
+<a href="https://github.com/CamJN/getargv/commit/0d0322b">0d0322b</a> fix parseInt
+<a href="https://github.com/CamJN/getargv/commit/1c4d519">1c4d519</a> full main args
+<a href="https://github.com/CamJN/getargv/commit/8e000f0">8e000f0</a> safer number parsing
+<a href="https://github.com/CamJN/getargv/commit/4754542">4754542</a> improve error messages
+<a href="https://github.com/CamJN/getargv/commit/319809a">319809a</a> try and inline functions when compiling
+<a href="https://github.com/CamJN/getargv/commit/61a2508">61a2508</a> reduce memory accesses
+<a href="https://github.com/CamJN/getargv/commit/b9ad0ab">b9ad0ab</a> add alt printing methods
+<a href="https://github.com/CamJN/getargv/commit/d91180a">d91180a</a> fix args memory layout diagram
+<a href="https://github.com/CamJN/getargv/commit/9b50a96">9b50a96</a> formatting tweaks
+<a href="https://github.com/CamJN/getargv/commit/9d5056e">9d5056e</a> cleanup
+<a href="https://github.com/CamJN/getargv/commit/57a5c89">57a5c89</a> remove goto
+<a href="https://github.com/CamJN/getargv/commit/963c957">963c957</a> fixup license compliance
+<a href="https://github.com/CamJN/getargv/commit/90d354e">90d354e</a> remove uneeded flag
+<a href="https://github.com/CamJN/getargv/commit/e365304">e365304</a> make install target
+<a href="https://github.com/CamJN/getargv/commit/2105783">2105783</a> initial Readme
+<a href="https://github.com/CamJN/getargv/commit/e34e5f4">e34e5f4</a> add man page, fixup arg parsing
+<a href="https://github.com/CamJN/getargv/commit/ed802cb">ed802cb</a> move some things
+<a href="https://github.com/CamJN/getargv/commit/cd8f21b">cd8f21b</a> add more flags
+<a href="https://github.com/CamJN/getargv/commit/110428b">110428b</a> check for errors in arg parsing
+<a href="https://github.com/CamJN/getargv/commit/992f237">992f237</a> add attribution
+<a href="https://github.com/CamJN/getargv/commit/2bb27a4">2bb27a4</a> fix some issues raised by clang-tidy
+<a href="https://github.com/CamJN/getargv/commit/7bf8522">7bf8522</a> clarify variable names
+<a href="https://github.com/CamJN/getargv/commit/b98a32e">b98a32e</a> update comment for current code
+<a href="https://github.com/CamJN/getargv/commit/3c50bb8">3c50bb8</a> remove uneeded extern declarations
+<a href="https://github.com/CamJN/getargv/commit/c021ae4">c021ae4</a> allow skipping arguments and converting nulls to spaces
+<a href="https://github.com/CamJN/getargv/commit/30316c6">30316c6</a> add makefile
+<a href="https://github.com/CamJN/getargv/commit/c5e2890">c5e2890</a> print trailing null (not sure if good idea)
+<a href="https://github.com/CamJN/getargv/commit/b287e44">b287e44</a> cleanup
+<a href="https://github.com/CamJN/getargv/commit/8922948">8922948</a> print nulls
+<a href="https://github.com/CamJN/getargv/commit/bebe598">bebe598</a> initial committ
+</pre>
+
+      <!-- Footer -->
+      <footer id="footer">
+  <ul class="icons">
+    <li>
+      <a href="https://twitter.com/CamJN" class="icon alt">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="-5 0 542 512"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
+      </a>
+    </li>
+    <li>
+      <a href="https://www.facebook.com/camden.narzt" class="icon alt">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -10 320 525"><path d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z"/></svg>
+      </a>
+    </li>
+    <li>
+      <a href="https://www.linkedin.com/in/camden-narzt" class="icon alt">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="-20 -20 495 512"><path d="M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83.5 0 53.8a53.79 53.79 0 0 1 107.58 0c0 29.7-24.1 54.3-53.79 54.3zM447.9 448h-92.68V302.4c0-34.7-.7-79.2-48.29-79.2-48.29 0-55.69 37.7-55.69 76.7V448h-92.78V148.9h89.08v40.8h1.3c12.4-23.5 42.69-48.3 87.88-48.3 94 0 111.28 61.9 111.28 142.3V448z"/></svg>
+      </a>
+    </li>
+    <li>
+      <a href="https://keybase.io/camjn" class="icon alt">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M286.17 419a18 18 0 1 0 18 18 18 18 0 0 0-18-18zm111.92-147.6c-9.5-14.62-39.37-52.45-87.26-73.71q-9.1-4.06-18.38-7.27a78.43 78.43 0 0 0-47.88-104.13c-12.41-4.1-23.33-6-32.41-5.77-.6-2-1.89-11 9.4-35L198.66 32l-5.48 7.56c-8.69 12.06-16.92 23.55-24.34 34.89a51 51 0 0 0-8.29-1.25c-41.53-2.45-39-2.33-41.06-2.33-50.61 0-50.75 52.12-50.75 45.88l-2.36 36.68c-1.61 27 19.75 50.21 47.63 51.85l8.93.54a214 214 0 0 0-46.29 35.54C14 304.66 14 374 14 429.77v33.64l23.32-29.8a148.6 148.6 0 0 0 14.56 37.56c5.78 10.13 14.87 9.45 19.64 7.33 4.21-1.87 10-6.92 3.75-20.11a178.29 178.29 0 0 1-15.76-53.13l46.82-59.83-24.66 74.11c58.23-42.4 157.38-61.76 236.25-38.59 34.2 10.05 67.45.69 84.74-23.84.72-1 1.2-2.16 1.85-3.22a156.09 156.09 0 0 1 2.8 28.43c0 23.3-3.69 52.93-14.88 81.64-2.52 6.46 1.76 14.5 8.6 15.74 7.42 1.57 15.33-3.1 18.37-11.15C429 443 434 414 434 382.32c0-38.58-13-77.46-35.91-110.92zM142.37 128.58l-15.7-.93-1.39 21.79 13.13.78a93 93 0 0 0 .32 19.57l-22.38-1.34a12.28 12.28 0 0 1-11.76-12.79L107 119c1-12.17 13.87-11.27 13.26-11.32l29.11 1.73a144.35 144.35 0 0 0-7 19.17zm148.42 172.18a10.51 10.51 0 0 1-14.35-1.39l-9.68-11.49-34.42 27a8.09 8.09 0 0 1-11.13-1.08l-15.78-18.64a7.38 7.38 0 0 1 1.34-10.34l34.57-27.18-14.14-16.74-17.09 13.45a7.75 7.75 0 0 1-10.59-1s-3.72-4.42-3.8-4.53a7.38 7.38 0 0 1 1.37-10.34L214 225.19s-18.51-22-18.6-22.14a9.56 9.56 0 0 1 1.74-13.42 10.38 10.38 0 0 1 14.3 1.37l81.09 96.32a9.58 9.58 0 0 1-1.74 13.44zM187.44 419a18 18 0 1 0 18 18 18 18 0 0 0-18-18z"/></svg>
+      </a>
+    </li>
+    <li>
+      <a href="https://github.com/CamJN" class="icon alt">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 0 525 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+      </a>
+    </li>
+    <li>
+      <a href="mailto:getargv@narzt.cam" class="icon alt">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="-10 0 535 512"><path d="M256 352c-16.53 0-33.06-5.422-47.16-16.41L0 173.2V400C0 426.5 21.49 448 48 448h416c26.51 0 48-21.49 48-48V173.2l-208.8 162.5C289.1 346.6 272.5 352 256 352zM16.29 145.3l212.2 165.1c16.19 12.6 38.87 12.6 55.06 0l212.2-165.1C505.1 137.3 512 125 512 112C512 85.49 490.5 64 464 64h-416C21.49 64 0 85.49 0 112C0 125 6.01 137.3 16.29 145.3z"/></svg>
+      </a>
+    </li>
+  </ul>
+  <ul class="copyright">
+    <li>&copy; Camden Narzt. All rights reserved.</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+  </ul>
+</footer>
+
+    </div>
+
+    <!-- Title bar -->
+    <div id="titleBar">
+      <a href="#navPanel" class="toggle"></a>
+      <span class="title"><a href="/index.html"><img src="images/title.svg"></a></span>
+    </div>
+
+    <!-- Nav panel -->
+    <div id="navPanel">
+      <nav>
+      </nav>
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/mobile.min.js"></script>
+    <script src="assets/js/preload.min.js"></script>
+    <script src="assets/js/scroll.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/panel.min.js"></script>
+    <script src="assets/js/dropdown.min.js"></script>
+  </body>
+</html>

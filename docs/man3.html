@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <link rel="stylesheet" href="mandoc.css" type="text/css" media="all"/>
+  <title>libgetargv(3)</title>
+</head>
+<body>
+<table class="head">
+  <tr>
+    <td class="head-ltitle">libgetargv(3)</td>
+    <td class="head-vol">Library Functions Manual</td>
+    <td class="head-rtitle">libgetargv(3)</td>
+  </tr>
+</table>
+<div class="manual-text">
+<section class="Sh">
+<h1 class="Sh" id="NAME"><a class="permalink" href="#NAME">NAME</a></h1>
+<p class="Pp"><code class="Nm">libgetargv</code> &#x2014;
+    <span class="Nd">library functions for getting and printing other processes
+    args</span></p>
+</section>
+<section class="Sh">
+<h1 class="Sh" id="LIBRARY"><a class="permalink" href="#LIBRARY">LIBRARY</a></h1>
+<p class="Pp"><span class="Lb">library &#x201C;libgetargv&#x201D;</span></p>
+</section>
+<section class="Sh">
+<h1 class="Sh" id="SYNOPSIS"><a class="permalink" href="#SYNOPSIS">SYNOPSIS</a></h1>
+<p class="Pp"><code class="In">#include
+    &lt;<a class="In">libgetargv.h</a>&gt;</code></p>
+<p class="Pp"><var class="Vt">struct GetargvOptions { int skip; pid_t pid; bool
+    nulls; };</var></p>
+<p class="Pp"><var class="Ft">void</var>
+  <br/>
+  <code class="Fn">get_argv_of_pid</code>(<var class="Fa" style="white-space: nowrap;">char*
+    retVal[3]</var>, <var class="Fa" style="white-space: nowrap;">const struct
+    GetargvOptions* options</var>);</p>
+<p class="Pp"><var class="Ft">bool</var>
+  <br/>
+  <code class="Fn">print_argv_of_pid</code>(<var class="Fa" style="white-space: nowrap;">char*
+    start_pointer</var>, <var class="Fa" style="white-space: nowrap;">char*
+    end_pointer</var>);</p>
+</section>
+<section class="Sh">
+<h1 class="Sh" id="DESCRIPTION"><a class="permalink" href="#DESCRIPTION">DESCRIPTION</a></h1>
+<p class="Pp">The first library to provide a correct interface to the
+    <code class="Dv">KERN_PROCARGS2</code> sysctl. Every other program/library
+    (including Apple's <a class="Xr">ps(1)</a>) incorrectly counts the arguments
+    in the case of empty leading arguments, resulting in the inclusion of env
+    vars in addition to arguments. This is because while it is conventional to
+    put the executable name in <var class="Va">argv[0]</var>,
+    <span class="No">it is not enforced by xnu, however everyone else relies on
+    it being true.</span></p>
+<p class="Pp" id="get_argv_of_pid"><a class="permalink" href="#get_argv_of_pid"><code class="Fn">get_argv_of_pid</code></a>()
+    is the function that implements the correct handling of parsing the buffer
+    returned by the <code class="Dv">KERN_PROCARGS2</code> sysctl. It takes as
+    arguments a <var class="Ft">char*</var> array of length 3
+    <var class="Fa">retVal</var>, <span class="No">and an</span>
+    <var class="Ft">GetargvOptions</var> struct <var class="Fa">options</var>
+    which controls whether the NULs which separate the arguments in
+    <var class="Va">argv</var> <span class="No">are replaced with spaces</span>
+    (.nulls = true), <span class="No">how many leading arguments to skip</span>
+    (.skip = #), <span class="No">and the pid to target</span> (.pid = #).
+    <span class="No">The results are returned in the</span>
+    <var class="Fa">retVal</var> <span class="No">array, the first element is a
+    pointer to the start of the</span> <var class="Va">argv</var> (skipped ahead
+    by as many args as requested), <span class="No">and the second element is a
+    pointer to the end of the</span> <var class="Va">argv</var>.
+    <span class="No">The third element is the entire raw buffer which it is the
+    caller's responsibility to free.</span></p>
+<p class="Pp" id="print_argv_of_pid"><a class="permalink" href="#print_argv_of_pid"><code class="Fn">print_argv_of_pid</code></a>()
+    is a convienience function that will print to stdout every byte from
+    <var class="Fa">start_pointer</var> <span class="No">to</span>
+    <var class="Fa">end_pointer</var>, <span class="No">including NULs, in a
+    performant way. Its return value is a boolean indicating success or failure,
+    on failure errno is set.</span></p>
+</section>
+<section class="Sh">
+<h1 class="Sh" id="EXAMPLES"><a class="permalink" href="#EXAMPLES">EXAMPLES</a></h1>
+<p class="Pp">The following program shows a minimal use of the entire library
+    API.</p>
+<div class="Bd Pp Bd-indent">
+<pre>
+#include &lt;libgetargv.h&gt;
+#include &lt;unistd.h&gt;
+
+int main(int argc, char** argv, char** envp, char** apple) {
+  char*          retVal[3];
+  struct GetargvOptions options = { .pid = getpid(), .nulls = false, .skip = 0 };
+  get_argv_of_pid(retVal, &amp;options);
+  print_argv_of_pid(retVal[0], retVal[1]);
+  free(retVal[2]);
+  return 0;
+}
+</pre>
+</div>
+</section>
+<section class="Sh">
+<h1 class="Sh" id="SEE_ALSO"><a class="permalink" href="#SEE_ALSO">SEE
+  ALSO</a></h1>
+<p class="Pp"><a class="Xr">getargv(1)</a>, <a class="Xr">stdbool.h(header)</a>,
+    <a class="Xr">stdlib.h(header)</a></p>
+</section>
+<section class="Sh">
+<h1 class="Sh" id="COMPATIBILITY"><a class="permalink" href="#COMPATIBILITY">COMPATIBILITY</a></h1>
+<p class="Pp">The <code class="Nm">libgetargv</code> library conforms to the xnu
+    kernel's KERN_PROCARGS2 sysctl.</p>
+</section>
+<section class="Sh">
+<h1 class="Sh" id="LIST_OF_FUNCTIONS"><a class="permalink" href="#LIST_OF_FUNCTIONS">LIST
+  OF FUNCTIONS</a></h1>
+<table class="Bl-column">
+  <tr id="Function">
+    <td><a class="permalink" href="#Function"><b class="Sy">Function</b></a></td>
+    <td></td>
+    <td></td>
+    <td>Description</td>
+  </tr>
+  <tr>
+    <td>get_argv_of_pid</td>
+    <td>get the argv of the specified pid</td>
+  </tr>
+  <tr>
+    <td>print_argv_of_pid</td>
+    <td>print a contiguous stretch of memory to stdout, including any NULs</td>
+  </tr>
+</table>
+</section>
+<section class="Sh">
+<h1 class="Sh" id="BUGS"><a class="permalink" href="#BUGS">BUGS</a></h1>
+<p class="Pp">This library does not neccesarily interact well with other
+    libraries due to unilaterally defining bool if stdbool.h isn't available.
+    This is only a problem when compiling C in std &lt; C99. If you do
+    experience a conflict, you can remove the definition of bool from the
+    header, so long as you only include the header after you define bool in your
+    program.</p>
+<p class="Pp">The current implementation does not facilitate printing to
+    anything but stdout.</p>
+</section>
+</div>
+<table class="foot">
+  <tr>
+    <td class="foot-date">January 14, 2022</td>
+    <td class="foot-os">macOS 11.6</td>
+  </tr>
+</table>
+</body>
+</html>

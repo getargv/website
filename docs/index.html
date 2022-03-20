@@ -1,0 +1,263 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>getargv</title>
+    <meta charset="utf-8" />
+    <meta name="Description" content="getargv is a utility to print the arguments of processes on macOS">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="icon" type="image/x-icon" href="assets/icon/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="assets/icon/favicon.svg" sizes="any">
+    <link rel="apple-touch-icon" type="image/png" href="assets/icon/favicon.png">
+    <link rel="mask-icon" href="assets/icon/safari-pinned-tab.svg" color="cf9669">
+    <meta name="theme-color" content="#cf9669">
+    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+  </head>
+  <body class="is-preload landing">
+    <div id="page-wrapper">
+
+      <!-- Header -->
+      <header id="header">
+  <h1 id="logo"><a href="/index.html"><img src="images/title.svg"></a></h1>
+  <nav id="nav">
+    <ul>
+      <li><a href="/index.html">Home</a></li>
+      <li><a href="/resilient.html">Resilient</a></li>
+      <li><a href="/fast.html">Fast</a></li>
+      <li><a href="/interface.html">Interface</a></li>
+      <li><a href="/dylib.html">Library</a></li>
+      <li>
+        <a href="#">Docs</a>
+        <ul class="dropdown">
+          <li><a href="man1.html">Tool Manpage</a></li>
+          <li><a href="man3.html">Library Manpage</a></li>
+          <li><a href="changelog.html">Changelog</a></li>
+          <li><a href="license.html">License</a></li>
+        </ul>
+      </li>
+      <li><iframe src="https://github.com/sponsors/CamJN/button" title="Sponsor CamJN" height="35" width="116" style="border: 0;"></iframe></li>
+    </ul>
+  </nav>
+</header>
+
+      <!-- Main -->
+      <!-- Banner -->
+<section id="banner">
+  <div class="content">
+    <header>
+      <h2>Read your <abbr title="processes'">procs'</abbr> <abbr title="arguments">args</abbr></h2>
+      <p>Sometimes you need to know what your<br />
+        processes' arguments were, exactly.</p>
+    </header>
+    <span class="image"><img src="images/logo.svg" alt="" /></span>
+  </div>
+  <a href="#one" class="goto-next scrolly">Next</a>
+</section>
+
+<!-- One -->
+<section id="one" class="spotlight style1 bottom">
+  <span class="image fit main"><img src="images/christopher-burns-Kj2SaNHG-hg-unsplash.jpg" alt="" /></span>
+  <div class="content">
+    <div class="container">
+      <div class="row">
+        <div class="col-4 col-12-medium">
+          <header>
+            <h2>Here for when ps just won't cut it</h2>
+            <p><code>ps</code> gives you a <samp>space</samp> separated list of arguments, <code>getargv</code> can give you them <samp class="null">␀</samp> separated.</p>
+          </header>
+        </div>
+        <div class="col-4 col-12-medium">
+          <p>
+            If all you need is to see the arguments passed to your process
+            <code>ps</code> is often good enough, it can show you what you want unless the
+            process was started with <var>argv[0]</var> set to an empty string, which
+            is unusual, though still supported by the kernel. In the case where <var>argv[0]</var>
+            is an empty string, <code>ps</code> (from <a href="https://opensource.apple.com/source/adv_cmds/adv_cmds-63/ps.tproj/print.c.auto.html">10.3</a>-<a href="https://opensource.apple.com/source/adv_cmds/adv_cmds-176.100.1/ps/print.c.auto.html">11.5</a>) will emit one or more environment variables
+            which were not part of the process' arguments.
+          </p>
+        </div>
+        <div class="col-4 col-12-medium">
+          <p>
+            If you need to parse the arguments passed to a process however,
+            that's when you'll need to use <code>getargv</code>. Arguments to a process can contain
+            any series of bytes aside from <samp class="null">␀</samp>, which means that arguments can contain
+            <samp>space</samp>s. In order to parse the arguments the same way that the process received
+            them you need to process <samp class="null">␀</samp> separated byte arrays. In linux that is provided
+            by the <kbd>/proc/$PID/cmdline</kbd> <abbr title="proc filesystem">procfs</abbr> path,
+            on macOS you need <code>getargv</code>. Or a 3<sup>rd</sup> party <abbr title="proc filesystem">procfs</abbr> such as <a href="https://github.com/osxfuse/filesystems/tree/master/filesystems-c/procfs">this</a> or <a href="https://github.com/alexchandel/procfs">this</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <a href="#two" class="goto-next scrolly">Next</a>
+</section>
+
+<!-- Two -->
+<section id="two" class="spotlight style2 right">
+  <span class="image fit main"><img src="images/screenshot.png" alt="" /></span>
+  <div class="content">
+    <header>
+      <h2>Easy to use interface</h2>
+      <p>Idiomatic flags and no cruft</p>
+    </header>
+    <p><code>getargv</code> has five flags, three of which are purely information about itself. You use the standard <kbd>-0</kbd> flag to print arguments <samp class="null">␀</samp> separated, the <kbd>-s</kbd> flag to strip leading arguments, the <kbd>-v</kbd> flag to print <code>getargv</code>'s version and either of <kbd>-h</kbd> or <kbd>-?</kbd> to print a usage string. That's it, that's the whole interface.</p>
+    <ul class="actions">
+      <li><a href="/interface.html" class="button">Learn More</a></li>
+    </ul>
+  </div>
+  <a href="#three" class="goto-next scrolly">Next</a>
+</section>
+
+<!-- Three -->
+<section id="three" class="spotlight style3 left">
+  <span class="image fit main bottom"><img src="images/klim-musalimov-dEimCxkUB-8-unsplash.jpg" alt="" /></span>
+  <div class="content">
+    <header>
+      <h2>Fast as possible</h2>
+      <p>By doing one thing, and doing it well, <code>getargv</code> is as fast as it can be</p>
+    </header>
+    <p><code>getargv</code> runs in approx <samp>2.4 ㎳</samp> as measured by <code>hyperfine</code>. It does this by utilizing a zero-copy one-scan algorithm to run in <code>O(n)</code> time where <var>n</var> is the length of the arguments passed to the process you are inspecting. <code>getargv</code> allocates exactly one block of memory, and stops reading the buffer once it finds the end of the process' arguments. <code>getargv</code> also prints the buffer to <var>stdout</var> using pointers back to the original buffer, without copying.</p>
+    <ul class="actions">
+      <li><a href="/fast.html" class="button">Learn More</a></li>
+    </ul>
+  </div>
+  <a href="#four" class="goto-next scrolly">Next</a>
+</section>
+
+<!-- Four -->
+<section id="four" class="wrapper style1 special fade-up">
+  <div class="container">
+    <header class="major">
+      <h2>Resilient to surprising situations</h2>
+      <p>I've spent a lot of time making <code>getargv</code> able to handle edge cases</p>
+    </header>
+    <div class="box alt">
+      <div class="row gtr-uniform">
+        <section class="col-4 col-6-medium col-12-xsmall">
+          <span class="icon alt major">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="-10 0 596 512"><path d="M288 64C39.52 64 0 182.1 0 273.5C0 379.5 78.8 448 176 448c27.33 0 51.21-6.516 66.11-36.79l19.93-40.5C268.3 358.6 278.1 352.4 288 352.1c9.9 .3711 19.7 6.501 25.97 18.63l19.93 40.5C348.8 441.5 372.7 448 400 448c97.2 0 176-68.51 176-174.5C576 182.1 536.5 64 288 64zM160 320c-35.35 0-64-28.65-64-64s28.65-64 64-64c35.35 0 64 28.65 64 64S195.3 320 160 320zM416 320c-35.35 0-64-28.65-64-64s28.65-64 64-64c35.35 0 64 28.65 64 64S451.3 320 416 320z"/></svg>
+          </span>
+          <h3>Empty argv[0]</h3>
+          <p><code>getargv</code> can handle the case where the process you are inspecting has an empty or missing <var>argv[0]</var>.</p>
+        </section>
+        <section class="col-4 col-6-medium col-12-xsmall">
+          <span class="icon solid alt major quote-icon"></span>
+          <h3>Empty Arguments</h3>
+          <p><code>getargv</code> can handle the process you are inspecting having been called with empty arguments in all positions.</p>
+        </section>
+        <section class="col-4 col-6-medium col-12-xsmall">
+          <span class="icon solid alt major null-icon"></span>
+          <h3>No Arguments</h3>
+          <p><code>getargv</code> can handle the case where the process you are inspecting has no arguments at all.</p>
+        </section>
+        <section class="col-4 col-6-medium col-12-xsmall">
+          <span class="icon alt major">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 512"><path d="M64 352c17.69 0 32-14.32 32-31.1V64.01c0-17.67-14.31-32.01-32-32.01S32 46.34 32 64.01v255.1C32 337.7 46.31 352 64 352zM64 400c-22.09 0-40 17.91-40 40s17.91 39.1 40 39.1s40-17.9 40-39.1S86.09 400 64 400z"/></svg>
+          </span>
+          <h3>Invalid <abbr title="Process ID">PID</abbr></h3>
+          <p><code>getargv</code> knows that the <var title="Maximum Process ID">PID_MAX</var> differs based on the macOS version, and checks accordingly.</p>
+        </section>
+        <section class="col-4 col-6-medium col-12-xsmall">
+          <span class="icon alt major">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="-10 0 596 512"><path d="M9.372 86.63C-3.124 74.13-3.124 53.87 9.372 41.37C21.87 28.88 42.13 28.88 54.63 41.37L246.6 233.4C259.1 245.9 259.1 266.1 246.6 278.6L54.63 470.6C42.13 483.1 21.87 483.1 9.372 470.6C-3.124 458.1-3.124 437.9 9.372 425.4L178.7 256L9.372 86.63zM544 416C561.7 416 576 430.3 576 448C576 465.7 561.7 480 544 480H256C238.3 480 224 465.7 224 448C224 430.3 238.3 416 256 416H544z"/></svg>
+          </span>
+          <h3>Incorrect args</h3>
+          <p><code>getargv</code> handles being called with incorrect arguments, and prints helpful error messages.</p>
+        </section>
+        <section class="col-4 col-6-medium col-12-xsmall">
+          <span class="icon alt major">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="-10 -10 468 532"><path d="M80 192V144C80 64.47 144.5 0 224 0C303.5 0 368 64.47 368 144V192H384C419.3 192 448 220.7 448 256V448C448 483.3 419.3 512 384 512H64C28.65 512 0 483.3 0 448V256C0 220.7 28.65 192 64 192H80zM144 192H304V144C304 99.82 268.2 64 224 64C179.8 64 144 99.82 144 144V192z"/></svg>
+          </span>
+          <h3>Insufficient Permissions</h3>
+          <p>The <var>KERN_PROCARGS2</var> <code>sysctl</code> does not differentiate between a <abbr title="Process ID">PID</abbr> not existing or your user not having permission to examine it, <code>getargv</code> does.</p>
+        </section>
+      </div>
+    </div>
+    <footer class="major">
+      <ul class="actions special">
+        <li><a href="/resilient.html" class="button">Learn More</a></li>
+      </ul>
+    </footer>
+  </div>
+</section>
+
+<!-- Five -->
+<section id="call-to-action" class="wrapper style2 special fade">
+  <div class="container">
+    <header>
+      <h2>Subscribe to my newsletter</h2>
+      <p>I've never actually sent one, but you can subscribe anyway</p>
+    </header>
+    <form class="cta" action="mailto:getargv@narzt.cam" method="get">
+      <input type="hidden" name="subject" value="Subscribe me to the newsletter" />
+      <div class="row gtr-uniform gtr-50">
+        <div class="col-8 col-12-xsmall"><input type="email" name="body" id="email" placeholder="Your Email Address" /></div>
+        <div class="col-4 col-12-xsmall"><input type="submit" value="Get Started" class="fit primary" /></div>
+      </div>
+    </form>
+  </div>
+</section>
+
+      <!-- Footer -->
+      <footer id="footer">
+  <ul class="icons">
+    <li>
+      <a href="https://twitter.com/CamJN" class="icon alt">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="-5 0 542 512"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
+      </a>
+    </li>
+    <li>
+      <a href="https://www.facebook.com/camden.narzt" class="icon alt">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -10 320 525"><path d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z"/></svg>
+      </a>
+    </li>
+    <li>
+      <a href="https://www.linkedin.com/in/camden-narzt" class="icon alt">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="-20 -20 495 512"><path d="M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83.5 0 53.8a53.79 53.79 0 0 1 107.58 0c0 29.7-24.1 54.3-53.79 54.3zM447.9 448h-92.68V302.4c0-34.7-.7-79.2-48.29-79.2-48.29 0-55.69 37.7-55.69 76.7V448h-92.78V148.9h89.08v40.8h1.3c12.4-23.5 42.69-48.3 87.88-48.3 94 0 111.28 61.9 111.28 142.3V448z"/></svg>
+      </a>
+    </li>
+    <li>
+      <a href="https://keybase.io/camjn" class="icon alt">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M286.17 419a18 18 0 1 0 18 18 18 18 0 0 0-18-18zm111.92-147.6c-9.5-14.62-39.37-52.45-87.26-73.71q-9.1-4.06-18.38-7.27a78.43 78.43 0 0 0-47.88-104.13c-12.41-4.1-23.33-6-32.41-5.77-.6-2-1.89-11 9.4-35L198.66 32l-5.48 7.56c-8.69 12.06-16.92 23.55-24.34 34.89a51 51 0 0 0-8.29-1.25c-41.53-2.45-39-2.33-41.06-2.33-50.61 0-50.75 52.12-50.75 45.88l-2.36 36.68c-1.61 27 19.75 50.21 47.63 51.85l8.93.54a214 214 0 0 0-46.29 35.54C14 304.66 14 374 14 429.77v33.64l23.32-29.8a148.6 148.6 0 0 0 14.56 37.56c5.78 10.13 14.87 9.45 19.64 7.33 4.21-1.87 10-6.92 3.75-20.11a178.29 178.29 0 0 1-15.76-53.13l46.82-59.83-24.66 74.11c58.23-42.4 157.38-61.76 236.25-38.59 34.2 10.05 67.45.69 84.74-23.84.72-1 1.2-2.16 1.85-3.22a156.09 156.09 0 0 1 2.8 28.43c0 23.3-3.69 52.93-14.88 81.64-2.52 6.46 1.76 14.5 8.6 15.74 7.42 1.57 15.33-3.1 18.37-11.15C429 443 434 414 434 382.32c0-38.58-13-77.46-35.91-110.92zM142.37 128.58l-15.7-.93-1.39 21.79 13.13.78a93 93 0 0 0 .32 19.57l-22.38-1.34a12.28 12.28 0 0 1-11.76-12.79L107 119c1-12.17 13.87-11.27 13.26-11.32l29.11 1.73a144.35 144.35 0 0 0-7 19.17zm148.42 172.18a10.51 10.51 0 0 1-14.35-1.39l-9.68-11.49-34.42 27a8.09 8.09 0 0 1-11.13-1.08l-15.78-18.64a7.38 7.38 0 0 1 1.34-10.34l34.57-27.18-14.14-16.74-17.09 13.45a7.75 7.75 0 0 1-10.59-1s-3.72-4.42-3.8-4.53a7.38 7.38 0 0 1 1.37-10.34L214 225.19s-18.51-22-18.6-22.14a9.56 9.56 0 0 1 1.74-13.42 10.38 10.38 0 0 1 14.3 1.37l81.09 96.32a9.58 9.58 0 0 1-1.74 13.44zM187.44 419a18 18 0 1 0 18 18 18 18 0 0 0-18-18z"/></svg>
+      </a>
+    </li>
+    <li>
+      <a href="https://github.com/CamJN" class="icon alt">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 0 525 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+      </a>
+    </li>
+    <li>
+      <a href="mailto:getargv@narzt.cam" class="icon alt">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="-10 0 535 512"><path d="M256 352c-16.53 0-33.06-5.422-47.16-16.41L0 173.2V400C0 426.5 21.49 448 48 448h416c26.51 0 48-21.49 48-48V173.2l-208.8 162.5C289.1 346.6 272.5 352 256 352zM16.29 145.3l212.2 165.1c16.19 12.6 38.87 12.6 55.06 0l212.2-165.1C505.1 137.3 512 125 512 112C512 85.49 490.5 64 464 64h-416C21.49 64 0 85.49 0 112C0 125 6.01 137.3 16.29 145.3z"/></svg>
+      </a>
+    </li>
+  </ul>
+  <ul class="copyright">
+    <li>&copy; Camden Narzt. All rights reserved.</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+  </ul>
+</footer>
+
+    </div>
+
+    <!-- Title bar -->
+    <div id="titleBar">
+      <a href="#navPanel" class="toggle"></a>
+      <span class="title"><a href="/index.html"><img src="images/title.svg"></a></span>
+    </div>
+
+    <!-- Nav panel -->
+    <div id="navPanel">
+      <nav>
+      </nav>
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/mobile.min.js"></script>
+    <script src="assets/js/preload.min.js"></script>
+    <script src="assets/js/scroll.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/panel.min.js"></script>
+    <script src="assets/js/dropdown.min.js"></script>
+  </body>
+</html>
