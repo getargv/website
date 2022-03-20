@@ -2924,7 +2924,11 @@ body.landing .dropotron.level-0 {
   display: inline-block;
   margin-left: 1em;
 }
-#header nav ul li a, #header nav ul li span {
+#header nav ul li iframe[height="35"] {
+  height: 35px;
+  vertical-align: middle;
+}
+#header nav ul li a, #header nav ul li span, #header nav ul li iframe {
   border: 0;
   color: inherit;
   display: inline-block;
@@ -2932,12 +2936,12 @@ body.landing .dropotron.level-0 {
   line-height: inherit;
   outline: 0;
 }
-#header nav ul li a.button, #header nav ul li span.button {
+#header nav ul li a.button, #header nav ul li span.button, #header nav ul li iframe.button {
   height: 2em;
   line-height: 2em;
   padding: 0 1.25em;
 }
-#header nav ul li a:not(.button):before, #header nav ul li span:not(.button):before {
+#header nav ul li a:not(.button):before, #header nav ul li span:not(.button):before, #header nav ul li iframe:not(.button):before {
   margin-right: 0.5em;
 }
 #header nav ul li.active > a, #header nav ul li.active > span {
