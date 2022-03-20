@@ -1554,7 +1554,11 @@ body.landing {
                 display: inline-block;
                 margin-left: 1em;
 
-                a, span {
+                iframe[height="35"] {
+                    height: 35px;
+                    vertical-align: middle;
+                }
+                a, span, iframe {
                     border: 0;
                     color: inherit;
                     display: inline-block;
