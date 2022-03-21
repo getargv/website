@@ -15,7 +15,7 @@ const header = readFileSync("header.html", 'utf8').trim().replace(/<getargv-home
 let template = readFileSync("template.html", 'utf8').trim();
 
 if (body_file != "index-body.html") {
-    template = template.replace(/<body class="is-preload landing">/, match => match.replace(" landing",""));
+    template = template.replace(/<body class="is-preload landing">.+$/m, '<body class="is-preload">');
 }
 
 template = template.replace(/<getargv-header \/>/,header);
