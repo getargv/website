@@ -1,29 +1,30 @@
-import { readFileSync } from 'fs'
+import { readFileSync } from 'fs';
 
 const myArgs = process.argv.slice(2);
 const body_file = myArgs[0];
-
-const sidebar_for = (_,name) => readFileSync(`${name}-sidebar.html`, 'utf8');
-
-const body = readFileSync(body_file, 'utf8').replaceAll(/<([^ -]+)-sidebar \/>/g,sidebar_for).trim();
-const footer = readFileSync("footer.html", 'utf8').trim();
-const stats = readFileSync("stats.html", 'utf8').trim();
-const speed = readFileSync("speed.html", 'utf8').trim();
-const projects = readFileSync("projects.html", 'utf8').trim();
-const homelink = readFileSync("homelink.html", 'utf8').trim();
-const header = readFileSync("header.html", 'utf8').trim().replace(/<getargv-homelink \/>/,homelink);
-let template = readFileSync("template.html", 'utf8').trim();
+const cache = new Map();
+const read = file => readFileSync(file, 'utf8').trim();
+cache.set('body', read(body_file));
+let old;
+let template = read("template.html");
 
 if (body_file != "index-body.html") {
     template = template.replace(/<body class="is-preload landing">.+$/m, '<body class="is-preload">');
 }
 
-template = template.replace(/<getargv-header \/>/,header);
-template = template.replace(/<getargv-footer \/>/,footer);
-template = template.replace(/<getargv-main \/>/,body);
-template = template.replace(/<getargv-stats \/>/,stats);
-template = template.replace(/<getargv-speed \/>/,speed);
-template = template.replace(/<getargv-projects \/>/,projects);
-template = template.replace(/<getargv-homelink \/>/,homelink);
+function content_for(_,name) {
+    if (!cache.has(name)) {
+        cache.set(name, read(`${name}.html`));
+    }
+    return cache.get(name);
+}
+
+do {
+    old = template;
+    template = template.replaceAll(/<getargv-([^ ]+) \/>/g,content_for);
+} while (old != template);
+
+// optimization, not ready yet
+//template = template.replaceAll(/[\s]{2,}/g,' '); // fucks up <pre> sections
 
 console.log(template);

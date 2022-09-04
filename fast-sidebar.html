@@ -1,6 +1,6 @@
 <section>
   <h3>Fast</h3>
-  <p><code>getargv</code> runs in approx <getargv-speed /> as measured by <code>hyperfine</code>. It does this by utilizing a zero-copy one-scan algorithm to run in <code>O(n)</code> time where <var>n</var> is the length of the arguments passed to the process you are inspecting. <code>getargv</code> allocates exactly one block of memory, and stops reading the buffer once it finds the end of the process' arguments. <code>getargv</code> also prints the buffer to <var>stdout</var> using pointers back to the original buffer, without copying.</p>
+  <getargv-fast-blurb />
   <footer>
     <ul class="actions">
       <li><a href="/fast.html" class="button">Learn More</a></li>

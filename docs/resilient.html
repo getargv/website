@@ -55,14 +55,15 @@
         <section id="sidebar">
           <section>
   <h3>Fast</h3>
-  <p><code>getargv</code> runs in approx <samp>2.4 ㎳</samp> as measured by <code>hyperfine</code>. It does this by utilizing a zero-copy one-scan algorithm to run in <code>O(n)</code> time where <var>n</var> is the length of the arguments passed to the process you are inspecting. <code>getargv</code> allocates exactly one block of memory, and stops reading the buffer once it finds the end of the process' arguments. <code>getargv</code> also prints the buffer to <var>stdout</var> using pointers back to the original buffer, without copying.</p>
+  <p>
+  <code>getargv</code> runs in approx <samp>0.6 ㎳</samp> as measured by <code>hyperfine</code>. It does this by utilizing a zero-copy one-scan algorithm to run in <code>O(n)</code> time where <var>n</var> is the length of the arguments passed to the process you are inspecting. <code>getargv</code> allocates exactly one block of memory, and stops reading the buffer once it finds the end of the process' arguments. <code>getargv</code> also prints the buffer to <var>stdout</var> using pointers back to the original buffer, without copying.
+</p>
   <footer>
     <ul class="actions">
       <li><a href="/fast.html" class="button">Learn More</a></li>
     </ul>
   </footer>
 </section>
-
           <hr />
           <section>
   <a href="/interface.html" class="image fit"><img src="images/flags.png" alt="command line showing getargv's flags: v0sh?" /></a>
@@ -74,7 +75,6 @@
     </ul>
   </footer>
 </section>
-
         </section>
 
       </div>
@@ -85,7 +85,7 @@
           <a class="image fit"><img src="images/luba-ertel-WlL8aHeMcVM-unsplash.jpg" alt="" /></a>
           <h3>Correctness as the First Priority</h3>
           <p>My impetus for <abbr title="I wound up adapting it from existing code, but I set out to create a tool">building</abbr> <code>getargv</code> was to parse a <abbr title="Process ID">PID</abbr>'s arguments that I didn't control, in a script; which required me to consider the different ways that the process could have been created. In doing so, I found some surprising edge cases which no-one else seems to have handled correctly, but <code>getargv</code> does.</p>
-          <p>The test suite for <code>getargv</code> is currently <samp>2.287×</samp> <abbr title="as measured in lines">as big</abbr> as the source for the program itself. With <samp>100%</samp> line, function, and branch coverage. And I'm still expanding the test suite.</p>
+          <p>The test suite for <code>getargv</code> is currently <samp>1.701×</samp> <abbr title="as measured in lines">as big</abbr> as the source for the program itself. With <samp>100%</samp> line, function, and branch coverage. And I'm still expanding the test suite.</p>
           <p>Out of curiosity I went and looked for every use of <var>KERN_PROCARGS2</var> I could find on the internet. Every single case where the arguments are considered, is incorrect. <a href="/hallofshame.html">88 projects</a>, and every project that uses them as dependencies, all wrong.</p>
           <h3>Hall of Fame</h3>
           <p>The following projects are using <var>KERN_PROCARGS2</var> correctly to view processes' arguments, if you'd like to be on the list, might I suggest using <code>libgetargv</code>, alternatively you can point me to your repo so that I can verify and add you to the list.</p>

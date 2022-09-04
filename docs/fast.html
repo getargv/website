@@ -64,10 +64,10 @@
 
           <ul>
             <li>no backtracking</li>
-            <li><abbr title="Linear time in the length of the target process' arguments">O(n)</abbr> time complexity</li>
+            <li><abbr title="Linear time in the length (in bytes) of the target process' arguments">O(n)</abbr> time complexity</li>
             <li><abbr title="Ok, there is one copy to avoid an unaligned load, but it's 4 bytes">zero-copy</abbr></li>
             <li><abbr title="Constant memory complexity due to one, constant sized, allocation">O(1)</abbr> space complexity</li>
-            <li><code>getargv</code> runs in approx <samp>2.4 ㎳</samp> as measured by <code>hyperfine</code></li>
+            <li><code>getargv</code> runs in approx <samp>0.6 ㎳</samp> as measured by <code>hyperfine</code></li>
             <li>I'm still looking into vectorizing the code, if I can</li>
           </ul>
         </section>
@@ -86,7 +86,6 @@
     </ul>
   </footer>
 </section>
-
           <hr />
           <section>
   <a href="/interface.html" class="image fit"><img src="images/flags.png" alt="command line showing getargv's flags: v0sh?" /></a>
@@ -98,7 +97,6 @@
     </ul>
   </footer>
 </section>
-
         </section>
 
       </div>
