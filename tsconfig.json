@@ -3,6 +3,7 @@
     "compileOnSave": true,
     "compilerOptions": {
         "rootDir": "./assets/ts/",
+        "downlevelIteration": true,
         "noImplicitAny": true,
         "removeComments": true,
         "preserveConstEnums": true,
