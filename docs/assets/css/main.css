@@ -2684,7 +2684,7 @@ input[type=button]:disabled,
   border-color: #e44c65;
 }
 .spotlight.style2 {
-  background-color: #361b48;
+  background-color: rgb(54, 27, 72);
 }
 .spotlight.style2 .content {
   border-color: #5480f1;
@@ -3121,7 +3121,6 @@ body.is-touch #banner {
   body, input, select, textarea {
     font-size: 11.5pt;
   }
-
   /* Spotlight */
   .spotlight.top .content {
     padding: 3.825em 0 1.825em 0;
@@ -3133,22 +3132,18 @@ body.is-touch #banner {
     padding: 4.5em 2.5em;
     width: 25em;
   }
-
   /* Wrapper */
   .wrapper {
     padding: 4.5em 0 2.5em 0;
   }
-
   /* Dropotron */
   .dropotron.level-0 {
     font-size: 1em;
   }
-
   /* Banner */
   #banner .content {
     padding: 4.5em;
   }
-
   /* Footer */
   #footer {
     padding: 4.5em 0;
@@ -3160,7 +3155,6 @@ body.is-touch #banner {
   body, input, select, textarea {
     font-size: 12pt;
   }
-
   /* Spotlight */
   .spotlight {
     background-attachment: scroll;
@@ -3199,12 +3193,10 @@ body.is-touch #banner {
   .spotlight .goto-next {
     display: none;
   }
-
   /* Wrapper */
   .wrapper {
     padding: 4.5em 2.5em 2.5em 2.5em;
   }
-
   /* Banner */
   #banner {
     background-attachment: scroll;
@@ -3224,7 +3216,6 @@ body.is-touch #banner {
   #banner .content .image {
     margin: 0;
   }
-
   /* Footer */
   #footer {
     padding: 4.5em 0;
@@ -3240,23 +3231,18 @@ body.is-touch #banner {
   html, body {
     overflow-x: hidden;
   }
-
   body, input, select, textarea {
     font-size: 12pt;
   }
-
   h2 {
     font-size: 1.5em;
   }
-
   h3 {
     font-size: 1.2em;
   }
-
   h4 {
     font-size: 1em;
   }
-
   /* Section/Article */
   header p br {
     display: none;
@@ -3275,14 +3261,12 @@ header h6 + p {
   header.major {
     margin: 0 0 2em 0;
   }
-
   /* Goto Next */
   .goto-next:before {
     height: 0.8em;
     margin: -0.4em 0 0 -0.6em;
     width: 1.2em;
   }
-
   /* Spotlight */
   .spotlight {
     box-shadow: 0 0.125em 0.5em 0 rgba(0, 0, 0, 0.25);
@@ -3294,17 +3278,14 @@ header h6 + p {
     border-top-width: 0.2em !important;
     padding: 3.25em 1.5em 1.25em 1.5em !important;
   }
-
   /* Wrapper */
   .wrapper {
     padding: 3.25em 1.5em 1.25em 1.5em;
   }
-
   /* Header */
   #header {
     display: none;
   }
-
   /* Banner */
   #banner {
     box-shadow: 0 0.125em 0.5em 0 rgba(0, 0, 0, 0.25);
@@ -3323,7 +3304,6 @@ header h6 + p {
     height: 9em;
     width: 9em;
   }
-
   /* Nav */
   #page-wrapper {
     -moz-backface-visibility: hidden;
@@ -3337,7 +3317,6 @@ header h6 + p {
     padding-bottom: 1px;
     padding-top: 44px !important;
   }
-
   #titleBar {
     -moz-backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
@@ -3407,7 +3386,6 @@ header h6 + p {
   #titleBar .toggle svg path {
     fill: rgba(255, 255, 255, 0.5);
   }
-
   #navPanel {
     -moz-backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
@@ -3471,7 +3449,6 @@ header h6 + p {
     display: inline-block;
     width: 6.25em;
   }
-
   body.navPanel-visible #page-wrapper {
     -moz-transform: translateX(275px);
     -webkit-transform: translateX(275px);
@@ -3490,7 +3467,6 @@ header h6 + p {
     -ms-transform: translateX(0);
     transform: translateX(0);
   }
-
   /* Footer */
   #footer {
     padding: 3.25em 1.5em;
@@ -3502,11 +3478,9 @@ header h6 + p {
   html, body {
     min-width: 320px;
   }
-
   body, input, select, textarea {
     font-size: 12pt;
   }
-
   /* Button */
   input[type=submit],
 input[type=reset],
@@ -3514,7 +3488,6 @@ input[type=button],
 .button {
     padding: 0;
   }
-
   /* Spotlight */
   .spotlight .image.main {
     max-height: 50vh;
@@ -3522,17 +3495,14 @@ input[type=button],
   .spotlight .content {
     padding: 3em 1.25em 1em 1.25em !important;
   }
-
   /* Wrapper */
   .wrapper {
     padding: 3em 1.25em 1em 1.25em;
   }
-
   /* Banner */
   #banner .content {
     padding: 3em 1.5625em 5.25em 1.5625em;
   }
-
   /* Footer */
   #footer {
     padding: 3em 1.25em;

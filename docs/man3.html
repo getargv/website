@@ -17,7 +17,7 @@
 <section class="Sh">
 <h1 class="Sh" id="NAME"><a class="permalink" href="#NAME">NAME</a></h1>
 <p class="Pp"><code class="Nm">libgetargv</code> &#x2014;
-    <span class="Nd">library functions for getting and printing other processes
+    <span class="Nd">library functions for getting and printing other processes'
     args</span></p>
 </section>
 <section class="Sh">
@@ -28,13 +28,25 @@
 <h1 class="Sh" id="SYNOPSIS"><a class="permalink" href="#SYNOPSIS">SYNOPSIS</a></h1>
 <p class="Pp"><code class="In">#include
     &lt;<a class="In">libgetargv.h</a>&gt;</code></p>
-<p class="Pp"><var class="Vt">struct GetargvOptions { int skip; pid_t pid; bool
-    nulls; };</var></p>
-<p class="Pp"><var class="Ft">void</var>
+<p class="Pp"><var class="Vt">struct GetArgvOptions { int skip; pid_t pid; bool
+    nuls; };</var>
   <br/>
-  <code class="Fn">get_argv_of_pid</code>(<var class="Fa" style="white-space: nowrap;">char*
-    retVal[3]</var>, <var class="Fa" style="white-space: nowrap;">const struct
-    GetargvOptions* options</var>);</p>
+  <var class="Vt">struct ArgvArgcResult { char* buffer; uint argc; char** argv;
+    };</var>
+  <br/>
+  <var class="Vt">struct ArgvResult { char* buffer; char* start_pointer; char*
+    end_pointer; };</var></p>
+<p class="Pp"><var class="Ft">bool</var>
+  <br/>
+  <code class="Fn">get_argv_of_pid</code>(<var class="Fa" style="white-space: nowrap;">const
+    struct GetArgvOptions* options</var>,
+    <var class="Fa" style="white-space: nowrap;">struct ArgvResult*
+    result</var>);</p>
+<p class="Pp"><var class="Ft">bool</var>
+  <br/>
+  <code class="Fn">get_argv_and_argc_of_pid</code>(<var class="Fa" style="white-space: nowrap;">pid_t
+    pid</var>, <var class="Fa" style="white-space: nowrap;">struct
+    ArgvArgcResult* result</var>);</p>
 <p class="Pp"><var class="Ft">bool</var>
   <br/>
   <code class="Fn">print_argv_of_pid</code>(<var class="Fa" style="white-space: nowrap;">char*
@@ -43,68 +55,169 @@
 </section>
 <section class="Sh">
 <h1 class="Sh" id="DESCRIPTION"><a class="permalink" href="#DESCRIPTION">DESCRIPTION</a></h1>
-<p class="Pp">The first library to provide a correct interface to the
-    <code class="Dv">KERN_PROCARGS2</code> sysctl. Every other program/library
-    (including Apple's <a class="Xr">ps(1)</a>) incorrectly counts the arguments
-    in the case of empty leading arguments, resulting in the inclusion of env
-    vars in addition to arguments. This is because while it is conventional to
-    put the executable name in <var class="Va">argv[0]</var>,
-    <span class="No">it is not enforced by xnu, however everyone else relies on
-    it being true.</span></p>
+<p class="Pp"><span class="No">The first and only library to provide a correct
+    interface to the</span> <code class="Dv">KERN_PROCARGS2 sysctl. Every other
+    program/library</code> (including Apple's <a class="Xr">ps(1)</a>)
+    incorrectly indexes the arguments while parsing, in the case of empty
+    leading arguments; resulting in the inclusion of env vars in addition to
+    arguments. This is because while it is conventional to put the executable
+    name in <var class="Va">argv[0]</var>, <span class="No">it is not enforced
+    by xnu, however everyone else relies on it being true.</span></p>
 <p class="Pp" id="get_argv_of_pid"><a class="permalink" href="#get_argv_of_pid"><code class="Fn">get_argv_of_pid</code></a>()
-    is the function that implements the correct handling of parsing the buffer
-    returned by the <code class="Dv">KERN_PROCARGS2</code> sysctl. It takes as
-    arguments a <var class="Ft">char*</var> array of length 3
-    <var class="Fa">retVal</var>, <span class="No">and an</span>
-    <var class="Ft">GetargvOptions</var> struct <var class="Fa">options</var>
-    which controls whether the NULs which separate the arguments in
-    <var class="Va">argv</var> <span class="No">are replaced with spaces</span>
-    (.nulls = true), <span class="No">how many leading arguments to skip</span>
-    (.skip = #), <span class="No">and the pid to target</span> (.pid = #).
-    <span class="No">The results are returned in the</span>
-    <var class="Fa">retVal</var> <span class="No">array, the first element is a
-    pointer to the start of the</span> <var class="Va">argv</var> (skipped ahead
-    by as many args as requested), <span class="No">and the second element is a
-    pointer to the end of the</span> <var class="Va">argv</var>.
-    <span class="No">The third element is the entire raw buffer which it is the
-    caller's responsibility to free.</span></p>
+    <span class="No">takes as arguments: a pointer to a</span>
+    <var class="Ft">struct GetArgvOptions</var> <span class="No">which controls
+    whether the</span> <code class="Dv">NUL</code>s which separate the arguments
+    in <var class="Va">argv</var> <span class="No">are replaced with
+    spaces</span> (.nuls = true), <span class="No">how many leading arguments to
+    skip</span> (.skip = #), <span class="No">and the</span>
+    <var class="Ar">pid</var> <span class="No">to target</span> (.pid = #);
+    <span class="No">and a pointer to a</span> <var class="Ft">struct
+    ArgvResult</var>. The results of the function are populated in the
+    <var class="Fa">result</var> <span class="No">struct:</span>
+    (.start_pointer) is a pointer to the start of the <var class="Va">argv</var>
+    (skipped ahead by as many args as requested), (.end_pointer) is a pointer to
+    the end of the <var class="Va">argv</var>, (.buffer) is the entire raw
+    buffer which it is the caller's responsibility to free. The return value of
+    the function is a boolean indicating success (true) or failure (false); in
+    case of failure <a class="Xr">errno(2)</a> <span class="No">is set, and the
+    user must not free the buffer pointer in</span>
+    <var class="Fa">result</var>, as it has already been done. In
+    <span class="No">the case where there are no arguments to return</span>
+    (.argc = 0) or (.skip = argc) then .start_pointer and .end_pointer are set
+    to <code class="Dv">NULL</code>. <code class="Dv">Use</code>
+    <code class="Fn">get_argv_and_argc_of_pid</code>() <span class="No">if you
+    want to inspect the results and not just print them.</span></p>
+<p class="Pp" id="get_argv_and_argc_of_pid"><a class="permalink" href="#get_argv_and_argc_of_pid"><code class="Fn">get_argv_and_argc_of_pid</code></a>()
+    <span class="No">is an alternative to</span>
+    <code class="Fn">get_argv_of_pid</code>() <span class="No">which returns
+    the</span> <var class="Fa">argc</var> <span class="No">and</span>
+    <var class="Fa">argv</var> <span class="No">of a</span>
+    <var class="Ar">pid</var>, with <var class="Fa">argv</var>
+    <span class="No">formatted as a</span> <var class="Ft">char**</var>, just
+    like if it was passed to
+    <a class="permalink" href="#main"><code class="Fn" id="main">main</code></a>().
+    It takes as arguments a <var class="Ft">pid_t</var>
+    <var class="Fa">pid</var>, <span class="No">and a pointer to an</span>
+    <var class="Ft">ArgvArgcResult</var> <span class="No">struct which will be
+    populated with the</span> <var class="Fa">argc</var>
+    <span class="No">and</span> <var class="Fa">argv</var> <span class="No">of
+    the</span> <var class="Ar">pid</var>, and the backing buffer from the
+    sysctl. It is the caller's responsibility to free the backing buffer
+    (.buffer) and the (.argv) array, except when argc is 0 in which case the
+    buffer and argv array are set to NULL. The return value of the function is a
+    <var class="Vt">bool</var> <span class="No">indicating success</span> (true)
+    or failure (false); in case of failure <a class="Xr">errno(2)</a>
+    <span class="No">is set, and the user must not free any pointers in</span>
+    <var class="Fa">result</var>, as it has already been done.</p>
 <p class="Pp" id="print_argv_of_pid"><a class="permalink" href="#print_argv_of_pid"><code class="Fn">print_argv_of_pid</code></a>()
-    is a convienience function that will print to stdout every byte from
-    <var class="Fa">start_pointer</var> <span class="No">to</span>
-    <var class="Fa">end_pointer</var>, <span class="No">including NULs, in a
-    performant way. Its return value is a boolean indicating success or failure,
-    on failure errno is set.</span></p>
+    <span class="No">is a convienience function that will print to stdout every
+    byte from</span> <var class="Fa">start_pointer</var>
+    <span class="No">to</span> <var class="Fa">end_pointer</var>,
+    <span class="No">including</span> <code class="Dv">NUL</code>s, in a
+    performant way. Its return value is a <var class="Vt">bool</var>
+    <span class="No">indicating success</span> (true) or failure (false); on
+    failure <a class="Xr">errno(2)</a> is set. If
+    <var class="Ar">start_pointer</var> <span class="No">or</span>
+    <var class="Ar">end_pointer</var> <span class="No">are</span>
+    <code class="Dv">NULL pointers</code> (note: not <code class="Dv">NUL
+    bytes</code>), or both point to the same address, or
+    <var class="Fa">end_pointer</var> <span class="No">is greater than</span>
+    <var class="Fa">start_pointer</var> <span class="No">then nothing is
+    printed.</span></p>
+</section>
+<section class="Sh">
+<h1 class="Sh" id="ERRORS"><a class="permalink" href="#ERRORS">ERRORS</a></h1>
+<p class="Pp">In addition to the errors documented for the
+    <a class="Xr">sysctl(3)</a> and <a class="Xr">write(2)</a> system calls, the
+    functions in <code class="Nm">libgetargv</code> may fail if:</p>
+<dl class="Bl-tag">
+  <dt id="EINVAL">[<a class="permalink" href="#EINVAL"><code class="Er">EINVAL</code></a>]</dt>
+  <dd>Targetted pid's args either are not NUL-terminated or there were none
+      despite pid's argc being &gt; 0, essentially the system is in an invalid
+      state and should be rebooted ASAP as the kernel is producing garbage
+      output</dd>
+  <dt id="ESRCH">[<a class="permalink" href="#ESRCH"><code class="Er">ESRCH</code></a>]</dt>
+  <dd>The targetted pid doesn't exist.</dd>
+  <dt id="EPERM">[<a class="permalink" href="#EPERM"><code class="Er">EPERM</code></a>]</dt>
+  <dd>User doesn't have permission to see targetted pid's args.</dd>
+  <dt id="ENAMETOOLONG">[<a class="permalink" href="#ENAMETOOLONG"><code class="Er">ENAMETOOLONG</code></a>]</dt>
+  <dd>Targetted pid's args are too long (somehow longer than ARG_MAX) and cannot
+      be parsed safely.</dd>
+  <dt id="ERANGE">[<a class="permalink" href="#ERANGE"><code class="Er">ERANGE</code></a>]</dt>
+  <dd>Function was asked to skip more args than targetted pid has.</dd>
+</dl>
+</section>
+<section class="Sh">
+<h1 class="Sh" id="THREAD_SAFETY"><a class="permalink" href="#THREAD_SAFETY">THREAD
+  SAFETY</a></h1>
+<p class="Pp"><span class="No">I believe</span>
+    <code class="Nm">libgetargv</code> <span class="No">is thread-safe under the
+    following conditions:</span> <a class="Xr">errno(2)</a> <span class="No">is
+    thread-local,</span>
+    <a class="permalink" href="#sysctl"><code class="Fn" id="sysctl">sysctl</code></a>()
+    <span class="No">is thread safe, as is copying out of the buffer it
+    populates; these conditions are met on all macOS versions I've tested. Note:
+    the arguments passed into the functions in</span>
+    <code class="Nm">libgetargv</code> <span class="No">must not be modified (or
+    freed) by other threads until after the functions return. Whether you use
+    thread-local storage, or mutexes, or some other synchronisation primitive,
+    or separate blocks of shared memory, or some other approach, is up to you.
+    Also note that: calling</span> <code class="Fn">print_argv_of_pid</code>()
+    <span class="No">from multiple threads may interleave the output, so you may
+    want to use</span>
+    <a class="permalink" href="#flockfile"><code class="Fn" id="flockfile">flockfile</code></a>(<var class="Fa">stdout</var>)
+    <span class="No">to prevent this.</span></p>
+</section>
+<section class="Sh">
+<h1 class="Sh" id="PERFORMANCE"><a class="permalink" href="#PERFORMANCE">PERFORMANCE</a></h1>
+<p class="Pp"><span class="No">I've spent a lot of time optimizing the
+    performance of this library. All functions use the most efficient algorithm
+    possible, and the fewest memory allocations possible. I've also benchmarked
+    the functions I use from the C std library in order to choose the most
+    optimized versions available. I regularly benchmark my code using hyperfine
+    to test for performance regressions.</span></p>
+<p class="Pp" id="get_argv_and_argc_of_pid~2"><span class="No">The</span>
+    <a class="permalink" href="#get_argv_and_argc_of_pid~2"><code class="Fn">get_argv_and_argc_of_pid</code></a>()
+    <span class="No">function may be slower than</span>
+    <code class="Fn">get_argv_of_pid</code>() <span class="No">as it must
+    perform an additional</span>
+    <a class="permalink" href="#malloc"><code class="Fn" id="malloc">malloc</code></a>(),
+    though it has fewer conditionals per loop so if there are few arguments then
+    it could wind up being faster. Both functions have the same time complexity:
+    <a class="permalink" href="#O"><code class="Fn" id="O">O</code></a>(<var class="Fa">n</var>)
+    <span class="No">where</span> <var class="Fa">n</var> <span class="No">is
+    the length of the arguments to pid in bytes.</span></p>
 </section>
 <section class="Sh">
 <h1 class="Sh" id="EXAMPLES"><a class="permalink" href="#EXAMPLES">EXAMPLES</a></h1>
-<p class="Pp">The following program shows a minimal use of the entire library
-    API.</p>
+<p class="Pp">The following programs show minimal use of the entire library
+  API.</p>
 <div class="Bd Pp Bd-indent">
 <pre>
-#include &lt;libgetargv.h&gt;
-#include &lt;unistd.h&gt;
 
-int main(int argc, char** argv, char** envp, char** apple) {
-  char*          retVal[3];
-  struct GetargvOptions options = { .pid = getpid(), .nulls = false, .skip = 0 };
-  get_argv_of_pid(retVal, &amp;options);
-  print_argv_of_pid(retVal[0], retVal[1]);
-  free(retVal[2]);
-  return 0;
-}
+See the file test/src/libtest1.c.
+
+</pre>
+</div>
+<div class="Bd Pp Bd-indent">
+<pre>
+
+See the file test/src/libtest2.c.
+
 </pre>
 </div>
 </section>
 <section class="Sh">
 <h1 class="Sh" id="SEE_ALSO"><a class="permalink" href="#SEE_ALSO">SEE
   ALSO</a></h1>
-<p class="Pp"><a class="Xr">getargv(1)</a>, <a class="Xr">stdbool.h(header)</a>,
-    <a class="Xr">stdlib.h(header)</a></p>
+<p class="Pp"><a class="Xr">getargv(1)</a>, <a class="Xr">ps(1)</a>,
+    <a class="Xr">errno(2)</a>, <a class="Xr">sysctl(3)</a>,
+    <a class="Xr">stdbool.h(header)</a>, <a class="Xr">stdlib.h(header)</a></p>
 </section>
 <section class="Sh">
-<h1 class="Sh" id="COMPATIBILITY"><a class="permalink" href="#COMPATIBILITY">COMPATIBILITY</a></h1>
+<h1 class="Sh" id="STANDARDS"><a class="permalink" href="#STANDARDS">STANDARDS</a></h1>
 <p class="Pp">The <code class="Nm">libgetargv</code> library conforms to the xnu
-    kernel's KERN_PROCARGS2 sysctl.</p>
+    kernel's <code class="Dv">KERN_PROCARGS2</code> sysctl.</p>
 </section>
 <section class="Sh">
 <h1 class="Sh" id="LIST_OF_FUNCTIONS"><a class="permalink" href="#LIST_OF_FUNCTIONS">LIST
@@ -112,36 +225,50 @@ int main(int argc, char** argv, char** envp, char** apple) {
 <table class="Bl-column">
   <tr id="Function">
     <td><a class="permalink" href="#Function"><b class="Sy">Function</b></a></td>
-    <td></td>
-    <td></td>
-    <td>Description</td>
+    <td><a class="permalink" href="#Description"><b class="Sy" id="Description">Description</b></a></td>
   </tr>
-  <tr>
-    <td>get_argv_of_pid</td>
-    <td>get the argv of the specified pid</td>
+  <tr id="get_argv_of_pid~2">
+    <td><a class="permalink" href="#get_argv_of_pid~2"><code class="Li">get_argv_of_pid</code></a></td>
+    <td>get the argv of the specified pid as a buffer</td>
   </tr>
-  <tr>
-    <td>print_argv_of_pid</td>
+  <tr id="get_argv_and_argc_of_pid~3">
+    <td><a class="permalink" href="#get_argv_and_argc_of_pid~3"><code class="Li">get_argv_and_argc_of_pid</code></a></td>
+    <td>get the argc and argv of the specified pid in standard format</td>
+  </tr>
+  <tr id="print_argv_of_pid~2">
+    <td><a class="permalink" href="#print_argv_of_pid~2"><code class="Li">print_argv_of_pid</code></a></td>
     <td>print a contiguous stretch of memory to stdout, including any NULs</td>
   </tr>
 </table>
 </section>
 <section class="Sh">
 <h1 class="Sh" id="BUGS"><a class="permalink" href="#BUGS">BUGS</a></h1>
-<p class="Pp">This library does not neccesarily interact well with other
-    libraries due to unilaterally defining bool if stdbool.h isn't available.
-    This is only a problem when compiling C in std &lt; C99. If you do
-    experience a conflict, you can remove the definition of bool from the
-    header, so long as you only include the header after you define bool in your
-    program.</p>
-<p class="Pp">The current implementation does not facilitate printing to
-    anything but stdout.</p>
+<p class="Pp"><span class="No">This library does not neccesarily interact well
+    with other libraries due to unilaterally defining</span>
+    <var class="Vt">bool</var> <span class="No">if</span>
+    <code class="In">&lt;<a class="In">stdbool.h</a>&gt;</code> isn't available.
+    This is only a problem when compiling C in std &lt; <span class="St">ISO/IEC
+    9899:1999 (&#x201C;ISO&#x00A0;C99&#x201D;)</span>. If you do experience a
+    conflict, you can remove the definition of bool from the header, so long as
+    you only include the header after you define bool in your program.</p>
+</section>
+<section class="Sh">
+<h1 class="Sh" id="IMPLEMENTATION_NOTES"><a class="permalink" href="#IMPLEMENTATION_NOTES">IMPLEMENTATION
+  NOTES</a></h1>
+<p class="Pp"><span class="No">The current implementation of</span>
+    <code class="Fn">print_argv_of_pid</code>() <span class="No">does not
+    facilitate printing to anything other than</span>
+    <var class="Va">stdout</var>. <span class="No">The current implementations
+    of</span> <code class="Fn">get_argv_of_pid</code>()
+    <span class="No">and</span>
+    <code class="Fn">get_argv_and_argc_of_pid</code>() <span class="No">allocate
+    memory, and do not facilitate alternate allocators.</span></p>
 </section>
 </div>
 <table class="foot">
   <tr>
     <td class="foot-date">January 14, 2022</td>
-    <td class="foot-os">macOS 12.3</td>
+    <td class="foot-os">macOS 12.6</td>
   </tr>
 </table>
 </body>
