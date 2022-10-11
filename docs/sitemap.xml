@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="sitemap.xsl" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<url><loc>https://getargv.narzt.cam/changelog.html</loc></url>
+<url><loc>https://getargv.narzt.cam/interface.html</loc></url>
+<url><loc>https://getargv.narzt.cam/license.html</loc></url>
+<url><loc>https://getargv.narzt.cam/man1.html</loc></url>
+<url><loc>https://getargv.narzt.cam/dylib.html</loc></url>
+<url><loc>https://getargv.narzt.cam/fast.html</loc></url>
+<url><loc>https://getargv.narzt.cam/man3.html</loc></url>
+<url><loc>https://getargv.narzt.cam/hallofshame.html</loc></url>
+<url><loc>https://getargv.narzt.cam/resilient.html</loc></url>
+</urlset>
