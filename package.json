@@ -42,8 +42,8 @@
         "deploy": "find . -name '*.html' \\! \\( -path 'node_modules' -o -name '*-body.html' -o -name '*-sidebar.html' -o -name 'template.html' -o -name '*-blurb.html' \\) -depth 1 -exec fgrep -l '<html' {} \\; | xargs -J {} cp -r {} assets images mandoc.css sitemap.xsl docs && rm -rf docs/assets/sass docs/assets/ts docs/images/Full-Res $(find docs/assets/ -name '*.map' -o \\( -name '*.js' \\! -name '*.min.js' \\))",
         "postdeploy": "npm run sitemap",
         "prerelease": "npm version minor --no-git-tag-version",
-        "release": "git commit --all --amend",
-        "postrelease": "git tag -s -m \"web$npm_package_version\" \"web$npm_package_version\"",
+        "release": "git commit --all --amend --no-edit",
+        "postrelease": "git tag -s -m \"web${npm_package_version}\" \"web${npm_package_version}\"",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "author": "Camden Narzt",
