@@ -1624,7 +1624,7 @@ body.landing {
     }
 
     &:after {
-        @include vendor('background-image', ('linear-gradient(top, #{_palette(bg-transparent)}, #{_palette(bg-transparent)})', 'url("images/overlay.png");'));
+        @include vendor('background-image', ('linear-gradient(to top, #{_palette(bg-bold)}, #{_palette(bg-transparent)})', 'url("images/overlay.png");'));
         content: '';
         display: block;
         height: 100%;
