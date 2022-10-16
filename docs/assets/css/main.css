@@ -36,6 +36,10 @@ samp:not(.null) {
   font-family: "SF Mono", "Courier New", monospace !important;
 }
 
+pre.changelog {
+  margin: 30px 50px;
+}
+
 /*
         Landed by HTML5 UP
         html5up.net | @ajlkn

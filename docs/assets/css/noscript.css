@@ -1,15 +1,11 @@
 /*
-	Landed by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+        Landed by HTML5 UP
+        html5up.net | @ajlkn
+        Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 */
-
 /* Loader */
+body.landing.is-preload svg.spinner, body.landing.is-preload:before, body.landing.is-preload:after {
+  display: none;
+}
 
-	body.landing.is-preload:before {
-		display: none;
-	}
-
-	body.landing.is-preload:after {
-		display: none;
-	}
+/*# sourceMappingURL=noscript.css.map */
