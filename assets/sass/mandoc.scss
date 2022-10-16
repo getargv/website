@@ -1,0 +1,28 @@
+@import 'libs/colors';
+
+$diff-darken: color-diff(#BAFFDF, #00381e);
+
+@mixin elements($color) {
+    .An, .Ar, .Cd, .Cm, .Dv, .Em, .Er, .Ev, .Fa, .Fd, .Fl, .Fn, .Ft,
+    .Ic, code.In, .Lb, .Lk, .Ms, .Mt, .Nd, code.Nm, .Pa, .Rs,
+    .St, .Sx, .Sy, .Va, .Vt, .Xr {
+        color: $color;
+        :link &{
+            color: inherit;
+        }
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    @include elements(#BAFFDF);
+}
+
+@media (prefers-color-scheme: light) {
+    @include elements(#00381e);
+    :link { color: apply-color-diff(#BAD7FF, $diff-darken); }
+    :visited { color: apply-color-diff(#F6BAFF, $diff-darken); }
+}
+
+html {
+    margin: 0 auto;
+}

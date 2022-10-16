@@ -19,6 +19,6 @@
 /stats.html
 /dylib.html
 /.cache
-/assets/js/*.js.map
-/assets/js/*.js
-/assets/css/main.css*
+/assets/js/*
+/assets/css/*.css
+/assets/css/*.map
