@@ -22,7 +22,7 @@
         "js": "for file in assets/js/*.js; do uglifyjs  --compress --mangle  --source-map \"url='/${file/.js/.min.js}.map',content='${file}.map',filename='${file/.js/.min.js}.map'\" --output \"${file/.js/.min.js}\" -- \"$file\"; done",
         "prehtml": "npm run stats && npm run projects && npm run license && npm run changelog",
         "html": "for file in *-body.html; do node build.mjs \"$file\" > ${file%-body.html}.html ; done",
-        "prechangelog": "echo '<pre>' > changelog-body.html",
+        "prechangelog": "echo '<pre class=\"changelog\">' > changelog-body.html",
         "changelog": "git log master --oneline | awk '{a=$1;$1=\"\";print \"<a href=\\\"https://github.com/CamJN/getargv/commit/\"a\"\\\">\"a\"</a>\"$0}' >> changelog-body.html",
         "postchangelog": "echo '</pre>' >> changelog-body.html",
         "projects": "fgrep '<li>' hallofshame-body.html | wc -l > projects.html",
