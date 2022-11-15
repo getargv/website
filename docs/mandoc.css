@@ -359,38 +359,4 @@ html {		--bg: #1E1F21;
 :link {		color: #BAD7FF; }
 :visited {	color: #F6BAFF; }
 }
-@media (prefers-color-scheme: dark) {
-  .An, .Ar, .Cd, .Cm, .Dv, .Em, .Er, .Ev, .Fa, .Fd, .Fl, .Fn, .Ft,
-.Ic, code.In, .Lb, .Lk, .Ms, .Mt, .Nd, code.Nm, .Pa, .Rs,
-.St, .Sx, .Sy, .Va, .Vt, .Xr {
-    color: #BAFFDF;
-  }
-  :link .An, :link .Ar, :link .Cd, :link .Cm, :link .Dv, :link .Em, :link .Er, :link .Ev, :link .Fa, :link .Fd, :link .Fl, :link .Fn, :link .Ft,
-:link .Ic, :link code.In, :link .Lb, :link .Lk, :link .Ms, :link .Mt, :link .Nd, :link code.Nm, :link .Pa, :link .Rs,
-:link .St, :link .Sx, :link .Sy, :link .Va, :link .Vt, :link .Xr {
-    color: inherit;
-  }
-}
-@media (prefers-color-scheme: light) {
-  .An, .Ar, .Cd, .Cm, .Dv, .Em, .Er, .Ev, .Fa, .Fd, .Fl, .Fn, .Ft,
-.Ic, code.In, .Lb, .Lk, .Ms, .Mt, .Nd, code.Nm, .Pa, .Rs,
-.St, .Sx, .Sy, .Va, .Vt, .Xr {
-    color: #00381e;
-  }
-  :link .An, :link .Ar, :link .Cd, :link .Cm, :link .Dv, :link .Em, :link .Er, :link .Ev, :link .Fa, :link .Fd, :link .Fl, :link .Fn, :link .Ft,
-:link .Ic, :link code.In, :link .Lb, :link .Lk, :link .Ms, :link .Mt, :link .Nd, :link code.Nm, :link .Pa, :link .Rs,
-:link .St, :link .Sx, :link .Sy, :link .Va, :link .Vt, :link .Xr {
-    color: inherit;
-  }
-  :link {
-    color: #001838;
-  }
-  :visited {
-    color: #310038;
-  }
-}
-html {
-  margin: 0 auto;
-}
-
-/*# sourceMappingURL=mandoc.css.map */
+@media(prefers-color-scheme: dark){.An,.Ar,.Cd,.Cm,.Dv,.Em,.Er,.Ev,.Fa,.Fd,.Fl,.Fn,.Ft,.Ic,code.In,.Lb,.Lk,.Ms,.Mt,.Nd,code.Nm,.Pa,.Rs,.St,.Sx,.Sy,.Va,.Vt,.Xr{color:#baffdf}:link .An,:link .Ar,:link .Cd,:link .Cm,:link .Dv,:link .Em,:link .Er,:link .Ev,:link .Fa,:link .Fd,:link .Fl,:link .Fn,:link .Ft,:link .Ic,:link code.In,:link .Lb,:link .Lk,:link .Ms,:link .Mt,:link .Nd,:link code.Nm,:link .Pa,:link .Rs,:link .St,:link .Sx,:link .Sy,:link .Va,:link .Vt,:link .Xr{color:inherit}}@media(prefers-color-scheme: light){.An,.Ar,.Cd,.Cm,.Dv,.Em,.Er,.Ev,.Fa,.Fd,.Fl,.Fn,.Ft,.Ic,code.In,.Lb,.Lk,.Ms,.Mt,.Nd,code.Nm,.Pa,.Rs,.St,.Sx,.Sy,.Va,.Vt,.Xr{color:#00381e}:link .An,:link .Ar,:link .Cd,:link .Cm,:link .Dv,:link .Em,:link .Er,:link .Ev,:link .Fa,:link .Fd,:link .Fl,:link .Fn,:link .Ft,:link .Ic,:link code.In,:link .Lb,:link .Lk,:link .Ms,:link .Mt,:link .Nd,:link code.Nm,:link .Pa,:link .Rs,:link .St,:link .Sx,:link .Sy,:link .Va,:link .Vt,:link .Xr{color:inherit}:link{color:#001838}:visited{color:#310038}}html{margin:0 auto}/*# sourceMappingURL=mandoc.css.map */

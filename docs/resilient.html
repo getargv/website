@@ -1,17 +1,17 @@
 <!DOCTYPE HTML>
-<html>
+<html lang="en-CA">
   <head>
     <title>getargv</title>
-    <meta charset="utf-8" />
+    <meta charset="utf-8">
     <meta name="Description" content="getargv is a utility to print the arguments of processes on macOS">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <link rel="stylesheet" href="assets/css/main.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="assets/css/main.css">
     <link rel="icon" type="image/x-icon" href="assets/icon/favicon.ico">
     <link rel="icon" type="image/svg+xml" href="assets/icon/favicon.svg" sizes="any">
     <link rel="apple-touch-icon" type="image/png" href="assets/icon/favicon.png">
     <link rel="mask-icon" href="assets/icon/safari-pinned-tab.svg" color="cf9669">
     <meta name="theme-color" content="#cf9669">
-    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+    <noscript><link rel="stylesheet" href="assets/css/noscript.css"></noscript>
   </head>
   <body class="is-preload">
 
@@ -87,7 +87,7 @@
           <a class="image fit"><img src="images/luba-ertel-WlL8aHeMcVM-unsplash.jpg" alt="" /></a>
           <h3>Correctness as the First Priority</h3>
           <p>My impetus for <abbr title="I wound up adapting it from existing code, but I set out to create a tool">building</abbr> <code>getargv</code> was to parse a <abbr title="Process ID">PID</abbr>'s arguments that I didn't control, in a script; which required me to consider the different ways that the process could have been created. In doing so, I found some surprising edge cases which no-one else seems to have handled correctly, but <code>getargv</code> does.</p>
-          <p>The test suite for <code>getargv</code> is currently <samp>1.756×</samp> <abbr title="as measured in lines">as big</abbr> as the source for the program itself. With <samp>100%</samp> line, function, and branch coverage. And I'm still expanding the test suite.</p>
+          <p>The test suite for <code>getargv</code> is currently <samp>1.879×</samp> <abbr title="as measured in lines">as big</abbr> as the source for the program itself. With <samp>100%</samp> line, function, and branch coverage. And I'm still expanding the test suite.</p>
           <p>Out of curiosity I went and looked for every use of <var>KERN_PROCARGS2</var> I could find on the internet. Every single case where the arguments are considered, is incorrect. <a href="/hallofshame.html">88 projects</a>, and every project that uses them as dependencies, all wrong.</p>
           <h3>Hall of Fame</h3>
           <p>The following projects are using <var>KERN_PROCARGS2</var> correctly to view processes' arguments, if you'd like to be on the list, might I suggest using <code>libgetargv</code>, alternatively you can point me to your repo so that I can verify and add you to the list.</p>
