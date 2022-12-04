@@ -57,12 +57,13 @@
 <h1 class="Sh" id="DESCRIPTION"><a class="permalink" href="#DESCRIPTION">DESCRIPTION</a></h1>
 <p class="Pp"><span class="No">The first and only library to provide a correct
     interface to the</span> <code class="Dv">KERN_PROCARGS2 sysctl. Every other
-    program/library</code> (including Apple's <a class="Xr">ps(1)</a>)
-    incorrectly indexes the arguments while parsing, in the case of empty
-    leading arguments; resulting in the inclusion of env vars in addition to
-    arguments. This is because while it is conventional to put the executable
-    name in <var class="Va">argv[0]</var>, <span class="No">it is not enforced
-    by xnu, however everyone else relies on it being true.</span></p>
+    program/library</code> (including Apple's
+    <a class="Xr" href="x-man-page://1/ps">ps(1)</a>) incorrectly indexes the
+    arguments while parsing, in the case of empty leading arguments; resulting
+    in the inclusion of env vars in addition to arguments. This is because while
+    it is conventional to put the executable name in
+    <var class="Va">argv[0]</var>, <span class="No">it is not enforced by xnu,
+    however everyone else relies on it being true.</span></p>
 <p class="Pp" id="get_argv_of_pid"><a class="permalink" href="#get_argv_of_pid"><code class="Fn">get_argv_of_pid</code></a>()
     <span class="No">takes as arguments: a pointer to a</span>
     <var class="Ft">struct GetArgvOptions</var> <span class="No">which controls
@@ -79,9 +80,9 @@
     the end of the <var class="Va">argv</var>, (.buffer) is the entire raw
     buffer which it is the caller's responsibility to free. The return value of
     the function is a boolean indicating success (true) or failure (false); in
-    case of failure <a class="Xr">errno(2)</a> <span class="No">is set, and the
-    user must not free the buffer pointer in</span>
-    <var class="Fa">result</var>, as it has already been done. In
+    case of failure <a class="Xr" href="x-man-page://2/errno">errno(2)</a>
+    <span class="No">is set, and the user must not free the buffer pointer
+    in</span> <var class="Fa">result</var>, as it has already been done. In
     <span class="No">the case where there are no arguments to return</span>
     (.argc = 0) or (.skip = argc) then .start_pointer and .end_pointer are set
     to <code class="Dv">NULL</code>. <code class="Dv">Use</code>
@@ -106,8 +107,9 @@
     (.buffer) and the (.argv) array, except when argc is 0 in which case the
     buffer and argv array are set to NULL. The return value of the function is a
     <var class="Vt">bool</var> <span class="No">indicating success</span> (true)
-    or failure (false); in case of failure <a class="Xr">errno(2)</a>
-    <span class="No">is set, and the user must not free any pointers in</span>
+    or failure (false); in case of failure
+    <a class="Xr" href="x-man-page://2/errno">errno(2)</a> <span class="No">is
+    set, and the user must not free any pointers in</span>
     <var class="Fa">result</var>, as it has already been done.</p>
 <p class="Pp" id="print_argv_of_pid"><a class="permalink" href="#print_argv_of_pid"><code class="Fn">print_argv_of_pid</code></a>()
     <span class="No">is a convienience function that will print to stdout every
@@ -116,7 +118,7 @@
     <span class="No">including</span> <code class="Dv">NUL</code>s, in a
     performant way. Its return value is a <var class="Vt">bool</var>
     <span class="No">indicating success</span> (true) or failure (false); on
-    failure <a class="Xr">errno(2)</a> is set. If
+    failure <a class="Xr" href="x-man-page://2/errno">errno(2)</a> is set. If
     <var class="Ar">start_pointer</var> <span class="No">or</span>
     <var class="Ar">end_pointer</var> <span class="No">are</span>
     <code class="Dv">NULL pointers</code> (note: not <code class="Dv">NUL
@@ -128,7 +130,8 @@
 <section class="Sh">
 <h1 class="Sh" id="ERRORS"><a class="permalink" href="#ERRORS">ERRORS</a></h1>
 <p class="Pp">In addition to the errors documented for the
-    <a class="Xr">sysctl(3)</a> and <a class="Xr">write(2)</a> system calls, the
+    <a class="Xr" href="x-man-page://3/sysctl">sysctl(3)</a> and
+    <a class="Xr" href="x-man-page://2/write">write(2)</a> system calls, the
     functions in <code class="Nm">libgetargv</code> may fail if:</p>
 <dl class="Bl-tag">
   <dt id="EINVAL">[<a class="permalink" href="#EINVAL"><code class="Er">EINVAL</code></a>]</dt>
@@ -152,7 +155,8 @@
   SAFETY</a></h1>
 <p class="Pp"><span class="No">I believe</span>
     <code class="Nm">libgetargv</code> <span class="No">is thread-safe under the
-    following conditions:</span> <a class="Xr">errno(2)</a> <span class="No">is
+    following conditions:</span>
+    <a class="Xr" href="x-man-page://2/errno">errno(2)</a> <span class="No">is
     thread-local,</span>
     <a class="permalink" href="#sysctl"><code class="Fn" id="sysctl">sysctl</code></a>()
     <span class="No">is thread safe, as is copying out of the buffer it
@@ -210,9 +214,12 @@ See the file test/src/libtest2.c.
 <section class="Sh">
 <h1 class="Sh" id="SEE_ALSO"><a class="permalink" href="#SEE_ALSO">SEE
   ALSO</a></h1>
-<p class="Pp"><a class="Xr">getargv(1)</a>, <a class="Xr">ps(1)</a>,
-    <a class="Xr">errno(2)</a>, <a class="Xr">sysctl(3)</a>,
-    <a class="Xr">stdbool.h(header)</a>, <a class="Xr">stdlib.h(header)</a></p>
+<p class="Pp"><a class="Xr" href="x-man-page://1/getargv">getargv(1)</a>,
+    <a class="Xr" href="x-man-page://1/ps">ps(1)</a>,
+    <a class="Xr" href="x-man-page://2/errno">errno(2)</a>,
+    <a class="Xr" href="x-man-page://3/sysctl">sysctl(3)</a>,
+    <a class="Xr" href="x-man-page://header/stdbool.h">stdbool.h(header)</a>,
+    <a class="Xr" href="x-man-page://header/stdlib.h">stdlib.h(header)</a></p>
 </section>
 <section class="Sh">
 <h1 class="Sh" id="STANDARDS"><a class="permalink" href="#STANDARDS">STANDARDS</a></h1>
@@ -255,14 +262,36 @@ See the file test/src/libtest2.c.
 <section class="Sh">
 <h1 class="Sh" id="IMPLEMENTATION_NOTES"><a class="permalink" href="#IMPLEMENTATION_NOTES">IMPLEMENTATION
   NOTES</a></h1>
-<p class="Pp"><span class="No">The current implementation of</span>
-    <code class="Fn">print_argv_of_pid</code>() <span class="No">does not
-    facilitate printing to anything other than</span>
-    <var class="Va">stdout</var>. <span class="No">The current implementations
-    of</span> <code class="Fn">get_argv_of_pid</code>()
-    <span class="No">and</span>
-    <code class="Fn">get_argv_and_argc_of_pid</code>() <span class="No">allocate
-    memory, and do not facilitate alternate allocators.</span></p>
+<ul class="Bl-bullet">
+  <li id="The"><a class="permalink" href="#The"><span class="No">The current
+      implementation of</span></a> <code class="Fn">print_argv_of_pid</code>()
+      <span class="No">does not facilitate printing to anything other
+      than</span> <var class="Va">stdout</var>.</li>
+  <li id="The~2"><a class="permalink" href="#The~2"><span class="No">The current
+      implementations of</span></a> <code class="Fn">get_argv_of_pid</code>()
+      <span class="No">and</span>
+      <code class="Fn">get_argv_and_argc_of_pid</code>()
+      <span class="No">allocate memory, and do not facilitate alternate
+      allocators.</span></li>
+  <li id="The~3"><a class="permalink" href="#The~3"><span class="No">The current
+      implementations of</span></a> <code class="Fn">get_argv_of_pid</code>()
+      <span class="No">and</span>
+      <code class="Fn">get_argv_and_argc_of_pid</code>() <span class="No">assume
+      that you have not compiled your own xnu kernel with a custom</span>
+      <code class="Dv">PID_MAX</code>; if you have, you will need to compile
+      <code class="Nm">libgetargv</code> <span class="No">with your
+      custom</span> <code class="Dv">PID_MAX</code> <span class="No">set
+      thus:</span>
+    <div class="Bd Pp Bd-indent">
+    <pre>
+$ make PID_MAX=__YOUR_CUSTOM_PID_MAX_HERE__ dylib
+    </pre>
+    </div>
+    <p class="Pp"><span class="No">Also, it is currently a hard requirement
+        that</span> <code class="Dv">PID_MAX</code> <span class="No">&lt;</span>
+        <code class="Dv">ARG_MAX</code>.</p>
+  </li>
+</ul>
 </section>
 </div>
 <table class="foot">

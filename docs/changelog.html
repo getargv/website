@@ -43,7 +43,44 @@
 
       <!-- Main -->
       <pre class="changelog">
-<a href="https://github.com/CamJN/getargv/commit/bc79698">bc79698</a> small makefile improvements
+<a href="https://github.com/CamJN/getargv/commit/d85ac7f">d85ac7f</a> add new fn to print to another output stream
+<a href="https://github.com/CamJN/getargv/commit/36919e6">36919e6</a> extract header contents and use include header to ensure consistency
+<a href="https://github.com/CamJN/getargv/commit/99b1e48">99b1e48</a> make code more c89 compatible
+<a href="https://github.com/CamJN/getargv/commit/070fac9">070fac9</a> separate lib/bin build dirs because of visibility and lto differences
+<a href="https://github.com/CamJN/getargv/commit/3f7f8dd">3f7f8dd</a> change padding of ArgvArgcResult
+<a href="https://github.com/CamJN/getargv/commit/5d6323d">5d6323d</a> cleanup makefile
+<a href="https://github.com/CamJN/getargv/commit/be67f5d">be67f5d</a> Fix typo
+<a href="https://github.com/CamJN/getargv/commit/f169fc5">f169fc5</a> add timeout to steps that have hung
+<a href="https://github.com/CamJN/getargv/commit/3382294">3382294</a> only conditionally set pkg min-os-version on macos >= 12.0
+<a href="https://github.com/CamJN/getargv/commit/104c2ea">104c2ea</a> declare print fn doesn’t modify arg ptrs
+<a href="https://github.com/CamJN/getargv/commit/6fee65a">6fee65a</a> move comment to more relevant line
+<a href="https://github.com/CamJN/getargv/commit/d45bacb">d45bacb</a> remove unused variable
+<a href="https://github.com/CamJN/getargv/commit/d37a9e3">d37a9e3</a> retry symbol stuff???
+<a href="https://github.com/CamJN/getargv/commit/dbcf3eb">dbcf3eb</a> remove main file, use linker to replace main function
+<a href="https://github.com/CamJN/getargv/commit/0fad4f5">0fad4f5</a> improve manpages
+<a href="https://github.com/CamJN/getargv/commit/93d4aba">93d4aba</a> homebrew work
+<a href="https://github.com/CamJN/getargv/commit/dbee1c8">dbee1c8</a> no LTO for dylib, it confuses the downstream linker sometimes
+<a href="https://github.com/CamJN/getargv/commit/d378d73">d378d73</a> start testing sysctl args
+<a href="https://github.com/CamJN/getargv/commit/253079f">253079f</a> test malloc and sysctl use better
+<a href="https://github.com/CamJN/getargv/commit/1dbde1d">1dbde1d</a> fix artifact creation
+<a href="https://github.com/CamJN/getargv/commit/dfcf733">dfcf733</a> use checkout v3 to fix node.js 12 runner deprecation warning
+<a href="https://github.com/CamJN/getargv/commit/b734c9d">b734c9d</a> Create SECURITY.md
+<a href="https://github.com/CamJN/getargv/commit/e1fa438">e1fa438</a> make err msg check use proper errno now that it’s consistant
+<a href="https://github.com/CamJN/getargv/commit/3fffa5e">3fffa5e</a> set expected errno in failed print method wrappers
+<a href="https://github.com/CamJN/getargv/commit/2169d90">2169d90</a> try to fix tests in CI
+<a href="https://github.com/CamJN/getargv/commit/2174523">2174523</a> fixup library install script to cope with real machines
+<a href="https://github.com/CamJN/getargv/commit/f42566c">f42566c</a> note assumptions about xnu in man page
+<a href="https://github.com/CamJN/getargv/commit/9a71468">9a71468</a> update readme for libgetargv
+<a href="https://github.com/CamJN/getargv/commit/8ce6c4c">8ce6c4c</a> record some profiling approaches WIP
+<a href="https://github.com/CamJN/getargv/commit/157157b">157157b</a> missing test case
+<a href="https://github.com/CamJN/getargv/commit/3be1409">3be1409</a> comment on type used for get_arg_max and remove redundant check in parse_uint
+<a href="https://github.com/CamJN/getargv/commit/d3cd175">d3cd175</a> fixup tests after making malloc optional
+<a href="https://github.com/CamJN/getargv/commit/765207d">765207d</a> store artifacts for inspection
+<a href="https://github.com/CamJN/getargv/commit/a067bb5">a067bb5</a> rough start on bottlling
+<a href="https://github.com/CamJN/getargv/commit/9b12a80">9b12a80</a> static buffer to skip malloc when possible
+<a href="https://github.com/CamJN/getargv/commit/1280c0f">1280c0f</a> use LTO on getargv for more speed
+<a href="https://github.com/CamJN/getargv/commit/c70da43">c70da43</a> reuse allocated buffer in benchmark, malloc is sloooooow
+<a href="https://github.com/CamJN/getargv/commit/b0a30ab">b0a30ab</a> small makefile improvements
 <a href="https://github.com/CamJN/getargv/commit/ad06807">ad06807</a> improve clang format config
 <a href="https://github.com/CamJN/getargv/commit/7fc372b">7fc372b</a> deal with arg_max isn’t always 1024^2 in uint parsing tests
 <a href="https://github.com/CamJN/getargv/commit/2d43cbd">2d43cbd</a> fix tests for lowered int parsing upper limit

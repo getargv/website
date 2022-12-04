@@ -73,18 +73,18 @@
             <code>ps</code> is often good enough, it can show you what you want unless the
             process was started with <var>argv[0]</var> set to an empty string, which
             is unusual, though still supported by the kernel. In the case where <var>argv[0]</var>
-            is an empty string, <code>ps</code> (from <a href="https://github.com/apple-oss-distributions/adv_cmds/blob/adv_cmds-63/ps.tproj/print.c#L184-L190">10.3</a>-<a href="https://github.com/apple-oss-distributions/adv_cmds/blob/adv_cmds-181/ps/print.c#L202-L208">12.5</a>) will emit one or more environment variables
-            which were not part of the process' arguments.
+            is an empty string, <code>ps</code> (from <a href="https://github.com/apple-oss-distributions/adv_cmds/blob/adv_cmds-63/ps.tproj/print.c#L184-L190">10.3</a>-<a href="https://github.com/apple-oss-distributions/adv_cmds/blob/adv_cmds-199.0.1/ps/print.c#L211-L217">13.0</a>) will emit one or more environment variables
+            which were not part of the process' arguments (one for each leading empty argument).
           </p>
         </div>
         <div class="col-4 col-12-medium">
           <p>
-            If you need to parse the arguments passed to a process however,
+            If you need to <b>parse</b> the arguments passed to a process however,
             that's when you'll need to use <code>getargv</code>. Arguments to a process can contain
             any series of bytes aside from <samp class="null">␀</samp>, which means that arguments can contain
             <samp>space</samp>s. In order to parse the arguments the same way that the process received
-            them you need to process <samp class="null">␀</samp> separated byte arrays. In linux that is provided
-            by the <kbd>/proc/$PID/cmdline</kbd> <abbr title="proc filesystem">procfs</abbr> path,
+            them, you need to process <samp class="null">␀</samp> separated byte arrays. On BSDs and Linuxen that is provided
+            by the <kbd>/proc/$PID/cmdline</kbd> <abbr title="proc filesystem">procfs</abbr> path, Solaris has <code>pargs</code>,
             on macOS you need <code>getargv</code>.
           </p>
         </div>
