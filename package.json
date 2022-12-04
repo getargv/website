@@ -26,7 +26,7 @@
         "changelog": "git log master --oneline | awk '{a=$1;$1=\"\";print \"<a href=\\\"https://github.com/CamJN/getargv/commit/\"a\"\\\">\"a\"</a>\"$0}' >> changelog-body.html",
         "postchangelog": "echo '</pre>' >> changelog-body.html",
         "projects": "fgrep '<li>' hallofshame-body.html | wc -l > projects.html",
-        "stats": "printf 'scale=3; %d / %d\\n' `git show master:test/src/unit_tests.c master:test/src/unit_tests.h master:test/src/common_unit_test.c master:test/src/common_unit_test.h | wc -l` `git show master:src/getargv.c master:src/main.c master:src/getargv.h | wc -l` | /usr/bin/bc > stats.html",
+        "stats": "printf 'scale=3; %d / %d\\n' `git show master:test/src/unit_tests.c master:test/src/unit_tests.h master:test/src/common_unit_test.c master:test/src/common_unit_test.h | wc -l` `git show master:src/getargv.c master:src/getargv.h | wc -l` | /usr/bin/bc > stats.html",
         "premandoc1": "npm run css",
         "mandoc1": "git show master:man/getargv.1 | mandoc -T html -O 'style=mandoc.css,man=x-man-page://%S/%N' > man1.html",
         "postmandoc1": "/usr/bin/curl -sSL https://mandoc.bsd.lv/snapshots/mandoc.tar.gz | /usr/bin/tar -x --strip-components=1 --include='*mandoc.css' --to-stdout --file - | cat - assets/css/mandoc.css > mandoc.css",
