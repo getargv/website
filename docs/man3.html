@@ -56,12 +56,12 @@
 <section class="Sh">
 <h1 class="Sh" id="DESCRIPTION"><a class="permalink" href="#DESCRIPTION">DESCRIPTION</a></h1>
 <p class="Pp"><span class="No">The first and only library to provide a correct
-    interface to the</span> <code class="Dv">KERN_PROCARGS2 sysctl. Every other
-    program/library</code> (including Apple's
-    <a class="Xr" href="x-man-page://1/ps">ps(1)</a>) incorrectly indexes the
-    arguments while parsing, in the case of empty leading arguments; resulting
-    in the inclusion of env vars in addition to arguments. This is because while
-    it is conventional to put the executable name in
+    interface to the</span> <code class="Dv">KERN_PROCARGS2</code>
+    <span class="No">sysctl. Every other program/library</span> (including
+    Apple's <a class="Xr" href="x-man-page://1/ps">ps(1)</a>) incorrectly
+    indexes the arguments while parsing, in the case of empty leading arguments;
+    resulting in the inclusion of env vars in addition to arguments. This is
+    because while it is conventional to put the executable name in
     <var class="Va">argv[0]</var>, <span class="No">it is not enforced by xnu,
     however everyone else relies on it being true.</span></p>
 <p class="Pp" id="get_argv_of_pid"><a class="permalink" href="#get_argv_of_pid"><code class="Fn">get_argv_of_pid</code></a>()
@@ -138,7 +138,7 @@
   <dd>Targetted pid's args either are not NUL-terminated or there were none
       despite pid's argc being &gt; 0, essentially the system is in an invalid
       state and should be rebooted ASAP as the kernel is producing garbage
-      output</dd>
+      output.</dd>
   <dt id="ESRCH">[<a class="permalink" href="#ESRCH"><code class="Er">ESRCH</code></a>]</dt>
   <dd>The targetted pid doesn't exist.</dd>
   <dt id="EPERM">[<a class="permalink" href="#EPERM"><code class="Er">EPERM</code></a>]</dt>
@@ -218,8 +218,8 @@ See the file test/src/libtest2.c.
     <a class="Xr" href="x-man-page://1/ps">ps(1)</a>,
     <a class="Xr" href="x-man-page://2/errno">errno(2)</a>,
     <a class="Xr" href="x-man-page://3/sysctl">sysctl(3)</a>,
-    <a class="Xr" href="x-man-page://header/stdbool.h">stdbool.h(header)</a>,
-    <a class="Xr" href="x-man-page://header/stdlib.h">stdlib.h(header)</a></p>
+    <a class="Xr" href="x-man-page://0p/stdbool.h">stdbool.h(0p)</a>,
+    <a class="Xr" href="x-man-page://3/free">free(3)</a></p>
 </section>
 <section class="Sh">
 <h1 class="Sh" id="STANDARDS"><a class="permalink" href="#STANDARDS">STANDARDS</a></h1>
