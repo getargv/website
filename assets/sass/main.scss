@@ -16,17 +16,17 @@ dl {
     font-family: _font(family-fixed) !important;
     margin-top: 0.3em;
 }
-.null-icon::before {
+.nul-icon::before {
     content: "∅";
     font-family: _font(family-fixed) !important;
     margin-top: 0.2em;
 }
 samp {
-    &.null {
+    &.nul {
         font-size: 1.75em;
         vertical-align: bottom;
     }
-    &:not(.null) {
+    &:not(.nul) {
         font-weight: 600;
         font-family: _font(family-fixed) !important;
     }
