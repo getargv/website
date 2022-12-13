@@ -13,7 +13,7 @@
 
           <h3>Zero-Copy</h3>
           <p><code>getargv</code> allocates exactly one block of memory.</p>
-          <p>By allocating just one relatively small block of memory for the <var>KERN_PROCARGS2</var> <code>sysctl</code>, and then only ever indexing into but never copying out of that buffer even when writing to stdout, <code>getargv</code> does not have to worry about allocator performance.</p>
+          <p>By allocating <abbr title="if the kern.argmax sysctl <= ARG_MAX a static buffer is used so no allocation is done">at-most</abbr> one <abbr title="usually 1MiB">relatively small</abbr> block of memory for the <var>KERN_PROCARGS2</var> <code>sysctl</code>, and then only ever indexing into but never copying out of that buffer even when writing to stdout, <code>getargv</code> does not have to worry about allocator performance.</p>
 
           <h3>No backtracking / Single Scan / Linear Time Algorithm</h3>
           <p><code>getargv</code> will look at each byte of the procargs buffer no more than once. It does not backtrack, and it does not lookahead. There is no additional time complexity beyond the size of the target process' arguments. <code>getargv</code> eagerly stops when it exhausts the argument count of the target process, and skips bytes intelligently where possible.</p>
