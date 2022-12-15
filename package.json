@@ -44,7 +44,8 @@
         "postdeploy": "npm run sitemap",
         "prerelease": "npm version minor --no-git-tag-version",
         "release": "git commit --all --amend --no-edit",
-        "postrelease": "git tag -s -m \"web$(node -e 'console.log(require(process.env.npm_package_json).version);')\" \"web$(node -e 'console.log(require(process.env.npm_package_json).version);')\"",
+        "postrelease": "echo \"web$(node -e 'console.log(require(process.env.npm_package_json).version);')\" | xargs -I {} git tag -s -m {} {}",
+        "images":"awk '/: +\\( [^)]+px +\\),/{gsub(/px/,\"\");print $4}' assets/sass/main.scss | awk '{print int($0*0.60) \"\\n\" int($0*0.92) \"\\n\" $0}' | while read res; do for file in  images/Full-Res/*.{png,jpg} ; do sips --resampleWidth $res $file -o ${file%.*}.$res.${file##*.}; done ; done",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "author": "Camden Narzt",
