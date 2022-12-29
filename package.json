@@ -14,7 +14,7 @@
     "main": "build.mjs",
     "scripts": {
         "prestart": "npm run html",
-        "start": "(trap 'kill 0' SIGINT; sass --watch assets/sass/main.scss assets/css/main.css & tsc --watch & /usr/bin/python3 -m http.server 0)",
+        "start": "(trap 'kill 0' SIGINT; sass --watch assets/sass/main.scss assets/css/main.css & node watch.mjs & tsc --watch & /usr/bin/python3 -m http.server 0)",
         "build": "npm run js && npm run css && npm run html && npm run mandoc1 && npm run mandoc3",
         "postbuild": "mkdir -p docs",
         "css": "sass --style compressed assets/sass/main.scss:assets/css/main.css assets/sass/noscript.scss:assets/css/noscript.css assets/sass/mandoc.scss:assets/css/mandoc.css",
@@ -45,13 +45,14 @@
         "prerelease": "npm version minor --no-git-tag-version",
         "release": "git commit --all --amend --no-edit",
         "postrelease": "echo \"web$(node -e 'console.log(require(process.env.npm_package_json).version);')\" | xargs -I {} git tag -s -m {} {}",
-        "images":"awk '/: +\\( [^)]+px +\\),/{gsub(/px/,\"\");print $4}' assets/sass/main.scss | awk '{print int($0*0.60) \"\\n\" int($0*0.92) \"\\n\" $0}' | while read res; do for file in  images/Full-Res/*.{png,jpg} ; do sips --resampleWidth $res $file -o ${file%.*}.$res.${file##*.}; done ; done",
+        "images": "awk '/: +\\( [^)]+px +\\),/{gsub(/px/,\"\");print $4}' assets/sass/main.scss | awk '{print int($0*0.60) \"\\n\" int($0*0.92) \"\\n\" $0}' | while read res; do for file in  images/Full-Res/*.{png,jpg} ; do sips --resampleWidth $res $file -o ${file%.*}.$res.${file##*.}; done ; done",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "author": "Camden Narzt",
     "license": "SEE LICENSE IN LICENSE.txt",
     "dependencies": {
         "@tsconfig/recommended": "^1.0.1",
+        "chokidar": "^3.5.3",
         "sass": "^1.49.8",
         "typescript": "^4.5.5",
         "uglify-js": "^3.15.1"
