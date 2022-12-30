@@ -1,0 +1,69 @@
+<div id="main" class="wrapper style1">
+  <div class="container">
+    <header class="major">
+      <h2>The Problem</h2>
+      <p>Why every other implementation is wrong</p>
+    </header>
+
+    <!-- Content -->
+    <section id="content">
+      <!--a class="image fit"><img src="images/hexdump.svg" alt="" /></a-->
+      <h3>A metaphor</h3>
+      <p>Imagine you know a guy called Bob, and you can ask Bob to make you a clock, and he'll do it, all he asks is that you describe the clock in a particular way: the first thing Bob needs to know is what basic kind of clock you would like, a grandfather clock, a coocoo clock, or an alarm clock; the second thing Bob needs is a description of the way that the clock will look on the outside, and lastly Bob needs any requirements you have about the inner workings of the clock. However Bob is a bit eccentric so he doesn't let you simply tell him the details of the clock, they must be spelled out using children's toy blocks (the kind with letters on them), and these descriptions using blocks must have a period at the end of each sentence (these are fancy letter blocks which cover the whole alphabet, numbers, spaces, and periods so you can do that for Bob). Now, if you see a fancy clock around town but don't know how it was described to Bob in order to be made, you can talk to Lucy, and Lucy can tell you the description to give to Bob to have him make any clock that you can show to Lucy. The thing with Lucy is that she also really likes those alphabet blocks, and will provide you the information you're asking for in the form of a bunch of blocks all laid out in a specific arrangement: the first thing in the arrangement Lucy gives you is the number of sentences that describe the outside of the clock; then the base kind of clock; then a number of periods that Lucy decides looks aestheticaclly pleasing, then the sentences describing the outside of the clock, and then the sentences describing the internal workings of the clock. You need to know the number of sentences that describe the outside of the clock because a sentence that describes the internal workings of the clock and a sentence that describes the external appearance could be mistaken for the other in some cases (and you didn't come up with the descriptions so you can't make sure it's clear which kind of sentence each is, for example "elegant." is a good enough sentence for Bob, but could be either type of sentence) and they are immediately adjacent (and undelineated) in the arrangement that Lucy gives you (she also won't answer any questions about the arrangements that she provides). Now, because someone else made the original description for Bob, they might have made some strange choices in how they described the clock, particularly they might have started the description of the outside of the clock with one or more empty sentences, which Bob is ok with, so long as each sentence ends in a period. This of course complicates how you read the results that Lucy gives you, as she puts the aesthetic periods immediately before the sentences describing the exterior appearance fo the clock. So how do you tell which periods are aesthetic and which are empty sentences that need to be counted as appearance sentences so that you can correctly separate the appearance sentences from the internal working sentences before giving them to Bob? The answer is you need to figure out Lucy's system for deciding how many periods to add for aesthetics, otherwise if you just skip over the periods between the base kind of clock and the first non-period letter in a sentence, and then you take as many sentences from that point forward as lucy told you to with the number at the beginning of the arrangement, you could wind up getting internal description sentences bunched in with your external appearance sentences, and the clock will come out wrong. And as it turns out, lots of smart people do it that way, (just skipping all of the the periods around the aesthetic period section) but I figured it out, so you can use my method to do it correctly.</p>
+      <h3>The <samp class="nul">␀</samp> byte and C strings</h3>
+      <p>The <samp class="nul">␀</samp> byte is a value that a C letter (called a character) can have, which indicates the end of a C string. It is similar to how a period ends a sentence. C strings are sequences of 0 or more non-<samp class="nul">␀</samp> bytes terminated by the <samp class="nul">␀</samp> byte. C strings that have no contents (called empty C strings) are just the <samp class="nul">␀</samp> byte on its own. Thus two consecutive empty C strings in memory are just two <samp class="nul">␀</samp> bytes back to back.</p>
+      <h3>Processes & functions</h3>
+      <p>A process is a running program. Each process has its own set of "arguments" and "environment variables". A process can look at this information and change its behaviour based on what these arguments and variables are. Take, for example, the variable <code>tries=100</code>; based on this, the process would try to do its job a maximum of 100 times before calling it quits. A function is a section of code within a program. Similar to a recipe, a function consists of several steps which are grouped together and can be referred to by name.</p>
+      <h3>execve</h3>
+      <p>The underlying function that is used to start processes on macOS is called <code title="read: exek vee ee">execve</code>. Much like how processes themselves work, this function needs three specific pieces of information (arguments) in order to do its job. The first argument is the location of the program it should start on the computer (the path). The second is a list of the arguments that, when the function is finished, will be passed on to the process that it creates. And finally, the third argument is a list of the environment variables to be passed on to the same process. The lists of arguments and environment variables that <code>execve</code> uses to start new processes are arrays of C strings, sometimes including empty C strings.</p>
+      <h3>sysctl & KERN_PROCARGS2</h3>
+      <p>On macOS there is a function for reading and writing some settings of the innermost part of the operating system (called the kernel). This function, called <code title="read: sys-control">sysctl</code>, has many jobs. Therefore one of the arguments it takes is an ID number, which corresponds to a specific task. These id numbers have names assigned to them in order to make it easier for programmers to differentiate between them and know what they refer to. One such ID number is 49, also called <var>KERN_PROCARGS2</var>, which indicates to <code>sysctl</code> that it should then provide the value of another processes' path, arguments, and environment variables. <code>sysctl</code> returns its results in a contiguous section of memory called a buffer, in this case the buffer is not delimited, but rather some of the data inside it is aligned to specific poorly documented offsets from various other data in the buffer. The contents of the buffer (in order) are roughly: the number of arguments the process received (argc) as a 4 byte integer, the saved executable path (the first argument to <code>execve</code>) as a C string, then padding <samp class="nul">␀</samp> bytes, then the serialized contents of the arguments to the process, immediately followed by the serialized environment variables of the process; and then some apple specific information that isn't relevant to the problem at hand.</p> <!--  -->
+      <h3>Memory diagram of sysctl result buffer</h3>
+      <pre class="diagram">
+    ┏━━━━━━━━━━━━━━━━┓
+    ┃ argc           ┃ ← 4 byte int
+    ┣━━━━━━━━━━━━━━━━┫
+    ┃ exec_path      ┃ ← saved exec path bytes
+    ┣━━━━━━━━━━━━━━━━┫
+    ┃ 0              ┃ ← ␀ terminating exec path string
+    ┣━━━━━━━━━━━━━━━━┫
+    ┋       ↓        ┋ ← Enough ␀ bytes to pad exec_path
+    ┣━━━━━━━━━━━━━━━━┫
+    ┃ argv[0]        ┃ ← Can be empty! An empty string looks like just another ␀
+    ┣━━━━━━━━━━━━━━━━┫
+    ┃ 0              ┃ ← ␀ terminating argv[0]
+    ┣━━━━━━━━━━━━━━━━┫
+    ┋       ↓        ┋ ← the rest of the args in argv
+    ┣━━━━━━━━━━━━━━━━┫
+    ┃ argv[argc - 1] ┃ ← the last arg in argv
+    ┣━━━━━━━━━━━━━━━━┫
+    ┃ 0              ┃ ← last argv arg's terminating ␀
+    ┣━━━━━━━━━━━━━━━━┫
+    ┃ envp[0]        ┃ ← beginning of envp with no delineation
+    ┣━━━━━━━━━━━━━━━━┫
+    ┃ 0              ┃ ← ␀ terminating envp[0]
+    ┣━━━━━━━━━━━━━━━━┫
+    ┋       ↓        ┋ ← the rest of the env vars in envp
+    ┣━━━━━━━━━━━━━━━━┫
+    ┃ envp[n]        ┃ ← the last env var in envp
+    ┣━━━━━━━━━━━━━━━━┫
+    ┃ 0              ┃ ← last env var's terminating ␀
+    ┣━━━━━━━━━━━━━━━━┫
+    ┋       ↓        ┋ ← Enough ␀ bytes to pad envp
+    ┣━━━━━━━━━━━━━━━━┫
+    ┃ apple[0]       ┃ ← First apple specific runtime information
+    ┣━━━━━━━━━━━━━━━━┫
+    ┃ 0              ┃ ← ␀ terminating apple specific runtime information
+    ┣━━━━━━━━━━━━━━━━┫
+    ┋       ↓        ┋ ← the rest of the apple specific runtime information
+    ┣━━━━━━━━━━━━━━━━┫
+    ┃ apple[n]       ┃ ← the last apple specific runtime information
+    ┣━━━━━━━━━━━━━━━━┫
+    ┃ 0              ┃ ← ␀ terminating the data returned by sysctl
+    ┗━━━━━━━━━━━━━━━━┛
+      </pre>
+      <h3>The problem</h3>
+      <p>You may have noticed that nothing is stopping us from using <code>execve</code> to start a process whose leading arguments are empty C strings, which when queried via <code>sysctl</code> & <var>KERN_PROCARGS2</var> are laid out in memory immediately following the padding <samp class="nul">␀</samp> bytes that come after the saved executabble path. How do you tell the <samp class="nul">␀</samp> bytes apart? You can't! So you can't simply "skip" the <samp class="nul">␀</samp> padding after the saved executable path, you need to calculate the position where the padding <samp class="nul">␀</samp>s end, and the arguments begin, or you will start indexing into the environment variables if you continue argc values into the argv section from where it starts being non-<samp class="nul">␀</samp>. Or, more realistically, since <a href="/hallofshame.html">no one else (not even Apple themselves)</a> get this right, just use <a href="/dylib.html">libgetargv</a> to do it for you.</p>
+    </section>
+  </div>
+</div>
