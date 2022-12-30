@@ -1459,7 +1459,7 @@ body.is-touch {
 /* Dropotron */
 
 .dropotron {
-    position: absolute;
+    position: fixed;
     z-index: 30;
     background: _palette(accent2-transparent);
     border-radius: _size(border-radius);
