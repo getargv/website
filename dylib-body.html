@@ -2,27 +2,30 @@
   <div class="container">
     <header class="major">
       <h2>Library</h2>
-      <p>Use my algorithm to correctly handle process args</p>
+      <p>Use my algorithm to correctly obtain other processes' arguments</p>
     </header>
 
     <!-- Content -->
     <section id="content">
-      <a class="image fit"><img src="images/library.png" alt="" /></a>
+      <a class="image fit"><img src="images/library.png" alt="macOS popup depicting the libgetargv dynamic library" /></a>
       <h3>Fast, and correct algorithm</h3>
       <p><code>libgetargv</code> uses the same code as <code>getargv</code>, so it is just as <a href="/fast.html">fast</a> and <a href="/resilient.html">resilient</a> as the standalone tool.</p>
-      <h3>dylib</h3>
-      <p>I provide a <code>dylib</code> to link against, and am working on providing a static library as well.</p>
       <h3>Multi lanugage</h3>
-      <p>The header for libgetargv is C/C++ compatible, and I provide a safe <a href="https://crates.io/crates/getargv">Rust crate</a> that wraps the <a href="https://crates.io/crates/getargv-sys">bindings</a> to the lib too, with more language bindings on the way.</p>
+      <ul>
+        <li>Libgetargv is written in C, out of necessity</li>
+        <li>The header for libgetargv is C++ compatible</li>
+        <li>I provide a safe <a href="https://crates.io/crates/getargv">Rust crate</a> that wraps the <a href="https://crates.io/crates/getargv-sys">bindings</a> to the lib</li>
+        <li>I provide <a href="https://github.com/getargv/getargv-swift/">Swift bindings</a> for the lib</li>
+        <li>more language bindings are on the way</li>
+      </ul>
+      <h3>LICENSE</h3>
+      <p>Licensed under the <a href="/license.html">BSD 3-Clause License</a>, once you've joined the appropriate <a href="https://github.com/sponsors/CamJN">Github Sponsors tier</a>.</p>
+      <h3>Linking</h3>
+      <p>I provide a <code title="macOS dynamic library">dylib</code> to link against, and am planning on providing a static library as well.</p>
       <h3>dSYM symbols</h3>
       <p>I provide a <code>dSYM</code> bundle to symbolicate the library when debugging your program.</p>
-      <h3>LICENSE</h3>
-      <p>Licensed under the BSD 3-Clause License, once you've joined the appropriate <a href="https://github.com/sponsors/CamJN">Github Sponsors tier</a>.</p>
       <h3>Manpage</h3>
-      <p>I provide a <a href="/man3.html">manpage</a> that documents the library functions.</p>
-    </section>
-    <section>
-      <iframe src="/man3.html" width="80%" height="200px"></iframe>
+      <p>I provide a <a href="/man3.html">manpage</a> that documents the library data types and functions.</p>
     </section>
   </div>
 </div>
