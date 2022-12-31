@@ -2,6 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link rel="stylesheet" href="mandoc.css" type="text/css" media="all"/>
   <title>libgetargv(3)</title>
 </head>
@@ -31,7 +32,7 @@
 <p class="Pp"><var class="Vt">struct GetArgvOptions { int skip; pid_t pid; bool
     nuls; };</var>
   <br/>
-  <var class="Vt">struct ArgvArgcResult { char* buffer; uint argc; char** argv;
+  <var class="Vt">struct ArgvArgcResult { char* buffer; char** argv; uint argc;
     };</var>
   <br/>
   <var class="Vt">struct ArgvResult { char* buffer; char* start_pointer; char*
@@ -196,16 +197,14 @@
 <h1 class="Sh" id="EXAMPLES"><a class="permalink" href="#EXAMPLES">EXAMPLES</a></h1>
 <p class="Pp">The following programs show minimal use of the entire library
   API.</p>
-<div class="Bd Pp Bd-indent">
+<div class="Bd Pp Bd-indent Li">
 <pre>
-
 See the file test/src/libtest1.c.
 
 </pre>
 </div>
-<div class="Bd Pp Bd-indent">
+<div class="Bd Pp Bd-indent Li">
 <pre>
-
 See the file test/src/libtest2.c.
 
 </pre>
@@ -282,10 +281,8 @@ See the file test/src/libtest2.c.
       <code class="Nm">libgetargv</code> <span class="No">with your
       custom</span> <code class="Dv">PID_MAX</code> <span class="No">set
       thus:</span>
-    <div class="Bd Pp Bd-indent">
-    <pre>
-$ make PID_MAX=__YOUR_CUSTOM_PID_MAX_HERE__ dylib
-    </pre>
+    <div class="Bd Pp Bd-indent Li">
+    <pre>$ make PID_MAX=__YOUR_CUSTOM_PID_MAX_HERE__ dylib</pre>
     </div>
     <p class="Pp"><span class="No">Also, it is currently a hard requirement
         that</span> <code class="Dv">PID_MAX</code> <span class="No">&lt;</span>
@@ -297,7 +294,7 @@ $ make PID_MAX=__YOUR_CUSTOM_PID_MAX_HERE__ dylib
 <table class="foot">
   <tr>
     <td class="foot-date">January 14, 2022</td>
-    <td class="foot-os">macOS 12.6</td>
+    <td class="foot-os">macOS 13.1</td>
   </tr>
 </table>
 </body>

@@ -2,6 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link rel="stylesheet" href="mandoc.css" type="text/css" media="all"/>
   <title>getargv(1)</title>
 </head>
@@ -83,10 +84,8 @@
     <code class="Dv">PID_MAX</code>, if you have you will need to compile
     <code class="Nm">getargv</code> <span class="No">with your custom</span>
     <code class="Dv">PID_MAX</code> <span class="No">set thus:</span></p>
-<div class="Bd Pp Bd-indent">
-<pre>
-$ make PID_MAX=__YOUR_CUSTOM_PID_MAX_HERE__ release
-</pre>
+<div class="Bd Pp Bd-indent Li">
+<pre>$ make PID_MAX=__YOUR_CUSTOM_PID_MAX_HERE__ release</pre>
 </div>
 <p class="Pp"><span class="No">Also, it is currently a hard requirement
     that</span> <code class="Dv">PID_MAX</code> <span class="No">&lt;</span>
