@@ -57,7 +57,6 @@
           <a href="#" class="image fit"><img src="images/benchmark.png" alt="Benchmark results from running getargv under the hyperfine benchmarking tool" /></a>
 
           <h3>Zero-Copy</h3>
-          <p><code>getargv</code> allocates exactly one block of memory.</p>
           <p>By allocating <abbr title="if the kern.argmax sysctl <= ARG_MAX a static buffer is used so no allocation is done">at-most</abbr> one <abbr title="usually 1MiB">relatively small</abbr> block of memory for the <var>KERN_PROCARGS2</var> <code>sysctl</code>, and then only ever indexing into but never copying out of that buffer even when writing to stdout, <code>getargv</code> does not have to worry about allocator performance.</p>
 
           <h3>No backtracking / Single Scan / Linear Time Algorithm</h3>
@@ -68,7 +67,7 @@
             <li><abbr title="Linear time in the length (in bytes) of the target process' arguments">O(n)</abbr> time complexity</li>
             <li><abbr title="Ok, there is one copy to avoid an unaligned load, but it's 4 bytes">zero-copy</abbr></li>
             <li><abbr title="Constant memory complexity due to one, constant sized, allocation">O(1)</abbr> space complexity</li>
-            <li><code>getargv</code> runs in approx <samp>0.6 ㎳</samp> as measured by <code>hyperfine</code></li>
+            <li><code>getargv</code> runs in approx <samp>0.6 ㎳</samp> on an M2 MacBook Air as measured by <code>hyperfine</code></li>
             <li>I'm still looking into vectorizing the code, if I can</li>
           </ul>
         </section>

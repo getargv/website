@@ -57,7 +57,7 @@
           <section>
   <h3>Fast</h3>
   <p>
-  <code>getargv</code> runs in approx <samp>0.6 ㎳</samp> as measured by <code>hyperfine</code>. It does this by utilizing a zero-copy one-scan algorithm to run in <code>O(n)</code> time where <var>n</var> is the length of the arguments passed to the process you are inspecting. <code>getargv</code> allocates exactly one block of memory, and stops reading the buffer once it finds the end of the process' arguments. <code>getargv</code> also prints the buffer to <var>stdout</var> using pointers back to the original buffer, without copying.
+  <code>getargv</code> runs in approx <samp>0.6 ㎳</samp> on an M2 MacBook Air as measured by <code>hyperfine</code>. It does this by utilizing a zero-copy single-scan algorithm to run in <code>O(n)</code> time where <var>n</var> is the length of the arguments passed to the process you are inspecting, in Bytes. <code>getargv</code> allocates <abbr title="if the kern.argmax sysctl <= ARG_MAX a static buffer is used so no allocation is done">at-most</abbr> one <abbr title="usually ~1MiB">relatively small</abbr> block of memory, and stops reading the buffer once it finds the end of the process' arguments. <code>getargv</code> also prints the arguments to <var>stdout</var> using pointers back to the original buffer, without copying.
 </p>
   <footer>
     <ul class="actions">
@@ -91,7 +91,7 @@
           <p>The test suite for <code>getargv</code> is currently <samp>1.858×</samp> <abbr title="as measured in lines">as big</abbr> as the source for the program itself. With <samp>100%</samp> line, function, and branch coverage. And I'm still expanding the test suite.</p>
           <p>Out of curiosity I went and looked for every use of <var>KERN_PROCARGS2</var> I could find on the internet. Every single case where the arguments are considered, is incorrect. <a href="/hallofshame.html">89 projects</a>, and every project that uses them as dependencies, all wrong.</p>
           <h3>Hall of Fame</h3>
-          <p>The following projects are using <var>KERN_PROCARGS2</var> correctly to view processes' arguments, if you'd like to be on the list, might I suggest using <code>libgetargv</code>, alternatively you can point me to your repo so that I can verify and add you to the list.</p>
+          <p>The following projects are using <var>KERN_PROCARGS2</var> correctly to view processes' arguments, if you'd like to be on the list, might I suggest using <a href="/dylib.html"><code>libgetargv</code></a>, alternatively you can point me to your repo so that I can verify and add you to the list.</p>
           <ul>
             <li><code>getargv</code> and <code>libgetargv</code></li>
           </ul>
