@@ -1,0 +1,23 @@
+use sips cli tool
+
+resiliant images/luba-ertel-WlL8aHeMcVM-unsplash.jpg
+1280 59%
+980 92%
+736 93%
+480 92%
+
+lib images/library.png
+1280 90%
+980 92%
+736 93%
+480 92%
+
+rest are full width
+
+   @include breakpoints((
+       xlarge:   ( 1281px,  null ),
+       large:    ( 981px,   1280px ),
+       medium:   ( 737px,   980px  ),
+       small:    ( 481px,   736px  ),
+       xsmall:   ( null,    480px  ),
+   ));
