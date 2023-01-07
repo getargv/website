@@ -5,17 +5,24 @@ function* parents(el: HTMLElement): IterableIterator<HTMLElement> {
     } while (el);
 }
 
-function parentsOfTagName(el: HTMLElement, filter: string): Array<HTMLElement> {
-    return Array.from(parents(el)).filter((el: HTMLElement) => el?.tagName.toUpperCase() == filter.toUpperCase());
+function numParentsOfTagName(el: HTMLElement, filter: string): number {
+    let count = 0;
+    for (const element of parents(el)) {
+        if (element?.tagName.toUpperCase() == filter.toUpperCase()) count++;
+    }
+    return count;
 }
 
 function* navList(el: HTMLElement): IterableIterator<HTMLAnchorElement> {
-    for (const a of el.getElementsByTagName('a')) {
-        const indent = Math.max(0, parentsOfTagName(a, 'li').length - 1);
+    for (const a of <NodeListOf<HTMLElement>>el.querySelectorAll('a,iframe')) {
+        const indent = Math.max(0, numParentsOfTagName(a, 'li') - 1);
         const ac = a.cloneNode() as HTMLAnchorElement;
-        ac.className = '';
+        ac.className = ''; // reset to empty
         ac.classList.add("link", `depth-${indent}`);
-        ac.innerHTML=`<span class="indent-${indent}"></span>${a.innerText}`;
+        const i = document.createElement('span');
+        i.className = `indent-${indent}`;
+        ac.prepend(i);
+        ac.append(a.innerText);
         yield ac;
     }
 }
@@ -206,3 +213,4 @@ addEventListener('DOMContentLoaded', () => {
         visibleClass: 'navPanel-visible'
     });
 });
+
