@@ -5,6 +5,10 @@
 @import 'libs/breakpoints';
 @import 'libs/html-grid';
 
+rt{
+    font-size:0.8em;
+}
+
 dl {
     dt { width: 45px; float:left; clear: both; font-family: _font(family-fixed); }
     dd { margin-left: 15px; float:left; }
@@ -35,10 +39,52 @@ samp {
 pre.diagram {
     line-height: 1em;
     color: white;
+
+    .one { color: #c84949; }
+    .two { color: #e6a632; }
+    .three { color: #c8c85c; }
+    .four { color: #60bf60; }
+    .five { color: #6161cc; }
+    .six { color: #9d51d5; }
 }
+
+details summary {
+  margin: 0 0 2em 0;
+}
+
 pre.changelog {
     margin: 30px 50px;
 }
+
+#in_technical_terms {
+    height: 1px;
+    width: 1px;
+    margin: -2em 0 calc(2em - 1px) 0;
+    position: relative;
+    top: -2em;
+}
+ol.ordinal {
+    list-style: none;
+
+    li::marker {
+        content: counter(list-item)"th";
+        content: counters(list-item, ordinal-normal);
+        font-variant-numeric: ordinal;
+    }
+
+    li:nth-child(10n+1):not(:nth-child(11))::marker {
+        content: counter(list-item)"st";
+    }
+
+    li:nth-child(10n+2):not(:nth-child(12))::marker {
+        content: counter(list-item)"nd";
+    }
+
+    li:nth-child(10n+3):not(:nth-child(13))::marker {
+        content: counter(list-item)"rd";
+    }
+}
+
 /*
         Landed by HTML5 UP
         html5up.net | @ajlkn
@@ -234,7 +280,7 @@ p {
 h1, h2, h3, h4, h5, h6 {
     color: _palette(fg-bold);
     font-weight: _font(weight-bold);
-    line-height: 1em;
+    line-height: 1.5em;
     margin: 0 0 (_size(element-margin) * 0.5) 0;
 
     a {
@@ -243,30 +289,30 @@ h1, h2, h3, h4, h5, h6 {
     }
 }
 
+h1 {
+    font-size: 2.25em;
+    letter-spacing: -0.025em;
+}
+
 h2 {
     font-size: 2em;
-    line-height: 1.5em;
     letter-spacing: -0.025em;
 }
 
 h3 {
     font-size: 1.35em;
-    line-height: 1.5em;
 }
 
 h4 {
     font-size: 1.1em;
-    line-height: 1.5em;
 }
 
 h5 {
     font-size: 0.9em;
-    line-height: 1.5em;
 }
 
 h6 {
     font-size: 0.7em;
-    line-height: 1.5em;
 }
 
 sub {
