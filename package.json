@@ -19,7 +19,7 @@
         "postbuild": "mkdir -p docs",
         "css": "sass --style compressed assets/sass/main.scss:assets/css/main.css assets/sass/noscript.scss:assets/css/noscript.css assets/sass/mandoc.scss:assets/css/mandoc.css",
         "prejs": "rm -f assets/js/* && tsc",
-        "js": "for file in assets/js/*.js; do uglifyjs  --compress --mangle  --source-map \"url='/${file/.js/.min.js}.map',content='${file}.map',filename='${file/.js/.min.js}.map'\" --output \"${file/.js/.min.js}\" -- \"$file\"; done",
+        "js": "for file in assets/js/*.js; do uglifyjs --compress --mangle --source-map \"url='/${file/.js/.min.js}.map',content='${file}.map',filename='${file/.js/.min.js}.map'\" --output \"${file/.js/.min.js}\" -- \"$file\"; done",
         "prehtml": "npm run stats && npm run projects && npm run license && npm run changelog",
         "html": "for file in *-body.html; do node build.mjs \"$file\" > ${file%-body.html}.html ; done",
         "prechangelog": "echo '<pre class=\"changelog\">' > changelog-body.html",
@@ -45,7 +45,7 @@
         "prerelease": "npm version minor --no-git-tag-version",
         "release": "git commit --all --amend --no-edit",
         "postrelease": "echo \"web$(node -e 'console.log(require(process.env.npm_package_json).version);')\" | xargs -I {} git tag -s -m {} {}",
-        "images": "awk '/: +\\( [^)]+px +\\),/{gsub(/px/,\"\");print $4}' assets/sass/main.scss | awk '{print int($0*0.60) \"\\n\" int($0*0.92) \"\\n\" $0}' | while read res; do for file in  images/Full-Res/*.{png,jpg} ; do sips --resampleWidth $res $file -o ${file%.*}.$res.${file##*.}; done ; done",
+        "images": "awk '/: +\\( [^)]+px +\\),/{gsub(/px/,\"\");print $4}' assets/sass/main.scss | awk '{print int($0*0.60) \"\\n\" int($0*0.92) \"\\n\" $0}' | while read res; do for file in images/Full-Res/*.{png,jpg} ; do sips --resampleWidth $res $file -o ${file%.*}.$res.${file##*.}; done ; done",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "author": "Camden Narzt",
