@@ -53,6 +53,14 @@
   <code class="Fn">print_argv_of_pid</code>(<var class="Fa" style="white-space: nowrap;">char*
     start_pointer</var>, <var class="Fa" style="white-space: nowrap;">char*
     end_pointer</var>);</p>
+<p class="Pp"><var class="Ft">void</var>
+  <br/>
+  <code class="Fn">free_ArgvResult</code>(<var class="Fa" style="white-space: nowrap;">struct
+    ArgvResult* result</var>);</p>
+<p class="Pp"><var class="Ft">void</var>
+  <br/>
+  <code class="Fn">free_ArgvArgcResult</code>(<var class="Fa" style="white-space: nowrap;">struct
+    ArgvArgcResult* result</var>);</p>
 </section>
 <section class="Sh">
 <h1 class="Sh" id="DESCRIPTION"><a class="permalink" href="#DESCRIPTION">DESCRIPTION</a></h1>
@@ -63,11 +71,11 @@
     indexes the arguments while parsing, in the case of empty leading arguments;
     resulting in the inclusion of env vars in addition to arguments. This is
     because while it is conventional to put the executable name in
-    <var class="Va">argv[0]</var>, <span class="No">it is not enforced by xnu,
-    however everyone else relies on it being true.</span></p>
+    <var class="Va">argv[0]</var>, <span class="No">it is not enforced by xnu
+    (the kernel), however everyone else relies on it being true.</span></p>
 <p class="Pp" id="get_argv_of_pid"><a class="permalink" href="#get_argv_of_pid"><code class="Fn">get_argv_of_pid</code></a>()
     <span class="No">takes as arguments: a pointer to a</span>
-    <var class="Ft">struct GetArgvOptions</var> <span class="No">which controls
+    <var class="Ft">struct GetArgvOptions</var> <span class="No">which controls:
     whether the</span> <code class="Dv">NUL</code>s which separate the arguments
     in <var class="Va">argv</var> <span class="No">are replaced with
     spaces</span> (.nuls = true), <span class="No">how many leading arguments to
@@ -79,14 +87,20 @@
     (.start_pointer) is a pointer to the start of the <var class="Va">argv</var>
     (skipped ahead by as many args as requested), (.end_pointer) is a pointer to
     the end of the <var class="Va">argv</var>, (.buffer) is the entire raw
-    buffer which it is the caller's responsibility to free. The return value of
-    the function is a boolean indicating success (true) or failure (false); in
-    case of failure <a class="Xr" href="x-man-page://2/errno">errno(2)</a>
-    <span class="No">is set, and the user must not free the buffer pointer
-    in</span> <var class="Fa">result</var>, as it has already been done. In
+    buffer which it is the caller's responsibility to
+    <a class="Xr" href="x-man-page://3/free">free(3)</a> (you can use
+    <code class="Fn">free_ArgvResult</code>() <span class="No">to ensure you use
+    the matching</span> <a class="Xr" href="x-man-page://3/free">free(3)</a>
+    <span class="No">function to this library's</span>
+    <a class="Xr" href="x-man-page://3/malloc">malloc(3)</a>
+    <span class="No">function</span>). The return value of the function is a
+    boolean indicating success (true) or failure (false); in case of failure
+    <a class="Xr" href="x-man-page://2/errno">errno(2)</a> <span class="No">is
+    set, and the buffer pointer in</span> <var class="Fa">result</var>, is set
+    to <code class="Dv">NULL</code>. <code class="Dv">In</code>
     <span class="No">the case where there are no arguments to return</span>
-    (.argc = 0) or (.skip = argc) then .start_pointer and .end_pointer are set
-    to <code class="Dv">NULL</code>. <code class="Dv">Use</code>
+    (.argc == 0) or (.skip == argc) then .start_pointer, .end_pointer, and
+    .buffer are set to <code class="Dv">NULL</code>. <code class="Dv">Use</code>
     <code class="Fn">get_argv_and_argc_of_pid</code>() <span class="No">if you
     want to inspect the results and not just print them.</span></p>
 <p class="Pp" id="get_argv_and_argc_of_pid"><a class="permalink" href="#get_argv_and_argc_of_pid"><code class="Fn">get_argv_and_argc_of_pid</code></a>()
@@ -104,16 +118,23 @@
     populated with the</span> <var class="Fa">argc</var>
     <span class="No">and</span> <var class="Fa">argv</var> <span class="No">of
     the</span> <var class="Ar">pid</var>, and the backing buffer from the
-    sysctl. It is the caller's responsibility to free the backing buffer
-    (.buffer) and the (.argv) array, except when argc is 0 in which case the
-    buffer and argv array are set to NULL. The return value of the function is a
+    sysctl. It is the caller's responsibility to
+    <a class="Xr" href="x-man-page://3/free">free(3)</a> <span class="No">the
+    backing buffer</span> (.buffer) and the (.argv) array (you can use
+    <code class="Fn">free_ArgvArgcResult</code>() <span class="No">to ensure you
+    use the matching</span> <a class="Xr" href="x-man-page://3/free">free(3)</a>
+    <span class="No">function to this library's</span>
+    <a class="Xr" href="x-man-page://3/malloc">malloc(3)</a>
+    <span class="No">function</span>), except when argc is 0 in which case the
+    buffer and argv array are set to <code class="Dv">NULL</code>.
+    <code class="Dv">The return value of the function is a</code>
     <var class="Vt">bool</var> <span class="No">indicating success</span> (true)
     or failure (false); in case of failure
     <a class="Xr" href="x-man-page://2/errno">errno(2)</a> <span class="No">is
-    set, and the user must not free any pointers in</span>
-    <var class="Fa">result</var>, as it has already been done.</p>
+    set, and the pointers in</span> <var class="Fa">result</var>
+    <span class="No">are set to</span> <code class="Dv">NULL</code>.</p>
 <p class="Pp" id="print_argv_of_pid"><a class="permalink" href="#print_argv_of_pid"><code class="Fn">print_argv_of_pid</code></a>()
-    <span class="No">is a convienience function that will print to stdout every
+    <span class="No">is a convenience function that will print to stdout every
     byte from</span> <var class="Fa">start_pointer</var>
     <span class="No">to</span> <var class="Fa">end_pointer</var>,
     <span class="No">including</span> <code class="Dv">NUL</code>s, in a
@@ -127,28 +148,51 @@
     <var class="Fa">end_pointer</var> <span class="No">is greater than</span>
     <var class="Fa">start_pointer</var> <span class="No">then nothing is
     printed.</span></p>
+<p class="Pp" id="free_ArgvResult"><a class="permalink" href="#free_ArgvResult"><code class="Fn">free_ArgvResult</code></a>()
+    <span class="No">is a safe way to</span>
+    <a class="Xr" href="x-man-page://3/free">free(3)</a> <span class="No">the
+    pointer in a</span> <var class="Ft">struct ArgvResult</var>
+    <span class="No">using the matching</span>
+    <a class="Xr" href="x-man-page://3/free">free(3)</a>
+    <span class="No">function to the</span>
+    <a class="Xr" href="x-man-page://3/malloc">malloc(3)</a>
+    <span class="No">that allocated the buffer it holds a pointer to. This
+    function does not return a value.</span></p>
+<p class="Pp" id="free_ArgvArgcResult"><a class="permalink" href="#free_ArgvArgcResult"><code class="Fn">free_ArgvArgcResult</code></a>()
+    <span class="No">is a safe way to</span>
+    <a class="Xr" href="x-man-page://3/free">free(3)</a> <span class="No">the
+    pointers in a</span> <var class="Ft">struct ArgvArgcResult</var>
+    <span class="No">using the matching</span>
+    <a class="Xr" href="x-man-page://3/free">free(3)</a>
+    <span class="No">function to the</span>
+    <a class="Xr" href="x-man-page://3/malloc">malloc(3)</a>
+    <span class="No">that allocated the buffers it holds pointers to. This
+    function does not return a value.</span></p>
 </section>
 <section class="Sh">
 <h1 class="Sh" id="ERRORS"><a class="permalink" href="#ERRORS">ERRORS</a></h1>
 <p class="Pp">In addition to the errors documented for the
     <a class="Xr" href="x-man-page://3/sysctl">sysctl(3)</a> and
     <a class="Xr" href="x-man-page://2/write">write(2)</a> system calls, the
-    functions in <code class="Nm">libgetargv</code> may fail if:</p>
+    functions in <code class="Nm">libgetargv</code> (except the free_Argv*Result
+    functions) may return false to indicate failure, and set
+    <a class="Xr" href="x-man-page://2/errno">errno(2)</a> as described
+  below:</p>
 <dl class="Bl-tag">
   <dt id="EINVAL">[<a class="permalink" href="#EINVAL"><code class="Er">EINVAL</code></a>]</dt>
-  <dd>Targetted pid's args either are not NUL-terminated or there were none
+  <dd>Targeted pid's args either are not NUL-terminated or there were none
       despite pid's argc being &gt; 0, essentially the system is in an invalid
       state and should be rebooted ASAP as the kernel is producing garbage
       output.</dd>
   <dt id="ESRCH">[<a class="permalink" href="#ESRCH"><code class="Er">ESRCH</code></a>]</dt>
-  <dd>The targetted pid doesn't exist.</dd>
+  <dd>The targeted pid doesn't exist.</dd>
   <dt id="EPERM">[<a class="permalink" href="#EPERM"><code class="Er">EPERM</code></a>]</dt>
-  <dd>User doesn't have permission to see targetted pid's args.</dd>
+  <dd>User doesn't have permission to see targeted pid's args.</dd>
   <dt id="ENAMETOOLONG">[<a class="permalink" href="#ENAMETOOLONG"><code class="Er">ENAMETOOLONG</code></a>]</dt>
-  <dd>Targetted pid's args are too long (somehow longer than ARG_MAX) and cannot
+  <dd>Targeted pid's args are too long (somehow longer than ARG_MAX) and cannot
       be parsed safely.</dd>
   <dt id="ERANGE">[<a class="permalink" href="#ERANGE"><code class="Er">ERANGE</code></a>]</dt>
-  <dd>Function was asked to skip more args than targetted pid has.</dd>
+  <dd>Function was asked to skip more args than targeted pid has.</dd>
 </dl>
 </section>
 <section class="Sh">
@@ -165,7 +209,7 @@
     the arguments passed into the functions in</span>
     <code class="Nm">libgetargv</code> <span class="No">must not be modified (or
     freed) by other threads until after the functions return. Whether you use
-    thread-local storage, or mutexes, or some other synchronisation primitive,
+    thread-local storage, or mutexes, or some other synchronization primitive,
     or separate blocks of shared memory, or some other approach, is up to you.
     Also note that: calling</span> <code class="Fn">print_argv_of_pid</code>()
     <span class="No">from multiple threads may interleave the output, so you may
@@ -245,11 +289,21 @@ See the file test/src/libtest2.c.
     <td><a class="permalink" href="#print_argv_of_pid~2"><code class="Li">print_argv_of_pid</code></a></td>
     <td>print a contiguous stretch of memory to stdout, including any NULs</td>
   </tr>
+  <tr id="free_ArgvResult~2">
+    <td><a class="permalink" href="#free_ArgvResult~2"><code class="Li">free_ArgvResult</code></a></td>
+    <td>free the pointer in an ArgvResult struct using the correct free
+      function</td>
+  </tr>
+  <tr id="free_ArgvArgcResult~2">
+    <td><a class="permalink" href="#free_ArgvArgcResult~2"><code class="Li">free_ArgvArgcResult</code></a></td>
+    <td>free the pointers in an ArgvArgcResult struct using the correct free
+      function</td>
+  </tr>
 </table>
 </section>
 <section class="Sh">
 <h1 class="Sh" id="BUGS"><a class="permalink" href="#BUGS">BUGS</a></h1>
-<p class="Pp"><span class="No">This library does not neccesarily interact well
+<p class="Pp"><span class="No">This library does not necessarily interact well
     with other libraries due to unilaterally defining</span>
     <var class="Vt">bool</var> <span class="No">if</span>
     <code class="In">&lt;<a class="In">stdbool.h</a>&gt;</code> isn't available.
@@ -294,7 +348,7 @@ See the file test/src/libtest2.c.
 <table class="foot">
   <tr>
     <td class="foot-date">January 5, 2023</td>
-    <td class="foot-os">macOS 13.1</td>
+    <td class="foot-os">macOS 13.2</td>
   </tr>
 </table>
 </body>
