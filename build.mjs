@@ -6,15 +6,15 @@ const cache = new Map();
 const read = file => readFileSync(file, 'utf8').trim();
 cache.set('body', read(body_file));
 let old;
-let template = read("template.html");
+let template = read("src/template.html");
 
-if (body_file != "index-body.html") {
+if (body_file != "src/index-body.html") {
     template = template.replace(/<body class="is-preload landing">.+$/m, '<body class="is-preload">');
 }
 
 function content_for(_,name) {
     if (!cache.has(name)) {
-        cache.set(name, read(`${name}.html`));
+        cache.set(name, read(`src/${name}.html`));
     }
     return cache.get(name);
 }

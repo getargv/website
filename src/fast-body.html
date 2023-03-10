@@ -9,7 +9,7 @@
 
         <!-- Content -->
         <section id="content">
-          <a href="#" class="image fit"><img src="images/benchmark.png" alt="Benchmark results from running getargv under the hyperfine benchmarking tool" /></a>
+          <a href="#" class="image fit"><img src="assets/images/benchmark.png" alt="Benchmark results from running getargv under the hyperfine benchmarking tool" /></a>
 
           <h3>Zero-Copy</h3>
           <p>By allocating <abbr title="if the kern.argmax sysctl <= ARG_MAX a static buffer is used so no allocation is done">at-most</abbr> one <abbr title="usually 1MiB">relatively small</abbr> block of memory for the <var>KERN_PROCARGS2</var> <code>sysctl</code>, and then only ever indexing into but never copying out of that buffer even when writing to stdout, <code>getargv</code> does not have to worry about allocator performance.</p>
