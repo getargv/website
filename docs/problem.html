@@ -1,0 +1,350 @@
+<!DOCTYPE HTML>
+<html lang="en-CA">
+  <head>
+    <title>getargv</title>
+    <meta charset="utf-8">
+    <meta name="Description" content="getargv is a utility to print the arguments of processes on macOS">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="icon" type="image/x-icon" href="assets/icon/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="assets/icon/favicon.svg" sizes="any">
+    <link rel="apple-touch-icon" type="image/png" href="assets/icon/favicon.png">
+    <link rel="mask-icon" href="assets/icon/safari-pinned-tab.svg" color="cf9669">
+    <meta name="theme-color" content="#cf9669">
+    <noscript><link rel="stylesheet" href="assets/css/noscript.css"></noscript>
+  </head>
+  <body class="is-preload">
+
+    <div id="page-wrapper">
+
+      <!-- Header -->
+      <header id="header">
+  <h1 id="logo"><a href="/index.html"><img src="assets/images/title.svg" alt="homepage link"></a></h1>
+  <nav id="nav">
+    <ul>
+      <li><a href="/index.html">Home</a></li>
+      <li><a href="/resilient.html">Resilient</a></li>
+      <li><a href="/fast.html">Fast</a></li>
+      <li><a href="/interface.html">Interface</a></li>
+      <li><a href="/dylib.html">Library</a></li>
+      <li>
+        <a href="#">Docs</a>
+        <ul class="dropdown">
+          <li><a href="man1.html">Tool Manpage</a></li>
+          <li><a href="man3.html">Library Manpage</a></li>
+          <li><a href="changelog.html">Changelog</a></li>
+          <li><a href="license.html">License</a></li>
+        </ul>
+      </li>
+      <li>Downloads →</li>
+      <li><iframe src="https://github.com/sponsors/CamJN/button" title="Sponsor CamJN" height="35" width="116" loading="lazy"></iframe></li>
+    </ul>
+  </nav>
+</header>
+
+      <!-- Main -->
+      <style>span.s3 {background-color: #fc2913}</style>
+<div id="main" class="wrapper style1">
+  <div class="container">
+    <header class="major">
+      <h1>The Problem</h1>
+      <p>Why every other implementation is wrong</p>
+    </header>
+    <!-- Content -->
+    <section id="content">
+      <!--a class="image fit"><img src="assets/images/hexdump.svg" alt="" /></a-->
+      <aside><p><i>The following section is written for those with little to no knowledge of the behind-the-scenes workings of programs. If the terms “C strings”, “<samp class="nul">␀</samp> bytes”, and “result buffer” are all familiar to you, then feel free to skip ahead to «<a href="#in_technical_terms">In Technical Terms: execve</a>».</i></p></aside>
+      <h2>A Metaphor</h2>
+      <p>Imagine, if you will, a toymaker (we'll call him “Exavier Veet”) who is the sole toy manufacturer in your town (“MacOsfield”). Exavier can build all sorts of wonderful toys, but in order to do so he needs to know three things:</p>
+      <ol>
+        <li>The basic kind of toy to make.</li>
+        <li>A description of the external appearance of the toy.</li>
+        <li>A list of things the toy can do.</li>
+      </ol>
+      <p>In order to avoid confusion, Exavier needs you to give him this information as three separate lines. He also requires that you use periods to distinguish individual specifications within each line.</p>
+      <p>Let's say that you want to buy a toy for a special child (or child-at-heart) in your life. Your giftee has requested a “Baby Emma doll” on their wishlist, but they haven't included any details regarding what the doll looks like or what it can do. You know that you need both of those descriptions in order to order the toy from Exavier.</p>
+      <p>Enter the town's librarian (“Syssi Contreau”), who has access to a digital catalogue of Exavier's past commissions. This catalogue contains the names &amp; details of each toy, and they are transcribed exactly as they were given to Exavier. However, Syssi's only printer (which she has affectionately named “Kera Proctor”) is an old ticker tape machine, which prints one continuous line of text. She provides the information in the following order:</p>
+      <ol class="ordinal">
+        <li>The number of specifications there are regarding the external appearance of the toy.</li>
+        <li>The kind of toy.</li>
+        <li>Several “empty sentences” (periods with no preceding text, Syssi's idea of a line break).</li>
+        <li>The list of the toy's external characteristics.</li>
+        <li>The list of the things the toy can do.</li>
+      </ol>
+      <p>In the case of the Baby Emma doll, the ticker tape may read as follows:</p>
+      <pre>2BABY DOLL.....BROWN HAIR.GREEN EYES.CRIES.GIGGLES.SAYS MAMA.</pre>
+      <p>It is up to you to to take the single line of data that Syssi gives you and break it up into the three separate datasets that Exavier needs in order to build the toy. The leading number is therefore important because it helps you figure out where the list of physical attributes ends and the list of functions begins. For example, “cries” might describe either the appearance of the doll (tears on its cheeks), or something that it does (makes a wailing noise). But since you know that there are only two external descriptors, you then know that “cries” must refer to an action. The group of empty sentences is, most of the time, unimportant to both you &amp; Exavier, and can be ignored.</p>
+      <p>The string above can thus be converted into the following format, which can then be submitted to Exavier:</p>
+      <ol>
+        <li>BABY DOLL.</li>
+        <li>BROWN HAIR. GREEN EYES.</li>
+        <li>CRIES. GIGGLES. SAYS MAMA.</li>
+      </ol>
+      <p>There is, however, a niche case in which the normally insignificant empty sentences can cause quite a lot of confusion.</p>
+      <p>Sometimes, people ordering toys from Exavier include empty sentences of their own on their order form when listing either the toy's external characteristics or the things it can do. <span class="s3">{REASON?}</span>. Because the catalogue is an exact transcription of their request, these empty sentences are included in the string of information that Syssi prints for you. Unlike you &amp; Exavier, Syssi doesn't know that the empty sentences are unimportant. So, if they occur anywhere within the list of external characteristics (including directly prior to or following said list), she counts them as attributes, and the leading number that she gives you ends up inflated.</p>
+      <p>If these extra empty sentences are in the middle of the list, all you have to do is subtract however many there are from the leading number, and then proceed as normal to separate the three datasets. But what if the empty sentences from the catalogue are at the very beginning of the list of external characteristics (in other words, immediately following the empty sentences that Syssi herself inserts as a line break)?</p>
+      <p>For instance:</p>
+      <pre>13BABY DOLL..............BROWN HAIR...GREEN EYES.CRIES......GIGGLES.SAYS MAMA..</pre>
+      <p>How do you tell the difference between the two types of empty sentences in order to determine the point at which the list of physical attributes ends and the list of functions begins? Most people in your town end up just ignoring all the empty sentences, and just guess as to where the breakpoint is, but if you do this then you run the risk of ending up with a toy that is very different from what your giftee wanted. <span class="s3">{VERY BAD ERROR EXAMPLE?}</span>.</p>
+      <p>Thankfully, there is a new arrival to the town (“Geoffrey Argent”) who has the solution to this exact problem. He has figured out that Syssi bases the number of empty sentences she inserts on the kind of toy that is being commissioned, and always uses the same amount for the same type; in this case, four for a doll. He then determines that there are eleven additional empty sentences that are being counted as external characteristics, two of them which are between “brown hair” &amp; “green eyes”, and nine more that come before “brown hair”. <math xmlns="http://www.w3.org/1998/Math/MathML"><mn>13</mn><mo>-</mo><mn>2</mn><mo>-</mo><mn>9</mn><mo>=</mo><mn>2</mn></math>, so he knows that there are two external characteristics, and that the remainder of the line of text must therefore describe things the toy can do. He then provides you with the information formatted perfectly for Exavier.</p>
+      <h2>In Technical Terms</h2>
+      <h3>processes &amp; functions</h3>
+      <p>A process is a running program. Each process has its own set of "arguments" and "environment variables". A process can look at this information and change its behaviour based on what these arguments and variables are. Take, for example, the variable <code>tries=100</code>; based on this, the process would try to do its job a maximum of 100 times before calling it quits. A function is a section of code within a program. Similar to a recipe, a function consists of several steps which are grouped together and can be referred to by name.</p>
+      <h3>the <samp class="nul">␀</samp> byte &amp; C strings</h3>
+      <p>The <samp class="nul">␀</samp> byte is a value that a C letter (or “character”) can have, which indicates the end of a C string. It is similar to how a period ends a sentence. C strings are sequences of zero or more non-<samp class="nul">␀</samp> bytes terminated by the <samp class="nul">␀</samp> byte. C strings that have no contents (“empty C strings”) are just the <samp class="nul">␀</samp> byte on its own. Thus two consecutive empty C strings in memory are just two <samp class="nul">␀</samp> bytes back to back.</p>
+      <div id="in_technical_terms"></div>
+      <h3>execve</h3>
+      <p>The underlying function that is used to start processes on macOS is called <ruby><code>execve</code><rp>(</rp><rt>/eɡˈzekˈvēˈē/</rt><rp>)</rp></ruby>. Much like how processes themselves work, this function needs three specific pieces of information (arguments) in order to do its job:</p>
+      <ol>
+        <li>The location of the program it should start on the computer (“the path”).</li>
+        <li>A list of the arguments to be passed on to the program once it is running.</li>
+        <li>A list of the environment variables to be passed on to the same process.</li>
+      </ol>
+      <p>These lists (or “arrays”) are made up of C strings, and can include empty C strings.</p>
+      <h3>sysctl &amp; KERN_PROCARGS2</h3>
+      <p>On macOS there is a function for reading and writing some settings of the innermost part of the operating system (called the kernel). This function, called <ruby><code>sysctl</code><rp>(</rp><rt>/ˈsisˈkonˈtɾol/</rt><rp>)</rp></ruby>, has many jobs. Therefore one of the arguments it takes is an ID number, which corresponds to a specific task. These ID numbers have names assigned to them in order to make it easier for programmers to differentiate between them and know what they refer to. One such ID number is 49, called <ruby><code>KERN_PROCARGS2</code><rp>(</rp><rt>/ˈkərnˈprō-ˈkˈär-gsˈtü/</rt><rp>)</rp></ruby> which indicates to <code>sysctl</code> that it should then provide the value of another processes' path, arguments, and environment variables.</p>
+      <p><code>sysctl</code> returns its results in a “buffer”, which is a non-delimited, contiguous bit of data (in other words, a single continuous line).</p>
+      <p>The contents of the buffer, in order, are:</p>
+      <ol class="ordinal">
+        <li> The number of arguments the process has, or <code>argc</code>, expressed as a four-byte integer.</li>
+        <li> The path to the executable.</li>
+        <li> Several empty C strings (<samp class="nul">␀</samp> bytes) to “align” the space between item #2 &amp; #4.</li>
+        <li> The list of the process' arguments.</li>
+        <li> The list of the process' environment variables.</li>
+        <li> Some Apple-specific code regarding runtime that doesn't impact the problem one way or another, and is therefore irrelevant to this discussion.</li>
+      </ol>
+      <details>
+        <summary>Memory diagram of sysctl result buffer</summary>
+        <pre class="diagram">
+          ┏━━━━━━━━━━━━━━━━┓
+          ┃ argc           ┃ ← 4 byte int
+          ┣━━━━━━━━━━━━━━━━┫
+          ┃ exec_path      ┃ ← saved exec path bytes
+          ┣━━━━━━━━━━━━━━━━┫
+          ┃ 0              ┃ ← ␀ terminating exec path string
+          ┣━━━━━━━━━━━━━━━━┫
+          ┋       ↓        ┋ ← Enough ␀ bytes to pad exec_path
+          ┣━━━━━━━━━━━━━━━━┫
+          ┃ argv[0]        ┃ ← Can be empty! An empty string looks like just another ␀
+          ┣━━━━━━━━━━━━━━━━┫
+          ┃ 0              ┃ ← ␀ terminating argv[0]
+          ┣━━━━━━━━━━━━━━━━┫
+          ┋       ↓        ┋ ← the rest of the args in argv
+          ┣━━━━━━━━━━━━━━━━┫
+          ┃ argv[argc - 1] ┃ ← the last arg in argv
+          ┣━━━━━━━━━━━━━━━━┫
+          ┃ 0              ┃ ← last argv arg's terminating ␀
+          ┣━━━━━━━━━━━━━━━━┫
+          ┃ envp[0]        ┃ ← beginning of envp with no delineation
+          ┣━━━━━━━━━━━━━━━━┫
+          ┃ 0              ┃ ← ␀ terminating envp[0]
+          ┣━━━━━━━━━━━━━━━━┫
+          ┋       ↓        ┋ ← the rest of the env vars in envp
+          ┣━━━━━━━━━━━━━━━━┫
+          ┃ envp[n]        ┃ ← the last env var in envp
+          ┣━━━━━━━━━━━━━━━━┫
+          ┃ 0              ┃ ← last env var's terminating ␀
+          ┣━━━━━━━━━━━━━━━━┫
+          ┋       ↓        ┋ ← Enough ␀ bytes to pad envp
+          ┣━━━━━━━━━━━━━━━━┫
+          ┃ apple[0]       ┃ ← First apple specific runtime information
+          ┣━━━━━━━━━━━━━━━━┫
+          ┃ 0              ┃ ← ␀ terminating apple specific runtime information
+          ┣━━━━━━━━━━━━━━━━┫
+          ┋       ↓        ┋ ← the rest of the apple specific runtime information
+          ┣━━━━━━━━━━━━━━━━┫
+          ┃ apple[n]       ┃ ← the last apple specific runtime information
+          ┣━━━━━━━━━━━━━━━━┫
+          ┃ 0              ┃ ← ␀ terminating the data returned by sysctl
+          ┗━━━━━━━━━━━━━━━━┛
+        </pre>
+      </details>
+      <details>
+        <summary>Hexdump of real result buffer</summary>
+        <pre class="diagram">
+Offset    Hexadecimal view of sysctl results       Printable chars
+00000000: <span class="one">1b00 0000</span> <span class="two">2f41 7070 6c69 6361 7469 6f6e</span>  <span class="one">....</span><span class="two">/Application</span>
+00000010: <span class="two">732f 446f 636b 6572 2e61 7070 2f43 6f6e  s/Docker.app/Con</span>
+00000020: <span class="two">7465 6e74 732f 5265 736f 7572 6365 732f  tents/Resources/</span>
+00000030: <span class="two">6269 6e2f 636f 6d2e 646f 636b 6572 2e68  bin/com.docker.h</span>
+00000040: <span class="two">7970 6572 6b69 7400</span> <span class="three">0000 0000</span> <span class="four">636f 6d2e</span>  <span class="two">yperkit.</span><span class="three">....</span><span class="four">com.</span>
+00000050: <span class="four">646f 636b 6572 2e68 7970 6572 6b69 7400  docker.hyperkit.</span>
+00000060: <span class="four">2d41 002d 7500 2d46 0076 6d73 2f30 2f68  -A.-u.-F.vms/0/h</span>
+00000070: <span class="four">7970 6572 6b69 742e 7069 6400 2d63 0036  yperkit.pid.-c.6</span>
+00000080: <span class="four">002d 6d00 3132 3238 384d 002d 7300 303a  .-m.12288M.-s.0:</span>
+00000090: <span class="four">302c 686f 7374 6272 6964 6765 002d 7300  0,hostbridge.-s.</span>
+000000a0: <span class="four">3331 2c6c 7063 002d 7300 313a 302c 7669  31,lpc.-s.1:0,vi</span>
+000000b0: <span class="four">7274 696f 2d76 706e 6b69 742c 7061 7468  rtio-vpnkit,path</span>
+000000c0: <span class="four">3d76 706e 6b69 742e 6574 682e 736f 636b  =vpnkit.eth.sock</span>
+000000d0: <span class="four">2c75 7569 643d 3937 6336 3162 6666 2d38  ,uuid=97c61bff-8</span>
+000000e0: <span class="four">3832 642d 3432 6134 2d38 3565 652d 6539  82d-42a4-85ee-e9</span>
+000000f0: <span class="four">6166 6165 3966 3033 3333 002d 5500 3039  afae9f0333.-U.09</span>
+00000100: <span class="four">6637 3764 3535 2d32 3864 352d 3433 3064  f77d55-28d5-430d</span>
+00000110: <span class="four">2d61 6366 382d 3462 3133 3337 6335 6538  -acf8-4b1337c5e8</span>
+00000120: <span class="four">3066 002d 7300 323a 302c 7669 7274 696f  0f.-s.2:0,virtio</span>
+00000130: <span class="four">2d62 6c6b 2c2f 5573 6572 732f 6361 6d64  -blk,/Users/camd</span>
+00000140: <span class="four">656e 6e61 727a 742f 4c69 6272 6172 792f  ennarzt/Library/</span>
+00000150: <span class="four">436f 6e74 6169 6e65 7273 2f63 6f6d 2e64  Containers/com.d</span>
+00000160: <span class="four">6f63 6b65 722e 646f 636b 6572 2f44 6174  ocker.docker/Dat</span>
+00000170: <span class="four">612f 766d 732f 302f 446f 636b 6572 2e72  a/vms/0/Docker.r</span>
+00000180: <span class="four">6177 002d 7300 332c 7669 7274 696f 2d73  aw.-s.3,virtio-s</span>
+00000190: <span class="four">6f63 6b2c 6775 6573 745f 6369 643d 332c  ock,guest_cid=3,</span>
+000001a0: <span class="four">7061 7468 3d76 6d73 2f30 2c67 7565 7374  path=vms/0,guest</span>
+000001b0: <span class="four">5f66 6f72 7761 7264 733d 3233 3736 3b31  _forwards=2376;1</span>
+000001c0: <span class="four">3532 3500 2d73 0034 2c76 6972 7469 6f2d  525.-s.4,virtio-</span>
+000001d0: <span class="four">726e 6400 2d6c 0063 6f6d 312c 6e75 6c6c  rnd.-l.com1,null</span>
+000001e0: <span class="four">2c61 736c 2c6c 6f67 3d76 6d73 2f30 2f63  ,asl,log=vms/0/c</span>
+000001f0: <span class="four">6f6e 736f 6c65 2d72 696e 6700 2d66 006b  onsole-ring.-f.k</span>
+00000200: <span class="four">6578 6563 2c2f 4170 706c 6963 6174 696f  exec,/Applicatio</span>
+00000210: <span class="four">6e73 2f44 6f63 6b65 722e 6170 702f 436f  ns/Docker.app/Co</span>
+00000220: <span class="four">6e74 656e 7473 2f52 6573 6f75 7263 6573  ntents/Resources</span>
+00000230: <span class="four">2f6c 696e 7578 6b69 742f 6b65 726e 656c  /linuxkit/kernel</span>
+00000240: <span class="four">2c2f 4170 706c 6963 6174 696f 6e73 2f44  ,/Applications/D</span>
+00000250: <span class="four">6f63 6b65 722e 6170 702f 436f 6e74 656e  ocker.app/Conten</span>
+00000260: <span class="four">7473 2f52 6573 6f75 7263 6573 2f6c 696e  ts/Resources/lin</span>
+00000270: <span class="four">7578 6b69 742f 696e 6974 7264 2e69 6d67  uxkit/initrd.img</span>
+00000280: <span class="four">2c65 6172 6c79 7072 696e 746b 3d73 6572  ,earlyprintk=ser</span>
+00000290: <span class="four">6961 6c20 7061 6765 5f70 6f69 736f 6e3d  ial page_poison=</span>
+000002a0: <span class="four">3120 7673 7973 6361 6c6c 3d65 6d75 6c61  1 vsyscall=emula</span>
+000002b0: <span class="four">7465 2070 616e 6963 3d31 206e 6f73 7065  te panic=1 nospe</span>
+000002c0: <span class="four">635f 7374 6f72 655f 6279 7061 7373 5f64  c_store_bypass_d</span>
+000002d0: <span class="four">6973 6162 6c65 206e 6f69 6272 7320 6e6f  isable noibrs no</span>
+000002e0: <span class="four">6962 7062 206e 6f5f 7374 665f 6261 7272  ibpb no_stf_barr</span>
+000002f0: <span class="four">6965 7220 6d69 7469 6761 7469 6f6e 733d  ier mitigations=</span>
+00000300: <span class="four">6f66 6620 636f 6e73 6f6c 653d 7474 7953  off console=ttyS</span>
+00000310: <span class="four">3020 636f 6e73 6f6c 653d 7474 7953 3120  0 console=ttyS1</span>
+00000320: <span class="four">2076 706e 6b69 742e 636f 6e6e 6563 743d   vpnkit.connect=</span>
+00000330: <span class="four">636f 6e6e 6563 743a 2f2f 322f 3139 3939  connect://2/1999</span>
+00000340: <span class="four">00</span><span class="five">55 5345 523d 6361 6d64 656e 6e61 727a</span>  <span class="four">.</span><span class="five">USER=camdennarz</span>
+00000350: <span class="five">7400 5850 435f 5345 5256 4943 455f 4e41  t.XPC_SERVICE_NA</span></span>
+00000360: <span class="five">4d45 3d61 7070 6c69 6361 7469 6f6e 2e63  ME=application.c</span>
+00000370: <span class="five">6f6d 2e64 6f63 6b65 722e 646f 636b 6572  om.docker.docker</span>
+00000380: <span class="five">2e31 3033 3637 3633 3532 2e31 3033 3639  .103676352.10369</span>
+00000390: <span class="five">3333 3535 005f 5f43 465f 5553 4552 5f54  3355.__CF_USER_T</span>
+000003a0: <span class="five">4558 545f 454e 434f 4449 4e47 3d30 7831  EXT_ENCODING=0x1</span>
+000003b0: <span class="five">4635 3a30 7838 3030 3031 3030 3a30 7835  F5:0x8000100:0x5</span>
+000003c0: <span class="five">320a 005f 5f4c 4c56 4d5f 5052 4f46 494c  2..__LLVM_PROFIL</span>
+000003d0: <span class="five">455f 5254 5f49 4e49 545f 4f4e 4345 3d5f  E_RT_INIT_ONCE=_</span>
+000003e0: <span class="five">5f4c 4c56 4d5f 5052 4f46 494c 455f 5254  _LLVM_PROFILE_RT</span>
+000003f0: <span class="five">5f49 4e49 545f 4f4e 4345 0053 4845 4c4c  _INIT_ONCE.SHELL</span>
+00000400: <span class="five">3d2f 7573 722f 6c6f 6361 6c2f 6269 6e2f  =/usr/local/bin/</span>
+00000410: <span class="five">6261 7368 0054 4d50 4449 523d 2f76 6172  bash.TMPDIR=/var</span>
+00000420: <span class="five">2f66 6f6c 6465 7273 2f70 372f 3033 5f67  /folders/p7/03_g</span>
+00000430: <span class="five">3574 3631 3134 3939 6c6d 6a71 6877 6335  5t611499lmjqhwc5</span>
+00000440: <span class="five">746c 6a72 3030 3030 676e 2f54 2f00 5f5f  tljr0000gn/T/.__</span>
+00000450: <span class="five">4346 4275 6e64 6c65 4964 656e 7469 6669  CFBundleIdentifi</span>
+00000460: <span class="five">6572 3d63 6f6d 2e64 6f63 6b65 722e 646f  er=com.docker.do</span>
+00000470: <span class="five">636b 6572 0053 5348 5f41 5554 485f 534f  cker.SSH_AUTH_SO</span>
+00000480: <span class="five">434b 3d2f 7072 6976 6174 652f 746d 702f  CK=/private/tmp/</span>
+00000490: <span class="five">636f 6d2e 6170 706c 652e 6c61 756e 6368  com.apple.launch</span>
+000004a0: <span class="five">642e 4d51 3934 5871 7a69 4f44 2f4c 6973  d.MQ94XqziOD/Lis</span>
+000004b0: <span class="five">7465 6e65 7273 0044 4f43 4b45 525f 484f  teners.DOCKER_HO</span>
+000004c0: <span class="five">5354 3d75 6e69 783a 2f2f 646f 636b 6572  ST=unix://docker</span>
+000004d0: <span class="five">2e73 6f63 6b00 434f 4d4d 414e 445f 4d4f  .sock.COMMAND_MO</span>
+000004e0: <span class="five">4445 3d75 6e69 7832 3030 3300 5041 5448  DE=unix2003.PATH</span>
+000004f0: <span class="five">3d2f 7573 722f 6269 6e3a 2f62 696e 3a2f  =/usr/bin:/bin:/</span>
+00000500: <span class="five">7573 722f 7362 696e 3a2f 7362 696e 004c  usr/sbin:/sbin.L</span>
+00000510: <span class="five">4f47 4e41 4d45 3d63 616d 6465 6e6e 6172  OGNAME=camdennar</span>
+00000520: <span class="five">7a74 0048 4f4d 453d 2f55 7365 7273 2f63  zt.HOME=/Users/c</span>
+00000530: <span class="five">616d 6465 6e6e 6172 7a74 0058 5043 5f46  amdennarzt.XPC_F</span>
+00000540: <span class="five">4c41 4753 3d30 7830 00</span><span class="six">00 0000 0000 0000</span>  <span class="five">LAGS=0x0.</span><span class="six">.......</span>
+00000550: <span class="six">0000 0000 0000 0000 0000 0000 0000 0000  ................</span>
+00000560: <span class="six">0000 0000 0000 0000 0000 0000 0000 0000  ................</span>
+00000570: <span class="six">0000 0000 0000 0000 0000 0000 0000 0000  ................</span>
+00000580: <span class="six">0000 0000 0000 0000 0000 0000 0000 0000  ................</span>
+00000590: <span class="six">0000 0000 0000 0000 0000 0000 0000 0000  ................</span>
+000005a0: <span class="six">0000 0000 0000 0000 0000 0000 0000 0000  ................</span>
+000005b0: <span class="six">0000 0070 7472 5f6d 756e 6765 3d00 0000  ...ptr_munge=...</span>
+000005c0: <span class="six">0000 0000 0000 0000 0000 0000 0000 0000  ................</span>
+000005d0: <span class="six">6d61 696e 5f73 7461 636b 3d00 0000 0000  main_stack=.....</span>
+000005e0: <span class="six">0000 0000 0000 0000 0000 0000 0000 0000  ................</span>
+000005f0: <span class="six">0000 0000 0000 0000 0000 0000 0000 0000  ................</span>
+00000600: <span class="six">0000 0000 0000 0000 0000 0000 6578 6563  ............exec</span>
+00000610: <span class="six">7574 6162 6c65 5f66 696c 653d 3078 3161  utable_file=0x1a</span>
+00000620: <span class="six">3031 3030 3030 3034 2c30 7836 3264 6662  01000004,0x62dfb</span>
+00000630: <span class="six">6231 0064 796c 645f 6669 6c65 3d30 7831  b1.dyld_file=0x1</span>
+00000640: <span class="six">6130 3130 3030 3030 342c 3078 6666 6666  a01000004,0xffff</span>
+00000650: <span class="six">6666 6630 3030 6462 3536 3700 6578 6563  fff000db567.exec</span>
+00000660: <span class="six">7574 6162 6c65 5f63 6468 6173 683d 3535  utable_cdhash=55</span>
+00000670: <span class="six">6338 6334 3866 6663 6164 6435 6161 6337  c8c48ffcadd5aac7</span>
+00000680: <span class="six">6563 3166 6539 3937 3564 3763 6131 6161  ec1fe9975d7ca1aa</span>
+00000690: <span class="six">3762 3564 3637 0065 7865 6375 7461 626c  7b5d67.executabl</span>
+000006a0: <span class="six">655f 626f 6f74 6861 7368 3d31 6262 3831  e_boothash=1bb81</span>
+000006b0: <span class="six">3564 3339 6263 3731 6435 3630 6431 3735  5d39bc71d560d175</span>
+000006c0: <span class="six">3062 6164 3931 3262 3666 6333 3533 3165  0bad912b6fc3531e</span>
+000006d0: <span class="six">6264 6100 7468 5f70 6f72 743d 0000 0000  bda.th_port=....</span>
+000006e0: <span class="six">0000 0000 00                             .....</span>
+</pre>
+</details>
+
+<p>It is then up to the person querying <code>sysctl</code> to correctly identify the three pieces of information that <code>execve</code> needs within this single buffer, separate them from the excess data, and pass them along as three separate arguments. To do so, first they must use the <code>argc</code> value to determine where the list of arguments ends and the list of environment variables begins. Then they need to break the remaining code up into three distinct buffers. And lastly, they need to ensure that it is formatted such that <code>execve</code> can parse it.</p>
+<h3>getargv</h3>
+<p>Sometimes, people write programs using empty C strings as more than just a sort of punctuation. <span class="s3">{EXAMPLE}</span>. Depending on where they insert them, this doesn't necessarily pose a problem. If they're within the list of environment variables you can just disregard them, and if they're within the list of arguments you just have to count them as arguments when using <code>argc</code> to calculate where to delimit (split) the buffer. However, if the process' leading argument(s) consist of groups of empty C strings, then things can get messy fast.</p>
+<p>Remember those empty C strings that <code>KERN_PROCARGS2</code> uses as padding to separate the path from the list of arguments? There used to be no way to differentiate them from the empty C strings that someone might have used when starting their program. So since the two sets of empty C strings were right next to each other, it was anyone's best guess where to split the arrays, since <code>argc</code> is then useless. Sometimes this was easy to do, if the values were obviously one or the other, but sometimes an argument might include an equals sign like an  environment variable or <code>argc</code> strings were counted as arguments (or vice versa), and it led to errors when the code was then printed, inspected, or fed to <code>execve</code>. And because there is nothing preventing <span class="s3">{BAD THING}</span> it could even lead to truly disastrous results, such as <span class="s3">{TERRIBAD OUTCOME}</span>.</p>
+<p>Despite the risk, even <a href="https://github.com/apple-oss-distributions/adv_cmds/blob/adv_cmds-199.0.1/ps/print.c#L211-L217">Apple themselves</a> decided to do things this way, and <a href="/hallofshame.html">everyone else</a> in the macOS community followed suit! However, I put in the work and figured out the method behind the madness. Namely, that <code>KERN_PROCARGS2</code> uses a pattern, based on the length of the path, to decide how many empty C strings that it inserts as padding. After years of extensive testing, I created <code>getargv</code>, a program which can be used to reliably identify the list of arguments in a buffer created by <code>sysctl</code> using <code>KERN_PROCARGS2</code>. Writing your own program? You can use <code>libgetargv</code>, a collection of functions (or “library”) to do the same thing within your program.</p>
+</section>
+</div>
+</div>
+
+      <!-- Footer -->
+      <footer id="footer">
+  <ul class="icons">
+    <li>
+      <a href="https://twitter.com/CamJN" class="icon alt">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="-5 0 542 512"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
+      </a>
+    </li>
+    <li>
+      <a href="https://www.facebook.com/camden.narzt" class="icon alt">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -10 320 525"><path d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z"/></svg>
+      </a>
+    </li>
+    <li>
+      <a href="https://www.linkedin.com/in/camden-narzt" class="icon alt">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="-20 -20 495 512"><path d="M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83.5 0 53.8a53.79 53.79 0 0 1 107.58 0c0 29.7-24.1 54.3-53.79 54.3zM447.9 448h-92.68V302.4c0-34.7-.7-79.2-48.29-79.2-48.29 0-55.69 37.7-55.69 76.7V448h-92.78V148.9h89.08v40.8h1.3c12.4-23.5 42.69-48.3 87.88-48.3 94 0 111.28 61.9 111.28 142.3V448z"/></svg>
+      </a>
+    </li>
+    <li>
+      <a href="https://keybase.io/camjn" class="icon alt">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M286.17 419a18 18 0 1 0 18 18 18 18 0 0 0-18-18zm111.92-147.6c-9.5-14.62-39.37-52.45-87.26-73.71q-9.1-4.06-18.38-7.27a78.43 78.43 0 0 0-47.88-104.13c-12.41-4.1-23.33-6-32.41-5.77-.6-2-1.89-11 9.4-35L198.66 32l-5.48 7.56c-8.69 12.06-16.92 23.55-24.34 34.89a51 51 0 0 0-8.29-1.25c-41.53-2.45-39-2.33-41.06-2.33-50.61 0-50.75 52.12-50.75 45.88l-2.36 36.68c-1.61 27 19.75 50.21 47.63 51.85l8.93.54a214 214 0 0 0-46.29 35.54C14 304.66 14 374 14 429.77v33.64l23.32-29.8a148.6 148.6 0 0 0 14.56 37.56c5.78 10.13 14.87 9.45 19.64 7.33 4.21-1.87 10-6.92 3.75-20.11a178.29 178.29 0 0 1-15.76-53.13l46.82-59.83-24.66 74.11c58.23-42.4 157.38-61.76 236.25-38.59 34.2 10.05 67.45.69 84.74-23.84.72-1 1.2-2.16 1.85-3.22a156.09 156.09 0 0 1 2.8 28.43c0 23.3-3.69 52.93-14.88 81.64-2.52 6.46 1.76 14.5 8.6 15.74 7.42 1.57 15.33-3.1 18.37-11.15C429 443 434 414 434 382.32c0-38.58-13-77.46-35.91-110.92zM142.37 128.58l-15.7-.93-1.39 21.79 13.13.78a93 93 0 0 0 .32 19.57l-22.38-1.34a12.28 12.28 0 0 1-11.76-12.79L107 119c1-12.17 13.87-11.27 13.26-11.32l29.11 1.73a144.35 144.35 0 0 0-7 19.17zm148.42 172.18a10.51 10.51 0 0 1-14.35-1.39l-9.68-11.49-34.42 27a8.09 8.09 0 0 1-11.13-1.08l-15.78-18.64a7.38 7.38 0 0 1 1.34-10.34l34.57-27.18-14.14-16.74-17.09 13.45a7.75 7.75 0 0 1-10.59-1s-3.72-4.42-3.8-4.53a7.38 7.38 0 0 1 1.37-10.34L214 225.19s-18.51-22-18.6-22.14a9.56 9.56 0 0 1 1.74-13.42 10.38 10.38 0 0 1 14.3 1.37l81.09 96.32a9.58 9.58 0 0 1-1.74 13.44zM187.44 419a18 18 0 1 0 18 18 18 18 0 0 0-18-18z"/></svg>
+      </a>
+    </li>
+    <li>
+      <a href="https://github.com/getargv" class="icon alt">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 0 525 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+      </a>
+    </li>
+    <li>
+      <a href="mailto:getargv@narzt.cam" class="icon alt">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="-10 0 535 512"><path d="M256 352c-16.53 0-33.06-5.422-47.16-16.41L0 173.2V400C0 426.5 21.49 448 48 448h416c26.51 0 48-21.49 48-48V173.2l-208.8 162.5C289.1 346.6 272.5 352 256 352zM16.29 145.3l212.2 165.1c16.19 12.6 38.87 12.6 55.06 0l212.2-165.1C505.1 137.3 512 125 512 112C512 85.49 490.5 64 464 64h-416C21.49 64 0 85.49 0 112C0 125 6.01 137.3 16.29 145.3z"/></svg>
+      </a>
+    </li>
+  </ul>
+  <ul class="copyright">
+    <li>&copy; Camden Narzt. All rights reserved.</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+  </ul>
+</footer>
+
+    </div>
+
+    <!-- Title bar -->
+    <div id="titleBar">
+      <a href="#navPanel" class="toggle"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"/></svg></a>
+      <span class="title"><a href="/index.html"><img src="assets/images/title.svg" alt="homepage link"></a></span>
+    </div>
+
+    <!-- Nav panel -->
+    <div id="navPanel">
+      <nav>
+      </nav>
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/mobile.min.js"></script>
+    <script src="assets/js/preload.min.js"></script>
+    <script src="assets/js/scroll.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/panel.min.js"></script>
+    <script src="assets/js/dropdown.min.js"></script>
+  </body>
+</html>

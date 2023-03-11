@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <link rel="stylesheet" href="mandoc.css" type="text/css" media="all"/>
+  <link rel="stylesheet" href="assets/css/mandoc.css" type="text/css" media="all"/>
   <title>libgetargv(3)</title>
 </head>
 <body>
@@ -203,6 +203,8 @@
     following conditions:</span>
     <a class="Xr" href="x-man-page://2/errno">errno(2)</a> <span class="No">is
     thread-local,</span>
+    <a class="permalink" href="#malloc"><code class="Fn" id="malloc">malloc</code></a>()
+    <span class="No">is thread safe,</span>
     <a class="permalink" href="#sysctl"><code class="Fn" id="sysctl">sysctl</code></a>()
     <span class="No">is thread safe, as is copying out of the buffer it
     populates; these conditions are met on all macOS versions I've tested. Note:
@@ -229,10 +231,9 @@
     <a class="permalink" href="#get_argv_and_argc_of_pid~2"><code class="Fn">get_argv_and_argc_of_pid</code></a>()
     <span class="No">function may be slower than</span>
     <code class="Fn">get_argv_of_pid</code>() <span class="No">as it must
-    perform an additional</span>
-    <a class="permalink" href="#malloc"><code class="Fn" id="malloc">malloc</code></a>(),
-    though it has fewer conditionals per loop so if there are few arguments then
-    it could wind up being faster. Both functions have the same time complexity:
+    perform an additional</span> <code class="Fn">malloc</code>(), though it has
+    fewer conditionals per loop so if there are few arguments then it could wind
+    up being faster. Both functions have the same time complexity:
     <a class="permalink" href="#O"><code class="Fn" id="O">O</code></a>(<var class="Fa">n</var>)
     <span class="No">where</span> <var class="Fa">n</var> <span class="No">is
     the length of the arguments to pid in bytes.</span></p>

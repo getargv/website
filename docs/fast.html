@@ -19,7 +19,7 @@
 
       <!-- Header -->
       <header id="header">
-  <h1 id="logo"><a href="/index.html"><img src="images/title.svg" alt="homepage link"></a></h1>
+  <h1 id="logo"><a href="/index.html"><img src="assets/images/title.svg" alt="homepage link"></a></h1>
   <nav id="nav">
     <ul>
       <li><a href="/index.html">Home</a></li>
@@ -54,7 +54,7 @@
 
         <!-- Content -->
         <section id="content">
-          <a href="#" class="image fit"><img src="images/benchmark.png" alt="Benchmark results from running getargv under the hyperfine benchmarking tool" /></a>
+          <a href="#" class="image fit"><img src="assets/images/benchmark.png" alt="Benchmark results from running getargv under the hyperfine benchmarking tool" /></a>
 
           <h3>Zero-Copy</h3>
           <p>By allocating <abbr title="if the kern.argmax sysctl <= ARG_MAX a static buffer is used so no allocation is done">at-most</abbr> one <abbr title="usually 1MiB">relatively small</abbr> block of memory for the <var>KERN_PROCARGS2</var> <code>sysctl</code>, and then only ever indexing into but never copying out of that buffer even when writing to stdout, <code>getargv</code> does not have to worry about allocator performance.</p>
@@ -88,7 +88,7 @@
 </section>
           <hr />
           <section>
-  <a href="/interface.html" class="image fit"><img src="images/flags.png" alt="command line showing getargv's flags: v0sh?" /></a>
+  <a href="/interface.html" class="image fit"><img src="assets/images/flags.png" alt="command line showing getargv's flags: v0sh?" /></a>
   <h3>Easy to use interface</h3>
   <p>
   <code>getargv</code> has five flags, three of which are purely information about itself. You use the standard <kbd>-0</kbd> flag to print arguments <samp class="nul">␀</samp> separated, the <kbd>-s</kbd> flag to strip leading arguments, the <kbd>-v</kbd> flag to print <code>getargv</code>'s version, and either of <kbd>-h</kbd> or <kbd>-?</kbd> to print a usage string. That's it, that's the whole interface.
@@ -150,7 +150,7 @@
     <!-- Title bar -->
     <div id="titleBar">
       <a href="#navPanel" class="toggle"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"/></svg></a>
-      <span class="title"><a href="/index.html"><img src="images/title.svg" alt="homepage link"></a></span>
+      <span class="title"><a href="/index.html"><img src="assets/images/title.svg" alt="homepage link"></a></span>
     </div>
 
     <!-- Nav panel -->
