@@ -14,7 +14,7 @@
     "main": "build.mjs",
     "scripts": {
         "prestart": "npm run html",
-        "start": "(trap 'kill 0' SIGINT; sass --watch assets/sass/main.scss assets/css/main.css & node watch.mjs & tsc --watch & /usr/bin/python3 -m http.server --directory ./docs/ 0)",
+        "start": "(trap 'kill 0' SIGINT; node watch.mjs & /usr/bin/python3 -m http.server --directory ./docs/ 0)",
         "build": "npm run js && npm run css && npm run html && npm run mandoc1 && npm run mandoc3",
         "postbuild": "mkdir -p docs",
         "css": "sass --style compressed assets/sass/main.scss:assets/css/main.css assets/sass/noscript.scss:assets/css/noscript.css assets/sass/mandoc_inject.scss:assets/css/mandoc_inject.css",
