@@ -49,7 +49,7 @@ pre.diagram {
 }
 
 details summary {
-  margin: 0 0 2em 0;
+    margin: 0 0 2em 0;
 }
 
 pre.changelog {
@@ -107,13 +107,16 @@ ol.ordinal {
     @include icon;
     $size: 1px;
 
-    &[href^="https://twitter.com/"]:hover > svg > path{fill: #1d9bf0;}
-    &[href^="https://www.facebook.com/"]:hover > svg > path{fill: #1877f2;}
-    &[href^="https://www.linkedin.com/"]:hover > svg > path{fill: #0a66c2;}
-    &[href^="https://keybase.io/"]:hover > svg > path{fill: #ff6f21;}
-    &[href^="https://github.com/"]:hover > svg > path{fill: #f0f6fc;}
-    &[href^="mailto:"]:hover > svg > path{fill: white;}
+    &[href^="https://twitter.com/"]:hover > svg > path{fill: #1d9bf0;stroke:none;}
+    &[href^="https://www.facebook.com/"]:hover > svg > path{fill: #1877f2;stroke:none;}
+    &[href^="https://www.linkedin.com/"]:hover > svg > path{fill: #0a66c2;stroke:none;}
+    &[href^="https://keybase.io/"]:hover > svg > path{fill: #ff6f21;stroke:none;}
+    &[href^="https://github.com/"]:hover > svg > path{fill: #f0f6fc;stroke:none;}
+    &[href^="mailto:"]:hover > svg > path{fill: white;stroke:none;}
 
+    &.big > svg {
+        height: 3em;
+    }
     & > svg {
         height: 2em;
         & > path {
@@ -835,6 +838,9 @@ input[type="radio"] {
         &.alt {
             @include line-icon(_palette(accent2), _palette(fg-light));
             svg { margin-top: 2em; }
+        }
+        &.big {
+            svg { margin-top: 1.5em; }
         }
     }
 }
@@ -1559,7 +1565,7 @@ body.is-touch {
 
 body.landing {
     .dropotron {
-        &.level-0 {
+        &[class^="level-"] {
             margin-top: 0;
         }
     }
@@ -1835,7 +1841,7 @@ body.is-touch {
     /* Dropotron */
 
     .dropotron {
-        &.level-0 {
+        &[class^="level-"] {
             font-size: 1em;
         }
     }
