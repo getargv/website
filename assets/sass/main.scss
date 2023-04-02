@@ -86,9 +86,9 @@ ol.ordinal {
 }
 
 /*
-        Landed by HTML5 UP
-        html5up.net | @ajlkn
-        Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+Landed by HTML5 UP
+html5up.net | @ajlkn
+Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 */
 
 // Breakpoints.
@@ -107,19 +107,95 @@ ol.ordinal {
     @include icon;
     $size: 1px;
 
-    &[href^="https://twitter.com/"]:hover > svg > path{fill: #1d9bf0;stroke:none;}
-    &[href^="https://www.facebook.com/"]:hover > svg > path{fill: #1877f2;stroke:none;}
-    &[href^="https://www.linkedin.com/"]:hover > svg > path{fill: #0a66c2;stroke:none;}
-    &[href^="https://keybase.io/"]:hover > svg > path{fill: #ff6f21;stroke:none;}
-    &[href^="https://github.com/"]:hover > svg > path{fill: #f0f6fc;stroke:none;}
-    &[href^="mailto:"]:hover > svg > path{fill: white;stroke:none;}
+    &[href^="https://twitter.com/"]:hover      > svg > path {fill: #1d9bf0; stroke:none;}
+    &[href^="https://www.facebook.com/"]:hover > svg > path {fill: #1877f2; stroke:none;}
+    &[href^="https://www.linkedin.com/"]:hover > svg > path {fill: #0a66c2; stroke:none;}
+    &[href^="https://keybase.io/"]:hover       > svg > path {fill: #ff6f21; stroke:none;}
+    &[href^="https://github.com/"]:hover       > svg > path {fill: #f0f6fc; stroke:none;}
+    &[href^="mailto:"]:hover                   > svg > path {fill: #ffffff; stroke:none;}
+
+    mask path {fill:white!important;}
+    &.rust:hover                               > svg > path {fill: #f74c00;}//official is black, which doesn't really work, so use ferris' orange
+    &.swift:hover                              > svg > path {fill: #F05138;}
+    &.ruby:hover                               > svg > g {
+        &>path,&>polygon {
+            &#polygon3282{ fill:url(#linearGradient-1)}
+            &#polygon3293{ fill:url(#linearGradient-2)}
+            &#polygon3304{ fill:url(#linearGradient-3)}
+            &#polygon3319{ fill:url(#linearGradient-4)}
+            &#polygon3334{ fill:url(#linearGradient-5)}
+            &#polygon3349{ fill:url(#linearGradient-6)}
+            &#polygon3362{ fill:url(#linearGradient-7)}
+            &#polygon3375{ fill:url(#linearGradient-8)}
+            &#path3377{ fill:#FFFFFF}
+            &#path3400{ fill:url(#linearGradient-9)}
+            &#path3413{ fill:url(#linearGradient-10)}
+            &#path3424{ fill:url(#linearGradient-11)}
+            &#path3435{ fill:url(#linearGradient-12)}
+            &#path3437{ fill:#9E1209}
+            &#path3448{ fill:url(#radialGradient-13)}
+            &#path3459{ fill:url(#radialGradient-14)}
+            &#path3472{ fill:url(#linearGradient-15)}
+            &#path3485{ fill:url(#linearGradient-16)}
+        }}
+    &.js{
+        &:hover > svg {
+            path,polygon {
+                &.nodegreen{ fill:#689f63}
+                &.nodegrey{ fill:white}
+                &#symbol{ fill:url(#linearGradient-b)}
+                &#node4{ fill:url(#linearGradient-d)}
+                &#node5{ fill:url(#linearGradient-f)}
+            }
+        }
+        &:not(:hover) > svg {
+            #SymbolGroup {
+                polygon:not(#symbol) {
+                    opacity:0
+                }
+                polygon#symbol {
+                    fill:white;
+                }
+            }
+        }
+    }
+    &.java:hover                               > svg > g > path {
+        &#Fill-85{ fill:#007699}
+        &#Fill-87{ fill:#F7901E}
+    }
+    &.python:hover                             > svg > g > path {
+        &#bluesnake{ fill: url(#linearGradient-bluesnake)}
+        &#yellowsnake{ fill: url(#linearGradient-yellowsnake)}
+    }
+    &.other:hover                                  > svg {
+        path#path3462{ fill:url(#radialGradient-3)}
+        circle#Oval{ fill:#05930C}
+        path#clear{opacity:0.1}
+        path.white{fill:#FFFFFF}
+        g#perl *{fill:#006699}
+        g#Go *{fill:#00ACD7}
+        path#path3474{fill:#777BB3}
+        path.black{fill:#000000}
+    }
+    &.cish:hover                                   > svg {
+        & >path, &>polygon {
+            &#blueone{fill:#00599C;}
+            &#bluetwo{fill:#004482;}
+            &#bluethree{fill:#659AD2;}
+            &.white{ fill:#FFFFFF; }
+        }
+    }
+
+    body:not(.landing) &:hover * {
+        stroke: none;
+    }
 
     &.big > svg {
         height: 3em;
     }
     & > svg {
         height: 2em;
-        & > path {
+        path,polygon,circle {
             fill: $bg;
             stroke: rgba($fg,0.5);
             stroke-width: 4%;
@@ -393,7 +469,6 @@ pre {
 
 @include keyframes('spinner-hide') {
     0% { fill: _palette(fg-lighter); z-index: _misc(z-index-overlay) + 1; @include vendor('transform', 'scale(1) rotate(0deg)'); }
-    99% { fill: _palette(bg); z-index: _misc(z-index-overlay) + 1; @include vendor('transform', 'scale(0.5) rotate(360deg)'); }
     100% { fill: _palette(bg); z-index: -1; @include vendor('transform', 'scale(0.5) rotate(360deg)'); }
 }
 
@@ -407,7 +482,6 @@ pre {
 @include keyframes('overlay-hide') {
     0% { opacity: 1; z-index: _misc(z-index-overlay); }
     15% { opacity: 1; z-index: _misc(z-index-overlay); }
-    99% { opacity: 0; z-index: _misc(z-index-overlay); }
     100% { opacity: 0; z-index: -1; }
 }
 

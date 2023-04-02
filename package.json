@@ -9,7 +9,7 @@
         "type": "github",
         "url": "https://github.com/CamJN"
     },
-    "version": "0.14.0",
+    "version": "0.15.0",
     "description": "Marketing site for getargv",
     "main": "build.mjs",
     "scripts": {
