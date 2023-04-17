@@ -102,7 +102,7 @@
             any series of bytes aside from <samp class="nul">␀</samp>, which means that arguments can contain
             <samp>space</samp>s. In order to parse the arguments the same way that the process received
             them, you need to process <samp class="nul">␀</samp> separated byte arrays. On BSDs and Linuxen that is provided
-            by the <kbd>/proc/$PID/cmdline</kbd> <abbr title="proc filesystem">procfs</abbr> path, Solaris has <code>pargs</code>,
+            by the <kbd>/proc/$PID/cmdline</kbd> <abbr title="process filesystem">procfs</abbr> path, Solaris has <code>pargs</code>,
             on macOS you need <code>getargv</code>.
           </p>
         </div>
