@@ -1,5 +1,9 @@
 @import 'libs/colors';
 
+:root {
+    color-scheme: light dark; /* both supported */
+}
+
 $diff-darken: color-diff(#BAFFDF, #00381e);
 
 @mixin elements($color) {
