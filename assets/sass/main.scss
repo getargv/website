@@ -167,15 +167,21 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
         &#bluesnake{ fill: url(#linearGradient-bluesnake)}
         &#yellowsnake{ fill: url(#linearGradient-yellowsnake)}
     }
-    &.other:hover                                  > svg {
-        path#path3462{ fill:url(#radialGradient-3)}
+    &.csharp:hover                                  > svg {
         circle#Oval{ fill:#05930C}
         path#clear{opacity:0.1}
         path.white{fill:#FFFFFF}
-        g#perl *{fill:#006699}
+    }
+    &.other:hover                                  > svg {
+        path#perl{fill:#006699}
         g#Go *{fill:#00ACD7}
-        path#path3474{fill:#777BB3}
-        path.black{fill:#000000}
+        g#php {
+            path#path3462{ fill:url(#radialGradient-3)}
+            path#clear{opacity:0.1}
+            path.white{fill:#FFFFFF}
+            path#path3474{fill:#777BB3}
+            path.black{fill:#000000}
+        }
     }
     &.cish:hover                                   > svg {
         & >path, &>polygon {
