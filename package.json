@@ -35,7 +35,7 @@
         "prelicense": "echo '<pre>' > src/license-body.html",
         "license": "git show master:LICENSE | sed -e 's/</\\&lt;/g' -e 's/>/\\&gt;/g' >> src/license-body.html",
         "postlicense": "echo '</pre>' >> src/license-body.html",
-        "presitemap": "echo \"<?xml version=\\\"1.0\\\" encoding=\\\"UTF-8\\\"?>\\n<?xml-stylesheet type=\\\"text/xsl\\\" href=\\\"assets/sitemap.xsl\\\" ?>\\n<urlset xmlns=\\\"http://www.sitemaps.org/schemas/sitemap/0.9\\\">\" > docs/sitemap.xml",
+        "presitemap": "echo \"<?xml version=\\\"1.0\\\" encoding=\\\"UTF-8\\\"?>\n<?xml-stylesheet type=\\\"text/xsl\\\" href=\\\"assets/sitemap.xsl\\\" ?>\n<urlset xmlns=\\\"http://www.sitemaps.org/schemas/sitemap/0.9\\\">\" > docs/sitemap.xml",
         "sitemap": "find docs -name '*.html' \\! \\( -name index.html -o -path node_modules \\) | sed -Ee 's|docs/(.+)|<url><loc>https://getargv.narzt.cam/\\1</loc></url>|g' >> docs/sitemap.xml",
         "postsitemap": "echo '</urlset>' >> docs/sitemap.xml",
         "clean": "sed -e 's|^/||g' .gitignore | xargs rm -rf",
