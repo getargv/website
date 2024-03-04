@@ -5,7 +5,12 @@
 @import 'libs/breakpoints';
 @import 'libs/html-grid';
 
-rt{
+#sponsorButton {
+    border: 0;
+    border-radius: 6px;
+}
+
+rt {
     font-size:0.8em;
 }
 
@@ -172,9 +177,20 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
         path#clear{opacity:0.1}
         path.white{fill:#FFFFFF}
     }
+    &.go:hover                                  > svg {
+        path{fill:#00ACD7}
+    }
     &.other:hover                                  > svg {
+        mask { fill: #fff; }
+        .black{
+            fill:#000;
+            fill-rule:nonzero;
+        }
         path#perl{fill:#006699}
-        g#Go *{fill:#00ACD7}
+        #kotlin{
+            fill:url(#lineargradient-blah);
+            fill-rule:nonzero;
+        }
         g#php {
             path#path3462{ fill:url(#radialGradient-3)}
             path#clear{opacity:0.1}
@@ -183,12 +199,29 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
             path.black{fill:#000000}
         }
     }
-    &.cish:hover                                   > svg {
+    &.cpp:hover                                   > svg {
         & >path, &>polygon {
             &#blueone{fill:#00599C;}
             &#bluetwo{fill:#004482;}
             &#bluethree{fill:#659AD2;}
             &.white{ fill:#FFFFFF; }
+        }
+    }
+    &.cish:hover                                   > svg {
+        path {
+            &#Cone {
+                fill:#283593;
+                fill:#004482;
+            }
+            &#Ctwo {
+                fill:#5c6bc0;
+                fill:#659ad2;
+            }
+            &#Cthree { fill:#ffffff; }
+            &#Cfour {
+                fill:#3949ab;
+                fill:#00599c;
+            }
         }
     }
 

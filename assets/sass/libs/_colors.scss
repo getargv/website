@@ -1,4 +1,5 @@
 @use "sass:color";
+@use "sass:math";
 //https://kittygiraudel.com/2014/01/30/programmatically-go-from-one-color-to-another-with-sass/
 @function color-diff($color-a, $color-b) {
     $hue: hue($color-a) - hue($color-b);
@@ -11,8 +12,8 @@
 
     @return (
         #{$function-hue}: - ($hue),
-        #{$function-saturation}: abs($saturation),
-        #{$function-lightness}: abs($lightness)
+        #{$function-saturation}: math.abs($saturation),
+        #{$function-lightness}: math.abs($lightness)
     );
 }
 @function apply-color-diff($color, $diff) {
