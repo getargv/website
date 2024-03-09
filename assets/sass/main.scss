@@ -1724,8 +1724,8 @@ body.landing {
                 display: inline-block;
                 margin-left: 1em;
 
-                iframe[height="35"] {
-                    height: 35px;
+                iframe[height] {
+                    height: 32px;
                     vertical-align: middle;
                 }
                 a, span, iframe {
