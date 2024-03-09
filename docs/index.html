@@ -94,7 +94,7 @@
             <code>ps</code> is often good enough, it can show you what you want unless the
             process was started with <var>argv[0]</var> set to an empty string, which
             is unusual, though still supported by the kernel. In the case where <var>argv[0]</var>
-            is an empty string, <code>ps</code> (from <a href="https://github.com/apple-oss-distributions/adv_cmds/blob/adv_cmds-63/ps.tproj/print.c#L184-L190">10.3</a>-<a href="https://github.com/apple-oss-distributions/adv_cmds/blob/adv_cmds-199.0.1/ps/print.c#L211-L217">13.2</a>) will emit one or more environment variables
+            is an empty string, <code>ps</code> (from <a href="https://github.com/apple-oss-distributions/adv_cmds/blob/adv_cmds-63/ps.tproj/print.c#L184-L190">10.3</a>-<a href="https://github.com/apple-oss-distributions/adv_cmds/blob/adv_cmds-213/ps/print.c#L211-L217">14.3</a>) will emit one or more environment variables
             which were not part of the process' arguments (one for each leading empty argument).
           </p>
         </div>
