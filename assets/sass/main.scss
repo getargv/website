@@ -112,7 +112,7 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
     @include icon;
     $size: 1px;
 
-    &[href^="https://twitter.com/"]:hover      > svg > path {fill: #1d9bf0; stroke:none;}
+    &[href^="https://twitter.com/"]:hover      > svg > path {fill: #ffffff; stroke:none;}
     &[href^="https://www.facebook.com/"]:hover > svg > path {fill: #1877f2; stroke:none;}
     &[href^="https://www.linkedin.com/"]:hover > svg > path {fill: #0a66c2; stroke:none;}
     &[href^="https://keybase.io/"]:hover       > svg > path {fill: #ff6f21; stroke:none;}
