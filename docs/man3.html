@@ -35,6 +35,9 @@
   <var class="Vt">struct ArgvArgcResult { char* buffer; char** argv; uint argc;
     };</var>
   <br/>
+  <var class="Vt">struct ArgvEnvpResult { char* buffer; char** argv; uint argc;
+    char** envp; uint envc; };</var>
+  <br/>
   <var class="Vt">struct ArgvResult { char* buffer; char* start_pointer; char*
     end_pointer; };</var></p>
 <p class="Pp"><var class="Ft">bool</var>
@@ -50,6 +53,11 @@
     ArgvArgcResult* result</var>);</p>
 <p class="Pp"><var class="Ft">bool</var>
   <br/>
+  <code class="Fn">get_argv_and_envp_of_pid</code>(<var class="Fa" style="white-space: nowrap;">pid_t
+    pid</var>, <var class="Fa" style="white-space: nowrap;">struct
+    ArgvEnvpResult* result</var>);</p>
+<p class="Pp"><var class="Ft">bool</var>
+  <br/>
   <code class="Fn">print_argv_of_pid</code>(<var class="Fa" style="white-space: nowrap;">char*
     start_pointer</var>, <var class="Fa" style="white-space: nowrap;">char*
     end_pointer</var>);</p>
@@ -61,6 +69,10 @@
   <br/>
   <code class="Fn">free_ArgvArgcResult</code>(<var class="Fa" style="white-space: nowrap;">struct
     ArgvArgcResult* result</var>);</p>
+<p class="Pp"><var class="Ft">void</var>
+  <br/>
+  <code class="Fn">free_ArgvEnvpResult</code>(<var class="Fa" style="white-space: nowrap;">struct
+    ArgvEnvpResult* result</var>);</p>
 </section>
 <section class="Sh">
 <h1 class="Sh" id="DESCRIPTION"><a class="permalink" href="#DESCRIPTION">DESCRIPTION</a></h1>
@@ -133,6 +145,41 @@
     <a class="Xr" href="x-man-page://2/errno">errno(2)</a> <span class="No">is
     set, and the pointers in</span> <var class="Fa">result</var>
     <span class="No">are set to</span> <code class="Dv">NULL</code>.</p>
+<p class="Pp" id="get_argv_and_envp_of_pid"><a class="permalink" href="#get_argv_and_envp_of_pid"><code class="Fn">get_argv_and_envp_of_pid</code></a>()
+    <span class="No">is an alternative to</span>
+    <code class="Fn">get_argv_of_pid</code>() <span class="No">which returns
+    the</span> <var class="Fa">argc</var>, <var class="Fa">argv</var>,
+    <var class="Fa">envc</var>, and <var class="Fa">envp</var>
+    <span class="No">of a</span> <var class="Ar">pid</var>, with the
+    <var class="Fa">argv</var> <span class="No">and</span>
+    <var class="Fa">envp</var> <span class="No">formatted as</span>
+    <var class="Ft">char**</var>, just like if they were passed to
+    <a class="permalink" href="#main~2"><code class="Fn" id="main~2">main</code></a>().
+    It takes as arguments a <var class="Ft">pid_t</var>
+    <var class="Fa">pid</var>, <span class="No">and a pointer to an</span>
+    <var class="Ft">ArgvEnvpResult</var> <span class="No">struct which will be
+    populated with the</span> <var class="Fa">argc</var>,
+    <var class="Fa">argv</var>, <var class="Fa">envc</var>, and
+    <var class="Fa">envp</var> <span class="No">of the</span>
+    <var class="Ar">pid</var>, and the backing buffer from the sysctl. It is the
+    caller's responsibility to
+    <a class="Xr" href="x-man-page://3/free">free(3)</a> <span class="No">the
+    backing buffer</span> (.buffer), the (.argv) array, and the (.envp) array
+    (You can use <code class="Fn">free_ArgvEnvpResult</code>()
+    <span class="No">to ensure you use the matching</span>
+    <a class="Xr" href="x-man-page://3/free">free(3)</a>
+    <span class="No">function to this library's</span>
+    <a class="Xr" href="x-man-page://3/malloc">malloc(3)</a>
+    <span class="No">function</span>). When .argc is 0 the .argv pointer is set
+    to <code class="Dv">NULL</code>. When envc is 0 the envp pointer is set to
+    <code class="Dv">NULL</code>. <code class="Dv">When both argc and envc are 0
+    the buffer pointer is set to</code> <code class="Dv">NULL</code>.
+    <code class="Dv">The return value of the function is a</code>
+    <var class="Vt">bool</var> <span class="No">indicating success</span> (true)
+    or failure (false); in case of failure
+    <a class="Xr" href="x-man-page://2/errno">errno(2)</a> <span class="No">is
+    set, and the pointers in</span> <var class="Fa">result</var>
+    <span class="No">are set to</span> <code class="Dv">NULL</code>.</p>
 <p class="Pp" id="print_argv_of_pid"><a class="permalink" href="#print_argv_of_pid"><code class="Fn">print_argv_of_pid</code></a>()
     <span class="No">is a convenience function that will print to stdout every
     byte from</span> <var class="Fa">start_pointer</var>
@@ -168,6 +215,16 @@
     <a class="Xr" href="x-man-page://3/malloc">malloc(3)</a>
     <span class="No">that allocated the buffers it holds pointers to. This
     function does not return a value.</span></p>
+<p class="Pp" id="free_ArgvEnvpResult"><a class="permalink" href="#free_ArgvEnvpResult"><code class="Fn">free_ArgvEnvpResult</code></a>()
+    <span class="No">is a safe way to</span>
+    <a class="Xr" href="x-man-page://3/free">free(3)</a> <span class="No">the
+    pointers in a</span> <var class="Ft">struct ArgvEnvpResult</var>
+    <span class="No">using the matching</span>
+    <a class="Xr" href="x-man-page://3/free">free(3)</a>
+    <span class="No">function to the</span>
+    <a class="Xr" href="x-man-page://3/malloc">malloc(3)</a>
+    <span class="No">that allocated the buffers it holds pointers to. This
+    function does not return a value.</span></p>
 </section>
 <section class="Sh">
 <h1 class="Sh" id="ERRORS"><a class="permalink" href="#ERRORS">ERRORS</a></h1>
@@ -189,6 +246,9 @@
   <dt id="EPERM">[<a class="permalink" href="#EPERM"><code class="Er">EPERM</code></a>]</dt>
   <dd>User doesn't have permission to see targeted pid's args.</dd>
   <dt id="ENAMETOOLONG">[<a class="permalink" href="#ENAMETOOLONG"><code class="Er">ENAMETOOLONG</code></a>]</dt>
+  <dd>Targeted pid's executable path is too long (somehow longer than ARG_MAX)
+      and cannot be parsed safely.</dd>
+  <dt id="E2BIG">[<a class="permalink" href="#E2BIG"><code class="Er">E2BIG</code></a>]</dt>
   <dd>Targeted pid's args are too long (somehow longer than ARG_MAX) and cannot
       be parsed safely.</dd>
   <dt id="ERANGE">[<a class="permalink" href="#ERANGE"><code class="Er">ERANGE</code></a>]</dt>
@@ -234,9 +294,19 @@
     perform an additional</span> <code class="Fn">malloc</code>(), though it has
     fewer conditionals per loop so if there are few arguments then it could wind
     up being faster. Both functions have the same time complexity:
-    <a class="permalink" href="#O"><code class="Fn" id="O">O</code></a>(<var class="Fa">n</var>)
+    <code class="Fn">O</code>(<var class="Fa">n</var>)
     <span class="No">where</span> <var class="Fa">n</var> <span class="No">is
     the length of the arguments to pid in bytes.</span></p>
+<p class="Pp" id="get_argv_and_envp_of_pid~2"><span class="No">The</span>
+    <a class="permalink" href="#get_argv_and_envp_of_pid~2"><code class="Fn">get_argv_and_envp_of_pid</code></a>()
+    <span class="No">function is definitely the slowest of them all, and should
+    only be used if the envp array of the process must be inspected. It still
+    has the same time complexity as the other functions:</span>
+    <a class="permalink" href="#O"><code class="Fn" id="O">O</code></a>(<var class="Fa">n</var>)
+    <span class="No">where</span> <var class="Fa">n</var> <span class="No">is
+    the length of the arguments to pid in bytes, but the environment's bytes
+    must be traversed twice, whereas the other functions traverse the arguments'
+    bytes once and stop before the environment's bytes.</span></p>
 </section>
 <section class="Sh">
 <h1 class="Sh" id="EXAMPLES"><a class="permalink" href="#EXAMPLES">EXAMPLES</a></h1>
@@ -251,6 +321,12 @@ See the file man3/libtest1.c.3getargv.
 <div class="Bd Pp Bd-indent Li">
 <pre>
 See the file man3/libtest2.c.3getargv.
+
+</pre>
+</div>
+<div class="Bd Pp Bd-indent Li">
+<pre>
+See the file man3/libtest3.c.3getargv.
 
 </pre>
 </div>
@@ -286,6 +362,11 @@ See the file man3/libtest2.c.3getargv.
     <td><a class="permalink" href="#get_argv_and_argc_of_pid~3"><code class="Li">get_argv_and_argc_of_pid</code></a></td>
     <td>get the argc and argv of the specified pid in standard format</td>
   </tr>
+  <tr id="get_argv_and_envp_of_pid~3">
+    <td><a class="permalink" href="#get_argv_and_envp_of_pid~3"><code class="Li">get_argv_and_envp_of_pid</code></a></td>
+    <td>get the argc, argv, envc, and envp of the specified pid in standard
+      format</td>
+  </tr>
   <tr id="print_argv_of_pid~2">
     <td><a class="permalink" href="#print_argv_of_pid~2"><code class="Li">print_argv_of_pid</code></a></td>
     <td>print a contiguous stretch of memory to stdout, including any NULs</td>
@@ -298,6 +379,11 @@ See the file man3/libtest2.c.3getargv.
   <tr id="free_ArgvArgcResult~2">
     <td><a class="permalink" href="#free_ArgvArgcResult~2"><code class="Li">free_ArgvArgcResult</code></a></td>
     <td>free the pointers in an ArgvArgcResult struct using the correct free
+      function</td>
+  </tr>
+  <tr id="free_ArgvEnvpResult~2">
+    <td><a class="permalink" href="#free_ArgvEnvpResult~2"><code class="Li">free_ArgvEnvpResult</code></a></td>
+    <td>free the pointers in an ArgvEnvpResult struct using the correct free
       function</td>
   </tr>
 </table>
@@ -322,27 +408,11 @@ See the file man3/libtest2.c.3getargv.
       <span class="No">does not facilitate printing to anything other
       than</span> <var class="Va">stdout</var>.</li>
   <li id="The~2"><a class="permalink" href="#The~2"><span class="No">The current
-      implementations of</span></a> <code class="Fn">get_argv_of_pid</code>()
-      <span class="No">and</span>
+      implementations of</span></a> <code class="Fn">get_argv_of_pid</code>(),
+      <code class="Fn">get_argv_and_argc_of_pid</code>(), and
       <code class="Fn">get_argv_and_argc_of_pid</code>()
       <span class="No">allocate memory, and do not facilitate alternate
       allocators.</span></li>
-  <li id="The~3"><a class="permalink" href="#The~3"><span class="No">The current
-      implementations of</span></a> <code class="Fn">get_argv_of_pid</code>()
-      <span class="No">and</span>
-      <code class="Fn">get_argv_and_argc_of_pid</code>() <span class="No">assume
-      that you have not compiled your own xnu kernel with a custom</span>
-      <code class="Dv">PID_MAX</code>; if you have, you will need to compile
-      <code class="Nm">libgetargv</code> <span class="No">with your
-      custom</span> <code class="Dv">PID_MAX</code> <span class="No">set
-      thus:</span>
-    <div class="Bd Pp Bd-indent Li">
-    <pre>$ make PID_MAX=__YOUR_CUSTOM_PID_MAX_HERE__ dylib</pre>
-    </div>
-    <p class="Pp"><span class="No">Also, it is currently a hard requirement
-        that</span> <code class="Dv">PID_MAX</code> <span class="No">&lt;</span>
-        <code class="Dv">ARG_MAX</code>.</p>
-  </li>
 </ul>
 </section>
 </div>
