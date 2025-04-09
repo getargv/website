@@ -1,10 +1,10 @@
-@import 'libs/colors';
+@use 'libs/colors';
 
 :root {
     color-scheme: light dark; /* both supported */
 }
 
-$diff-darken: color-diff(#BAFFDF, #00381e);
+$diff-darken: colors.color-diff(#BAFFDF, #00381e);
 
 @mixin elements($color) {
     .An, .Ar, .Cd, .Cm, .Dv, .Em, .Er, .Ev, .Fa, .Fd, .Fl, .Fn, .Ft,
@@ -23,8 +23,8 @@ $diff-darken: color-diff(#BAFFDF, #00381e);
 
 @media (prefers-color-scheme: light) {
     @include elements(#00381e);
-    :link { color: apply-color-diff(#BAD7FF, $diff-darken); }
-    :visited { color: apply-color-diff(#F6BAFF, $diff-darken); }
+    :link { color: colors.apply-color-diff(#BAD7FF, $diff-darken); }
+    :visited { color: colors.apply-color-diff(#F6BAFF, $diff-darken); }
 }
 
 html {
