@@ -1,9 +1,10 @@
-@import 'libs/vars';
-@import 'libs/functions';
-@import 'libs/mixins';
-@import 'libs/vendor';
-@import 'libs/breakpoints';
-@import 'libs/html-grid';
+@use "sass:color";
+@use 'libs/vars';
+@use 'libs/functions';
+@use 'libs/mixins';
+@use 'libs/vendor';
+@use 'libs/breakpoints';
+@use 'libs/html-grid';
 
 #sponsorButton {
     border: 0;
@@ -15,19 +16,19 @@ rt {
 }
 
 dl {
-    dt { width: 45px; float:left; clear: both; font-family: _font(family-fixed); }
+    dt { width: 45px; float:left; clear: both; font-family: functions.font(family-fixed); }
     dd { margin-left: 15px; float:left; }
     &::after { content:""; display:block; clear: both; }
 }
 
 .quote-icon::before {
     content: "❝❞";
-    font-family: _font(family-fixed) !important;
+    font-family: functions.font(family-fixed) !important;
     margin-top: 0.3em;
 }
 .nul-icon::before {
     content: "∅";
-    font-family: _font(family-fixed) !important;
+    font-family: functions.font(family-fixed) !important;
     margin-top: 0.2em;
 }
 samp {
@@ -37,7 +38,7 @@ samp {
     }
     &:not(.nul) {
         font-weight: 600;
-        font-family: _font(family-fixed) !important;
+        font-family: functions.font(family-fixed) !important;
     }
 }
 
@@ -98,7 +99,7 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
 
 // Breakpoints.
 
-@include breakpoints((
+@include breakpoints.breakpoints((
     xlarge:   ( 1281px,  null ),
     large:    ( 981px,   1280px ),
     medium:   ( 737px,   980px  ),
@@ -108,8 +109,8 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
 
 // Mixins.
 
-@mixin line-icon($bg: _palette(bg), $fg: _palette(fg-bold)) {
-    @include icon;
+@mixin line-icon($bg: functions.palette(bg), $fg: functions.palette(fg-bold)) {
+    @include mixins.icon;
     $size: 1px;
 
     &[href^="https://twitter.com/"]:hover      > svg > path {fill: #ffffff; stroke:none;}
@@ -336,7 +337,7 @@ html {
 }
 
 html, body {
-    background: _palette(bg);
+    background: functions.palette(bg);
 }
 
 body {
@@ -344,8 +345,8 @@ body {
     // Stops initial animations until page loads.
     &.is-preload {
         *, *:before, *:after {
-            @include vendor('animation', 'none !important');
-            @include vendor('transition', 'none !important');
+            @include vendor.vendor('animation', 'none !important');
+            @include vendor.vendor('transition', 'none !important');
         }
         .spotlight {
             .image.main {
@@ -363,28 +364,28 @@ body {
 }
 
 body, input, select, textarea {
-    color: _palette(fg);
-    font-family: _font(family);
+    color: functions.palette(fg);
+    font-family: functions.font(family);
     font-size: 15pt;
-    font-weight: _font(weight);
+    font-weight: functions.font(weight);
     line-height: 1.75em;
 }
 
 a {
-    @include vendor('transition', ('border-color #{_duration(transition)} ease-in-out', 'color #{_duration(transition)} ease-in-out'));
+    @include vendor.vendor('transition', ('border-color #{functions.duration(transition)} ease-in-out', 'color #{functions.duration(transition)} ease-in-out'));
     border-bottom: dotted 1px;
-    color: _palette(accent1);
+    color: functions.palette(accent1);
     text-decoration: none;
 
     &:hover {
-        color: _palette(accent1) !important;
+        color: functions.palette(accent1) !important;
         border-bottom-color: transparent;
     }
 }
 
 strong, b {
-    color: _palette(fg-bold);
-    font-weight: _font(weight-bold);
+    color: functions.palette(fg-bold);
+    font-weight: functions.font(weight-bold);
 }
 
 em, i {
@@ -392,14 +393,14 @@ em, i {
 }
 
 p {
-    margin: 0 0 _size(element-margin) 0;
+    margin: 0 0 functions.size(element-margin) 0;
 }
 
 h1, h2, h3, h4, h5, h6 {
-    color: _palette(fg-bold);
-    font-weight: _font(weight-bold);
+    color: functions.palette(fg-bold);
+    font-weight: functions.font(weight-bold);
     line-height: 1.5em;
-    margin: 0 0 (_size(element-margin) * 0.5) 0;
+    margin: 0 0 (functions.size(element-margin) * 0.5) 0;
 
     a {
         color: inherit;
@@ -447,25 +448,25 @@ sup {
 
 hr {
     border: 0;
-    border-bottom: solid 1px _palette(border);
-    margin: (_size(element-margin) * 1.5) 0;
+    border-bottom: solid 1px functions.palette(border);
+    margin: (functions.size(element-margin) * 1.5) 0;
 
     &.major {
-        margin: (_size(element-margin) * 2) 0;
+        margin: (functions.size(element-margin) * 2) 0;
     }
 }
 
 blockquote {
-    border-left: solid 4px _palette(border);
+    border-left: solid 4px functions.palette(border);
     font-style: italic;
-    margin: 0 0 _size(element-margin) 0;
+    margin: 0 0 functions.size(element-margin) 0;
     padding: 0.5em 0 0.5em 2em;
 }
 
 code, var, kbd {
-    background: _palette(border-bg);
-    border-radius: _size(border-radius);
-    font-family: _font(family-fixed);
+    background: functions.palette(border-bg);
+    border-radius: functions.size(border-radius);
+    font-family: functions.font(family-fixed);
     font-size: 0.9em;
     margin: 0 0.25em;
     padding: 0.25em 0.65em;
@@ -473,9 +474,9 @@ code, var, kbd {
 
 pre {
     -webkit-overflow-scrolling: touch;
-    font-family: _font(family-fixed);
+    font-family: functions.font(family-fixed);
     font-size: 0.9em;
-    margin: 0 0 _size(element-margin) 0;
+    margin: 0 0 functions.size(element-margin) 0;
 
     code, var, kbd {
         display: block;
@@ -501,39 +502,39 @@ pre {
 
 // Spinner
 
-@include keyframes('spinner-show') {
+@include vendor.keyframes('spinner-show') {
     0% { opacity: 0; }
     100% { opacity: 1; }
 }
 
-@include keyframes('spinner-hide') {
-    0% { fill: _palette(fg-lighter); z-index: _misc(z-index-overlay) + 1; @include vendor('transform', 'scale(1) rotate(0deg)'); }
-    100% { fill: _palette(bg); z-index: -1; @include vendor('transform', 'scale(0.5) rotate(360deg)'); }
+@include vendor.keyframes('spinner-hide') {
+    0% { fill: functions.palette(fg-lighter); z-index: functions.misc(z-index-overlay) + 1; @include vendor.vendor('transform', 'scale(1) rotate(0deg)'); }
+    100% { fill: functions.palette(bg); z-index: -1; @include vendor.vendor('transform', 'scale(0.5) rotate(360deg)'); }
 }
 
-@include keyframes('spinner-rotate') {
-    0% { @include vendor('transform', 'scale(1) rotate(0deg)'); }
-    100% { @include vendor('transform', 'scale(1) rotate(360deg)'); }
+@include vendor.keyframes('spinner-rotate') {
+    0% { @include vendor.vendor('transform', 'scale(1) rotate(0deg)'); }
+    100% { @include vendor.vendor('transform', 'scale(1) rotate(360deg)'); }
 }
 
 // Overlay
 
-@include keyframes('overlay-hide') {
-    0% { opacity: 1; z-index: _misc(z-index-overlay); }
-    15% { opacity: 1; z-index: _misc(z-index-overlay); }
+@include vendor.keyframes('overlay-hide') {
+    0% { opacity: 1; z-index: functions.misc(z-index-overlay); }
+    15% { opacity: 1; z-index: functions.misc(z-index-overlay); }
     100% { opacity: 0; z-index: -1; }
 }
 
 body.landing {
-    @include icon(false, solid);
+    @include mixins.icon(false, solid);
 
     // Spinner (inactive)
 
     svg.spinner {
-        @include vendor('animation', ('spinner-show 1.5s 1 0.25s ease forwards', 'spinner-hide 0.25s ease-in-out forwards !important'));
-        @include vendor('transform-origin', '50% 50%');
+        @include vendor.vendor('animation', ('spinner-show 1.5s 1 0.25s ease forwards', 'spinner-hide 0.25s ease-in-out forwards !important'));
+        @include vendor.vendor('transform-origin', '50% 50%');
 
-        path{fill: _palette(fg-lighter);}
+        path{fill: functions.palette(fg-lighter);}
         cursor: default;
         display: block;
         font-size: 2em;
@@ -552,8 +553,8 @@ body.landing {
     // Overlay (inactive)
 
     &:after {
-        @include vendor('animation', 'overlay-hide #{_duration(landing-fadein)} ease-in forwards !important');
-        background: _palette(bg);
+        @include vendor.vendor('animation', 'overlay-hide #{functions.duration(landing-fadein)} ease-in forwards !important');
+        background: functions.palette(bg);
         content: '';
         display: block;
         height: 100%;
@@ -570,16 +571,16 @@ body.landing {
         // Spinner (active)
 
         svg.spinner {
-            @include vendor('animation', ('spinner-show 1.5s 1 0.25s ease forwards', 'spinner-rotate 0.75s infinite linear !important'));
-            z-index: _misc(z-index-overlay) + 1;
+            @include vendor.vendor('animation', ('spinner-show 1.5s 1 0.25s ease forwards', 'spinner-rotate 0.75s infinite linear !important'));
+            z-index: functions.misc(z-index-overlay) + 1;
         }
 
         // Overlay (active)
 
         &:after {
-            @include vendor('animation', 'none !important');
+            @include vendor.vendor('animation', 'none !important');
             opacity: 1;
-            z-index: _misc(z-index-overlay);
+            z-index: functions.misc(z-index-overlay);
         }
 
     }
@@ -595,39 +596,39 @@ body.landing {
 
 .container {
     margin: 0 auto;
-    max-width: calc(100% - #{_size(element-margin) * 2});
-    width: _size(container-width);
+    max-width: calc(100% - #{functions.size(element-margin) * 2});
+    width: functions.size(container-width);
 
     &.xsmall {
-        width: (_size(container-width) * 0.25);
+        width: (functions.size(container-width) * 0.25);
     }
 
     &.small {
-        width: (_size(container-width) * 0.5);
+        width: (functions.size(container-width) * 0.5);
     }
 
     &.medium {
-        width: (_size(container-width) * 0.75);
+        width: (functions.size(container-width) * 0.75);
     }
 
     &.large {
-        width: (_size(container-width) * 1.25);
+        width: (functions.size(container-width) * 1.25);
     }
 
     &.xlarge {
-        width: (_size(container-width) * 1.5);
+        width: (functions.size(container-width) * 1.5);
     }
 
     &.max {
         width: 100%;
     }
 
-    @include breakpoint('<=large') {
+    @include breakpoints.breakpoint('<=large') {
         width: 90%;
         max-width: 100%;
     }
 
-    @include breakpoint('<=medium') {
+    @include breakpoints.breakpoint('<=medium') {
         width: 100% !important;
     }
 }
@@ -635,26 +636,26 @@ body.landing {
 /* Row */
 
 .row {
-    @include html-grid(2.5em);
+    @include html-grid.html-grid(2.5em);
 
-    @include breakpoint('<=xlarge') {
-        @include html-grid(2.5em, 'xlarge');
+    @include breakpoints.breakpoint('<=xlarge') {
+        @include html-grid.html-grid(2.5em, 'xlarge');
     }
 
-    @include breakpoint('<=large') {
-        @include html-grid(2.5em, 'large');
+    @include breakpoints.breakpoint('<=large') {
+        @include html-grid.html-grid(2.5em, 'large');
     }
 
-    @include breakpoint('<=medium') {
-        @include html-grid(2.5em, 'medium');
+    @include breakpoints.breakpoint('<=medium') {
+        @include html-grid.html-grid(2.5em, 'medium');
     }
 
-    @include breakpoint('<=small') {
-        @include html-grid(2.5em, 'small');
+    @include breakpoints.breakpoint('<=small') {
+        @include html-grid.html-grid(2.5em, 'small');
     }
 
-    @include breakpoint('<=xsmall') {
-        @include html-grid(2.5em, 'xsmall');
+    @include breakpoints.breakpoint('<=xsmall') {
+        @include html-grid.html-grid(2.5em, 'xsmall');
     }
 }
 
@@ -668,9 +669,9 @@ section, article {
 
 header, #titleBar {
     p {
-        color: _palette(fg-bold);
+        color: functions.palette(fg-bold);
         position: relative;
-        margin: 0 0 (_size(element-margin) * 0.75) 0;
+        margin: 0 0 (functions.size(element-margin) * 0.75) 0;
     }
 
     h1, .logo, .title {
@@ -683,13 +684,13 @@ header, #titleBar {
 
     h2 + p {
         font-size: 1.25em;
-        margin-top: (_size(element-margin) * -0.5);
+        margin-top: (functions.size(element-margin) * -0.5);
         line-height: 1.75em;
     }
 
     h3 + p {
         font-size: 1.1em;
-        margin-top: (_size(element-margin) * -0.4);
+        margin-top: (functions.size(element-margin) * -0.4);
         line-height: 1.75em;
     }
 
@@ -697,17 +698,17 @@ header, #titleBar {
     h5 + p,
     h6 + p {
         font-size: 0.9em;
-        margin-top: (_size(element-margin) * -0.3);
+        margin-top: (functions.size(element-margin) * -0.3);
         line-height: 1.5em;
     }
 
     &.major {
-        margin: 0 0 (_size(element-margin) * 2) 0;
+        margin: 0 0 (functions.size(element-margin) * 2) 0;
         position: relative;
         text-align: center;
 
         &:after {
-            background: _palette(accent1);
+            background: functions.palette(accent1);
             content: '';
             display: inline-block;
             height: 0.2em;
@@ -719,14 +720,14 @@ header, #titleBar {
 
 footer {
     &.major {
-        margin: (_size(element-margin) * 2) 0 0 0;
+        margin: (functions.size(element-margin) * 2) 0 0 0;
     }
 }
 
 /* Form */
 
 form {
-    margin: 0 0 _size(element-margin) 0;
+    margin: 0 0 functions.size(element-margin) 0;
 
     &.cta {
         max-width: 35em;
@@ -736,11 +737,11 @@ form {
 }
 
 label {
-    color: _palette(fg-bold);
+    color: functions.palette(fg-bold);
     display: block;
     font-size: 0.9em;
-    font-weight: _font(weight-bold);
-    margin: 0 0 (_size(element-margin) * 0.5) 0;
+    font-weight: functions.font(weight-bold);
+    margin: 0 0 (functions.size(element-margin) * 0.5) 0;
 }
 
 input[type="text"],
@@ -748,11 +749,11 @@ input[type="password"],
 input[type="email"],
 select,
 textarea {
-    @include vendor('appearance', 'none');
-    @include vendor('transition', 'border-color #{_duration(transition)} ease-in-out');
+    @include vendor.vendor('appearance', 'none');
+    @include vendor.vendor('transition', 'border-color #{functions.duration(transition)} ease-in-out');
     background: transparent;
-    border-radius: _size(border-radius);
-    border: solid 1px _palette(border);
+    border-radius: functions.size(border-radius);
+    border: solid 1px functions.palette(border);
     color: inherit;
     display: block;
     outline: 0;
@@ -765,22 +766,22 @@ textarea {
     }
 
     &:focus {
-        border-color: _palette(accent1);
+        border-color: functions.palette(accent1);
     }
 }
 
 select {
-    background-image: svg-url("<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40' preserveAspectRatio='none' viewBox='0 0 40 40'><path d='M9.4,12.3l10.4,10.4l10.4-10.4c0.2-0.2,0.5-0.4,0.9-0.4c0.3,0,0.6,0.1,0.9,0.4l3.3,3.3c0.2,0.2,0.4,0.5,0.4,0.9 c0,0.4-0.1,0.6-0.4,0.9L20.7,31.9c-0.2,0.2-0.5,0.4-0.9,0.4c-0.3,0-0.6-0.1-0.9-0.4L4.3,17.3c-0.2-0.2-0.4-0.5-0.4-0.9 c0-0.4,0.1-0.6,0.4-0.9l3.3-3.3c0.2-0.2,0.5-0.4,0.9-0.4S9.1,12.1,9.4,12.3z' fill='#{_palette(border)}' /></svg>");
+    background-image: mixins.svg-url("<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40' preserveAspectRatio='none' viewBox='0 0 40 40'><path d='M9.4,12.3l10.4,10.4l10.4-10.4c0.2-0.2,0.5-0.4,0.9-0.4c0.3,0,0.6,0.1,0.9,0.4l3.3,3.3c0.2,0.2,0.4,0.5,0.4,0.9 c0,0.4-0.1,0.6-0.4,0.9L20.7,31.9c-0.2,0.2-0.5,0.4-0.9,0.4c-0.3,0-0.6-0.1-0.9-0.4L4.3,17.3c-0.2-0.2-0.4-0.5-0.4-0.9 c0-0.4,0.1-0.6,0.4-0.9l3.3-3.3c0.2-0.2,0.5-0.4,0.9-0.4S9.1,12.1,9.4,12.3z' fill='#{functions.palette(border)}' /></svg>");
     background-size: 1.25rem;
     background-repeat: no-repeat;
     background-position: calc(100% - 1rem) center;
-    height: _size(element-height);
-    padding-right: _size(element-height);
+    height: functions.size(element-height);
+    padding-right: functions.size(element-height);
     text-overflow: ellipsis;
 
     option {
-        color: _palette(fg-bold);
-        background: _palette(bg);
+        color: functions.palette(fg-bold);
+        background: functions.palette(bg);
     }
 
     &:focus {
@@ -798,7 +799,7 @@ input[type="text"],
 input[type="password"],
 input[type="email"],
 select {
-    height: _size(element-height);
+    height: functions.size(element-height);
 }
 
 textarea {
@@ -807,7 +808,7 @@ textarea {
 
 input[type="checkbox"],
 input[type="radio"], {
-    @include vendor('appearance', 'none');
+    @include vendor.vendor('appearance', 'none');
     display: block;
     float: left;
     margin-right: -2em;
@@ -816,43 +817,43 @@ input[type="radio"], {
     z-index: -1;
 
     & + label {
-        @include icon(false, solid);
-        color: _palette(fg);
+        @include mixins.icon(false, solid);
+        color: functions.palette(fg);
         cursor: pointer;
         display: inline-block;
         font-size: 1em;
-        font-weight: _font(weight);
-        padding-left: (_size(element-height) * 0.6) + 0.75em;
+        font-weight: functions.font(weight);
+        padding-left: (functions.size(element-height) * 0.6) + 0.75em;
         padding-right: 0.75em;
         position: relative;
 
         &:before {
-            border-radius: _size(border-radius);
-            border: solid 1px _palette(border);
+            border-radius: functions.size(border-radius);
+            border: solid 1px functions.palette(border);
             content: '';
             display: inline-block;
             font-size: 0.8em;
-            height: (_size(element-height) * 0.75);
+            height: (functions.size(element-height) * 0.75);
             left: 0;
-            line-height: (_size(element-height) * 0.75);
+            line-height: (functions.size(element-height) * 0.75);
             position: absolute;
             text-align: center;
             top: 0;
-            width: (_size(element-height) * 0.75);
+            width: (functions.size(element-height) * 0.75);
         }
     }
 
     &:checked + label {
         &:before {
-            background: _palette(border2-bg);
-            color: _palette(fg-bold);
+            background: functions.palette(border2-bg);
+            color: functions.palette(fg-bold);
             content: '✔︎';
         }
     }
 
     &:focus + label {
         &:before {
-            border-color: _palette(accent1);
+            border-color: functions.palette(accent1);
         }
     }
 }
@@ -860,7 +861,7 @@ input[type="radio"], {
 input[type="checkbox"] {
     & + label {
         &:before {
-            border-radius: _size(border-radius);
+            border-radius: functions.size(border-radius);
         }
     }
 }
@@ -874,31 +875,31 @@ input[type="radio"] {
 }
 
 ::-webkit-input-placeholder {
-    color: _palette(fg-light) !important;
+    color: functions.palette(fg-light) !important;
     opacity: 1.0;
 }
 
 :-moz-placeholder {
-    color: _palette(fg-light) !important;
+    color: functions.palette(fg-light) !important;
     opacity: 1.0;
 }
 
 ::-moz-placeholder {
-    color: _palette(fg-light) !important;
+    color: functions.palette(fg-light) !important;
     opacity: 1.0;
 }
 
 :-ms-input-placeholder {
-    color: _palette(fg-light) !important;
+    color: functions.palette(fg-light) !important;
     opacity: 1.0;
 }
 
 /* Box */
 
 .box {
-    border-radius: _size(border-radius);
-    border: solid 1px _palette(border);
-    margin-bottom: _size(element-margin);
+    border-radius: functions.size(border-radius);
+    border: solid 1px functions.palette(border);
+    margin-bottom: functions.size(element-margin);
     padding: 1.5em;
 
     > :last-child,
@@ -917,7 +918,7 @@ input[type="radio"] {
 /* Icon */
 
 .icon {
-    @include icon;
+    @include mixins.icon;
     border-bottom: none;
     position: relative;
 
@@ -934,13 +935,13 @@ input[type="radio"] {
     }
 
     &.major {
-        background: _palette(accent2);
+        background: functions.palette(accent2);
         border-radius: 100%;
         cursor: default;
         display: inline-block;
         height: 6em;
         line-height: 5.65em;
-        margin: 0 0 _size(element-margin) 0;
+        margin: 0 0 functions.size(element-margin) 0;
         text-align: center;
         width: 6em;
 
@@ -949,7 +950,7 @@ input[type="radio"] {
         }
 
         &.alt {
-            @include line-icon(_palette(accent2), _palette(fg-light));
+            @include line-icon(functions.palette(accent2), functions.palette(fg-light));
             svg { margin-top: 2em; }
         }
         &.big {
@@ -961,7 +962,7 @@ input[type="radio"] {
 /* Image */
 
 .image {
-    border-radius: _size(border-radius);
+    border-radius: functions.size(border-radius);
     border: 0;
     display: inline-block;
     position: relative;
@@ -980,7 +981,7 @@ input[type="radio"] {
     }
 
     img {
-        border-radius: _size(border-radius);
+        border-radius: functions.size(border-radius);
         display: block;
     }
 
@@ -1007,7 +1008,7 @@ input[type="radio"] {
 
     &.fit {
         display: block;
-        margin: 0 0 _size(element-margin) 0;
+        margin: 0 0 functions.size(element-margin) 0;
         width: 100%;
 
         img {
@@ -1024,7 +1025,7 @@ input[type="radio"] {
 
 ol {
     list-style: decimal;
-    margin: 0 0 _size(element-margin) 0;
+    margin: 0 0 functions.size(element-margin) 0;
     padding-left: 3em;
 
     li {
@@ -1034,7 +1035,7 @@ ol {
 
 ul {
     list-style: disc;
-    margin: 0 0 _size(element-margin) 0;
+    margin: 0 0 functions.size(element-margin) 0;
     padding-left: 1em;
 
     li {
@@ -1046,7 +1047,7 @@ ul {
         padding-left: 0;
 
         li {
-            border-top: solid 1px _palette(border);
+            border-top: solid 1px functions.palette(border);
             padding: 0.5em 0;
 
             &:first-child {
@@ -1059,7 +1060,7 @@ ul {
 }
 
 dl {
-    margin: 0 0 _size(element-margin) 0;
+    margin: 0 0 functions.size(element-margin) 0;
 }
 
 /* Icons */
@@ -1088,19 +1089,19 @@ ul.icons {
 /* Actions */
 
 ul.actions {
-    @include vendor('display', 'flex');
+    @include vendor.vendor('display', 'flex');
     cursor: default;
     list-style: none;
-    margin-left: (_size(element-margin) * -0.5);
+    margin-left: (functions.size(element-margin) * -0.5);
     padding-left: 0;
 
     li {
-        padding: 0 0 0 (_size(element-margin) * 0.5);
+        padding: 0 0 0 (functions.size(element-margin) * 0.5);
         vertical-align: middle;
     }
 
     &.special {
-        @include vendor('justify-content', 'center');
+        @include vendor.vendor('justify-content', 'center');
         width: 100%;
         margin-left: 0;
 
@@ -1112,11 +1113,11 @@ ul.actions {
     }
 
     &.stacked {
-        @include vendor('flex-direction', 'column');
+        @include vendor.vendor('flex-direction', 'column');
         margin-left: 0;
 
         li {
-            padding: (_size(element-margin) * 0.65) 0 0 0;
+            padding: (functions.size(element-margin) * 0.65) 0 0 0;
 
             &:first-child {
                 padding-top: 0;
@@ -1125,11 +1126,11 @@ ul.actions {
     }
 
     &.fit {
-        width: calc(100% + #{_size(element-margin) * 0.5});
+        width: calc(100% + #{functions.size(element-margin) * 0.5});
 
         li {
-            @include vendor('flex-grow', '1');
-            @include vendor('flex-shrink', '1');
+            @include vendor.vendor('flex-grow', '1');
+            @include vendor.vendor('flex-shrink', '1');
             width: 100%;
 
             > * {
@@ -1142,16 +1143,16 @@ ul.actions {
         }
     }
 
-    @include breakpoint('<=xsmall') {
+    @include breakpoints.breakpoint('<=xsmall') {
         &:not(.fixed) {
-            @include vendor('flex-direction', 'column');
+            @include vendor.vendor('flex-direction', 'column');
             margin-left: 0;
             width: 100% !important;
 
             li {
-                @include vendor('flex-grow', '1');
-                @include vendor('flex-shrink', '1');
-                padding: (_size(element-margin) * 0.5) 0 0 0;
+                @include vendor.vendor('flex-grow', '1');
+                @include vendor.vendor('flex-shrink', '1');
+                padding: (functions.size(element-margin) * 0.5) 0 0 0;
                 text-align: center;
                 width: 100%;
 
@@ -1189,17 +1190,17 @@ ul.actions {
 }
 
 table {
-    margin: 0 0 _size(element-margin) 0;
+    margin: 0 0 functions.size(element-margin) 0;
     width: 100%;
 
     tbody {
         tr {
-            border: solid 1px _palette(border);
+            border: solid 1px functions.palette(border);
             border-left: 0;
             border-right: 0;
 
             &:nth-child(2n + 1) {
-                background-color: _palette(border-bg);
+                background-color: functions.palette(border-bg);
             }
         }
     }
@@ -1209,19 +1210,19 @@ table {
     }
 
     th {
-        color: _palette(fg-bold);
+        color: functions.palette(fg-bold);
         font-size: 0.9em;
-        font-weight: _font(weight-bold);
+        font-weight: functions.font(weight-bold);
         padding: 0 0.75em 0.75em 0.75em;
         text-align: left;
     }
 
     thead {
-        border-bottom: solid 1px _palette(border);
+        border-bottom: solid 1px functions.palette(border);
     }
 
     tfoot {
-        border-top: solid 1px _palette(border);
+        border-top: solid 1px functions.palette(border);
     }
 
     &.alt {
@@ -1230,7 +1231,7 @@ table {
         tbody {
             tr {
                 td {
-                    border: solid 1px _palette(border);
+                    border: solid 1px functions.palette(border);
                     border-left-width: 0;
                     border-top-width: 0;
 
@@ -1263,30 +1264,30 @@ input[type="submit"],
 input[type="reset"],
 input[type="button"],
 .button {
-    @include vendor('appearance', 'none');
-    @include vendor('transition', ('background-color #{_duration(transition)} ease-in-out', 'color #{_duration(transition)} ease-in-out', 'box-shadow #{_duration(transition)} ease-in-out'));
+    @include vendor.vendor('appearance', 'none');
+    @include vendor.vendor('transition', ('background-color #{functions.duration(transition)} ease-in-out', 'color #{functions.duration(transition)} ease-in-out', 'box-shadow #{functions.duration(transition)} ease-in-out'));
     background-color: transparent;
-    border-radius: _size(border-radius);
+    border-radius: functions.size(border-radius);
     border: 0;
-    box-shadow: inset 0 0 0 1px _palette(border);
-    color: _palette(fg-bold) !important;
+    box-shadow: inset 0 0 0 1px functions.palette(border);
+    color: functions.palette(fg-bold) !important;
     cursor: pointer;
     display: inline-block;
-    font-weight: _font(weight-bold);
-    height: _size(element-height);
-    line-height: _size(element-height);
+    font-weight: functions.font(weight-bold);
+    height: functions.size(element-height);
+    line-height: functions.size(element-height);
     padding: 0 2.25em;
     text-align: center;
     text-decoration: none;
     white-space: nowrap;
 
     &:hover, &:active {
-        box-shadow: inset 0 0 0 1px _palette(accent1);
-        color: _palette(accent1) !important;
+        box-shadow: inset 0 0 0 1px functions.palette(accent1);
+        color: functions.palette(accent1) !important;
     }
 
     &:active {
-        background-color: transparentize(_palette(accent1), 0.85);
+        background-color: color.adjust(functions.palette(accent1), $alpha: -0.85);
     }
 
     &.icon {
@@ -1308,24 +1309,24 @@ input[type="button"],
     }
 
     &.primary {
-        background-color: _palette(accent1);
+        background-color: functions.palette(accent1);
         box-shadow: none;
-        color: _palette(fg-bold) !important;
+        color: functions.palette(fg-bold) !important;
 
         &:hover {
-            background-color: lighten(_palette(accent1), 5);
+            background-color: color.adjust(functions.palette(accent1), $lightness: 5%);
         }
 
         &:active {
-            background-color: darken(_palette(accent1), 5);
+            background-color: color.adjust(functions.palette(accent1), $lightness: -5%);
         }
     }
 
     &.disabled,
     &:disabled {
-        background-color: _palette(border) !important;
+        background-color: functions.palette(border) !important;
         box-shadow: none !important;
-        color: _palette(fg-bold) !important;
+        color: functions.palette(fg-bold) !important;
         cursor: default;
         opacity: 0.25;
     }
@@ -1378,7 +1379,7 @@ input[type="button"],
 
     // Force spotlights to stack in reverse order (needed for our box
     // shadows to overlap stuff in the right direction).
-    @for $i from 1 through _misc(max-spotlight) {
+    @for $i from 1 through functions.misc(max-spotlight) {
         &:nth-last-of-type(#{$i}) {
             z-index: #{$i};
         }
@@ -1403,25 +1404,25 @@ input[type="button"],
     }
 
     .content {
-        @include vendor('transform', 'translate(0,0)');
-        @include vendor('transition', 'transform 1s ease, opacity 1s ease');
-        background: _palette(bg-transparent);
+        @include vendor.vendor('transform', 'translate(0,0)');
+        @include vendor.vendor('transition', 'transform 1s ease, opacity 1s ease');
+        background: functions.palette(bg-transparent);
         border-style: solid;
         opacity: 1;
         position: absolute;
     }
 
     .goto-next {
-        @include vendor('transform', 'translate(0,0)');
-        @include vendor('transition', 'transform 0.75s ease, opacity 1s ease-in');
-        @include vendor('transition-delay', '0.5s');
+        @include vendor.vendor('transform', 'translate(0,0)');
+        @include vendor.vendor('transition', 'transform 0.75s ease, opacity 1s ease-in');
+        @include vendor.vendor('transition-delay', '0.5s');
         opacity: 1;
     }
 
     &.top, &.bottom {
         .content {
             left: 0;
-            padding: ($size-wrapper-pad-tb * 0.85) 0 (($size-wrapper-pad-tb * 0.85) - _size(element-margin)) 0;
+            padding: ($size-wrapper-pad-tb * 0.85) 0 (($size-wrapper-pad-tb * 0.85) - functions.size(element-margin)) 0;
             width: 100%;
         }
     }
@@ -1465,7 +1466,7 @@ input[type="button"],
 
     &.style1 {
         .content {
-            border-color: _palette(accent1);
+            border-color: functions.palette(accent1);
         }
     }
 
@@ -1473,13 +1474,13 @@ input[type="button"],
         background-color: rgb(54, 27, 72);
 
         .content {
-            border-color: _palette(accent3);
+            border-color: functions.palette(accent3);
         }
     }
 
     &.style3 {
         .content {
-            border-color: _palette(accent4);
+            border-color: functions.palette(accent4);
         }
     }
 
@@ -1489,31 +1490,31 @@ input[type="button"],
         }
 
         .goto-next {
-            @include vendor('transform', 'translate(0,1.5em)');
+            @include vendor.vendor('transform', 'translate(0,1.5em)');
             opacity: 0;
         }
 
         &.top {
             .content {
-                @include vendor('transform', 'translate(0,-5em)');
+                @include vendor.vendor('transform', 'translate(0,-5em)');
             }
         }
 
         &.bottom {
             .content {
-                @include vendor('transform', 'translate(0,5em)');
+                @include vendor.vendor('transform', 'translate(0,5em)');
             }
         }
 
         &.left {
             .content {
-                @include vendor('transform', 'translate(-5em,0)');
+                @include vendor.vendor('transform', 'translate(-5em,0)');
             }
         }
 
         &.right {
             .content {
-                @include vendor('transform', 'translate(5em,0)');
+                @include vendor.vendor('transform', 'translate(5em,0)');
             }
         }
     }
@@ -1528,13 +1529,13 @@ body.is-touch {
 /* Wrapper */
 
 .wrapper {
-    padding: $size-wrapper-pad-tb 0 ($size-wrapper-pad-tb - _size(element-margin)) 0;
+    padding: $size-wrapper-pad-tb 0 ($size-wrapper-pad-tb - functions.size(element-margin)) 0;
 
     &.style1 {
     }
 
     &.style2 {
-        background: _palette(accent1);
+        background: functions.palette(accent1);
 
         input[type="text"],
         input[type="password"],
@@ -1542,7 +1543,7 @@ body.is-touch {
         select,
         textarea {
             &:focus {
-                border-color: _palette(border2);
+                border-color: functions.palette(border2);
             }
         }
 
@@ -1551,27 +1552,27 @@ body.is-touch {
         input[type="button"],
         .button {
             &:hover, &:active {
-                background-color: _palette(border-bg) !important;
-                box-shadow: inset 0 0 0 1px _palette(border2) !important;
-                color: _palette(fg-bold) !important;
+                background-color: functions.palette(border-bg) !important;
+                box-shadow: inset 0 0 0 1px functions.palette(border2) !important;
+                color: functions.palette(fg-bold) !important;
             }
 
             &:active {
-                background-color: _palette(border2-bg) !important;
+                background-color: functions.palette(border2-bg) !important;
             }
 
             &.primary {
-                background-color: _palette(fg-bold);
-                color: _palette(accent1) !important;
+                background-color: functions.palette(fg-bold);
+                color: functions.palette(accent1) !important;
 
                 &:hover, &:active {
-                    background-color: _palette(border-bg) !important;
-                    box-shadow: inset 0 0 0 1px _palette(border2) !important;
-                    color: _palette(fg-bold) !important;
+                    background-color: functions.palette(border-bg) !important;
+                    box-shadow: inset 0 0 0 1px functions.palette(border2) !important;
+                    color: functions.palette(fg-bold) !important;
                 }
 
                 &:active {
-                    background-color: _palette(border2-bg) !important;
+                    background-color: functions.palette(border2-bg) !important;
                 }
             }
         }
@@ -1579,14 +1580,14 @@ body.is-touch {
 
     &.fade-down {
         > .container {
-            @include vendor('transform', 'translate(0,0)');
-            @include vendor('transition', 'transform 1s ease, opacity 1s ease');
+            @include vendor.vendor('transform', 'translate(0,0)');
+            @include vendor.vendor('transition', 'transform 1s ease, opacity 1s ease');
             opacity: 1;
         }
 
         &.inactive {
             > .container {
-                @include vendor('transform', 'translate(0,-1em)');
+                @include vendor.vendor('transform', 'translate(0,-1em)');
                 opacity: 0;
             }
         }
@@ -1594,14 +1595,14 @@ body.is-touch {
 
     &.fade-up {
         > .container {
-            @include vendor('transform', 'translate(0,0)');
-            @include vendor('transition', 'transform 1s ease, opacity 1s ease');
+            @include vendor.vendor('transform', 'translate(0,0)');
+            @include vendor.vendor('transition', 'transform 1s ease, opacity 1s ease');
             opacity: 1;
         }
 
         &.inactive {
             > .container {
-                @include vendor('transform', 'translate(0,1em)');
+                @include vendor.vendor('transform', 'translate(0,1em)');
                 opacity: 0;
             }
         }
@@ -1609,7 +1610,7 @@ body.is-touch {
 
     &.fade {
         > .container {
-            @include vendor('transition', 'opacity 1s ease');
+            @include vendor.vendor('transition', 'opacity 1s ease');
             opacity: 1;
         }
 
@@ -1626,8 +1627,8 @@ body.is-touch {
 .dropotron {
     position: fixed;
     z-index: 30;
-    background: _palette(accent2-transparent);
-    border-radius: _size(border-radius);
+    background: functions.palette(accent2-transparent);
+    border-radius: functions.size(border-radius);
     box-shadow: 0 0.075em 0.35em 0 rgba(0,0,0,0.125);
     list-style: none;
     margin-top: calc(-0.25em + 1px);
@@ -1641,7 +1642,7 @@ body.is-touch {
 
         a, span {
             border: 0;
-            color: _palette(fg);
+            color: functions.palette(fg);
             display: block;
             padding: 0.1em 1em;
             text-decoration: none;
@@ -1653,7 +1654,7 @@ body.is-touch {
 
         &.active {
             > a, > span {
-                color: _palette(accent1);
+                color: functions.palette(accent1);
             }
         }
     }
@@ -1663,8 +1664,8 @@ body.is-touch {
         margin-top: 1em;
 
         &:before {
-            @include vendor('transform', 'rotate(45deg)');
-            background: _palette(accent2);
+            @include vendor.vendor('transform', 'rotate(45deg)');
+            background: functions.palette(accent2);
             content: '';
             display: block;
             height: 1em;
@@ -1692,7 +1693,7 @@ body.landing {
 }
 
 #header {
-    background: _palette(accent2-transparent);
+    background: functions.palette(accent2-transparent);
     box-shadow: 0 0 0.25em 0 rgba(0,0,0,0.25);
     cursor: default;
     height: 3.5em;
@@ -1749,7 +1750,7 @@ body.landing {
 
                 &.active {
                     > a, > span {
-                        color: _palette(accent1);
+                        color: functions.palette(accent1);
                     }
                 }
 
@@ -1777,7 +1778,7 @@ body.landing {
 
 #banner {
     background-attachment: fixed;
-    background-color: _palette(accent2);
+    background-color: functions.palette(accent2);
     background-image: url('../images/ian-battaglia-9drS5E_Rguc-unsplash.jpg');
     background-position: center center;
     background-size: cover;
@@ -1785,7 +1786,7 @@ body.landing {
     min-height: 100vh;
     position: relative;
     text-align: center;
-    z-index: (_misc(max-spotlight) + 1);
+    z-index: (functions.misc(max-spotlight) + 1);
 
     &:before {
         content: '';
@@ -1796,7 +1797,7 @@ body.landing {
     }
 
     &:after {
-        @include vendor('background-image', ('linear-gradient(to top, #{_palette(bg-bold)}, #{_palette(bg-transparent)})', 'url("images/overlay.png");'));
+        @include vendor.vendor('background-image', ('linear-gradient(to top, #{functions.palette(bg-bold)}, #{functions.palette(bg-transparent)})', 'url("images/overlay.png");'));
         content: '';
         display: block;
         height: 100%;
@@ -1826,7 +1827,7 @@ body.landing {
             }
 
             p {
-                margin: (_size(element-margin) * 0.25) 0 0 0;
+                margin: (functions.size(element-margin) * 0.25) 0 0 0;
                 top: 0;
             }
         }
@@ -1857,20 +1858,20 @@ body.is-touch {
 /* Footer */
 
 #footer {
-    background: _palette(accent2);
+    background: functions.palette(accent2);
     padding: $size-wrapper-pad-tb 0;
     text-align: center;
 
     .icons {
         .icon {
             &.alt {
-                @include line-icon(_palette(accent2), _palette(fg-light));
+                @include line-icon(functions.palette(accent2), functions.palette(fg-light));
             }
         }
     }
 
     .copyright {
-        color: _palette(fg-light);
+        color: functions.palette(fg-light);
         font-size: 0.8em;
         line-height: 1em;
         margin: 2em 0 0 0;
@@ -1878,7 +1879,7 @@ body.is-touch {
         text-align: center;
 
         li {
-            border-left: solid 1px _palette(border);
+            border-left: solid 1px functions.palette(border);
             display: inline-block;
             list-style: none;
             margin-left: 1.5em;
@@ -1899,7 +1900,7 @@ body.is-touch {
 
 /* XLarge */
 
-@include breakpoint('<=xlarge') {
+@include breakpoints.breakpoint('<=xlarge') {
 
     /* Basic */
 
@@ -1911,7 +1912,7 @@ body.is-touch {
 
 /* Large */
 
-@include breakpoint('<=large') {
+@include breakpoints.breakpoint('<=large') {
 
     $size-wrapper-pad-tb: 4.5em;
     $size-wrapper-pad-lr: 2.5em;
@@ -1927,13 +1928,13 @@ body.is-touch {
     .spotlight {
         &.top {
             .content {
-                padding: ($size-wrapper-pad-tb * 0.85) 0 (($size-wrapper-pad-tb * 0.85) - _size(element-margin)) 0;
+                padding: ($size-wrapper-pad-tb * 0.85) 0 (($size-wrapper-pad-tb * 0.85) - functions.size(element-margin)) 0;
             }
         }
 
         &.bottom {
             .content {
-                padding: ($size-wrapper-pad-tb * 0.85) 0 (($size-wrapper-pad-tb * 1.1) - _size(element-margin)) 0;
+                padding: ($size-wrapper-pad-tb * 0.85) 0 (($size-wrapper-pad-tb * 1.1) - functions.size(element-margin)) 0;
             }
         }
 
@@ -1948,7 +1949,7 @@ body.is-touch {
     /* Wrapper */
 
     .wrapper {
-        padding: $size-wrapper-pad-tb 0 ($size-wrapper-pad-tb - _size(element-margin)) 0;
+        padding: $size-wrapper-pad-tb 0 ($size-wrapper-pad-tb - functions.size(element-margin)) 0;
     }
 
     /* Dropotron */
@@ -1977,7 +1978,7 @@ body.is-touch {
 
 /* Medium */
 
-@include breakpoint('<=medium') {
+@include breakpoints.breakpoint('<=medium') {
 
     $size-wrapper-pad-tb: 4.5em;
     $size-wrapper-pad-lr: 2.5em;
@@ -2002,12 +2003,12 @@ body.is-touch {
         }
 
         .content {
-            background-color: _palette(bg);
+            background-color: functions.palette(bg);
             border-width: 0 !important;
             border-top-width: 0.35em !important;
             bottom: auto !important;
             left: auto !important;
-            padding: $size-wrapper-pad-tb $size-wrapper-pad-lr ($size-wrapper-pad-tb - _size(element-margin)) $size-wrapper-pad-lr !important;
+            padding: $size-wrapper-pad-tb $size-wrapper-pad-lr ($size-wrapper-pad-tb - functions.size(element-margin)) $size-wrapper-pad-lr !important;
             position: relative;
             right: auto !important;
             text-align: center;
@@ -2015,7 +2016,7 @@ body.is-touch {
             width: 100% !important;
 
             ul.actions {
-                @include vendor('justify-content', 'center');
+                @include vendor.vendor('justify-content', 'center');
                 width: 100%;
                 margin-left: 0;
 
@@ -2035,7 +2036,7 @@ body.is-touch {
     /* Wrapper */
 
     .wrapper {
-        padding: $size-wrapper-pad-tb $size-wrapper-pad-lr ($size-wrapper-pad-tb - _size(element-margin)) $size-wrapper-pad-lr;
+        padding: $size-wrapper-pad-tb $size-wrapper-pad-lr ($size-wrapper-pad-tb - functions.size(element-margin)) $size-wrapper-pad-lr;
     }
 
     /* Banner */
@@ -2053,7 +2054,7 @@ body.is-touch {
 
             header {
                 display: block;
-                margin: 0 0 _size(element-margin) 0;
+                margin: 0 0 functions.size(element-margin) 0;
                 text-align: center;
             }
 
@@ -2077,7 +2078,7 @@ body.is-touch {
     display: none;
 }
 
-@include breakpoint('<=small') {
+@include breakpoints.breakpoint('<=small') {
 
     $size-wrapper-pad-tb: 3.25em;
     $size-wrapper-pad-lr: 1.5em;
@@ -2128,7 +2129,7 @@ body.is-touch {
         }
 
         &.major {
-            margin: 0 0 _size(element-margin) 0;
+            margin: 0 0 functions.size(element-margin) 0;
         }
     }
 
@@ -2153,14 +2154,14 @@ body.is-touch {
 
         .content {
             border-top-width: 0.2em !important;
-            padding: $size-wrapper-pad-tb $size-wrapper-pad-lr ($size-wrapper-pad-tb - _size(element-margin)) $size-wrapper-pad-lr !important;
+            padding: $size-wrapper-pad-tb $size-wrapper-pad-lr ($size-wrapper-pad-tb - functions.size(element-margin)) $size-wrapper-pad-lr !important;
         }
     }
 
     /* Wrapper */
 
     .wrapper {
-        padding: $size-wrapper-pad-tb $size-wrapper-pad-lr ($size-wrapper-pad-tb - _size(element-margin)) $size-wrapper-pad-lr;
+        padding: $size-wrapper-pad-tb $size-wrapper-pad-lr ($size-wrapper-pad-tb - functions.size(element-margin)) $size-wrapper-pad-lr;
     }
 
     /* Header */
@@ -2198,29 +2199,29 @@ body.is-touch {
     /* Nav */
 
     #page-wrapper {
-        @include vendor('backface-visibility', 'hidden');
-        @include vendor('transition', 'transform #{_duration(navPanel)} ease');
+        @include vendor.vendor('backface-visibility', 'hidden');
+        @include vendor.vendor('transition', 'transform #{functions.duration(navPanel)} ease');
         padding-bottom: 1px;
         padding-top: 44px !important;
     }
 
     #titleBar {
-        @include vendor('backface-visibility', 'hidden');
-        @include vendor('transition', 'transform #{_duration(navPanel)} ease');
+        @include vendor.vendor('backface-visibility', 'hidden');
+        @include vendor.vendor('transition', 'transform #{functions.duration(navPanel)} ease');
         display: block;
         height: 44px;
         left: 0;
         position: fixed;
         top: 0;
         width: 100%;
-        z-index: _misc(z-index-base) + 1;
-        background: _palette(accent2);
+        z-index: functions.misc(z-index-base) + 1;
+        background: functions.palette(accent2);
         box-shadow: 0 0.125em 0.125em 0 rgba(0,0,0,0.125);
 
         .title {
-            color: _palette(fg-bold);
+            color: functions.palette(fg-bold);
             display: block;
-            font-weight: _font(weight-bold);
+            font-weight: functions.font(weight-bold);
             height: 44px;
             line-height: 44px;
             text-align: center;
@@ -2232,7 +2233,7 @@ body.is-touch {
         }
 
         .toggle {
-            @include icon(false, solid);
+            @include mixins.icon(false, solid);
             height: 60px;
             left: 0;
             position: absolute;
@@ -2242,8 +2243,8 @@ body.is-touch {
             border: 0;
 
             svg {
-                background: _palette(accent1);
-                path {fill: _palette(fg-light); }
+                background: functions.palette(accent1);
+                path {fill: functions.palette(fg-light); }
                 display: block;
                 height: 44px;
                 left: 0;
@@ -2259,24 +2260,24 @@ body.is-touch {
     }
 
     #navPanel {
-        @include vendor('backface-visibility', 'hidden');
-        @include vendor('transform', 'translateX(#{_size(navPanel) * -1})');
-        @include vendor('transition', ('transform #{_duration(navPanel)} ease'));
+        @include vendor.vendor('backface-visibility', 'hidden');
+        @include vendor.vendor('transform', 'translateX(#{functions.size(navPanel) * -1})');
+        @include vendor.vendor('transition', ('transform #{functions.duration(navPanel)} ease'));
         display: block;
         height: 100%;
         left: 0;
         overflow-y: auto;
         position: fixed;
         top: 0;
-        width: _size(navPanel);
-        z-index: _misc(z-index-base) + 2;
-        background: darken(_palette(bg), 2);
+        width: functions.size(navPanel);
+        z-index: functions.misc(z-index-base) + 2;
+        background: color.adjust(functions.palette(bg), $lightness: -2%);
         padding: 0.75em 1.25em;
 
         .link {
             border: 0;
-            border-top: solid 1px transparentize(_palette(border), 0.25);
-            color: _palette(fg);
+            border-top: solid 1px color.adjust(functions.palette(border), $alpha: -0.25);
+            color: functions.palette(fg);
             display: block;
             height: 3em;
             line-height: 3em;
@@ -2291,8 +2292,8 @@ body.is-touch {
             }
 
             &.depth-0 {
-                color: _palette(fg-bold);
-                font-weight: _font(weight-bold);
+                color: functions.palette(fg-bold);
+                font-weight: functions.font(weight-bold);
             }
 
             .indent-1 { display: inline-block; width: 1.25em; }
@@ -2306,15 +2307,15 @@ body.is-touch {
     body {
         &.navPanel-visible {
             #page-wrapper {
-                @include vendor('transform', 'translateX(#{_size(navPanel)})');
+                @include vendor.vendor('transform', 'translateX(#{functions.size(navPanel)})');
             }
 
             #titleBar {
-                @include vendor('transform', 'translateX(#{_size(navPanel)})');
+                @include vendor.vendor('transform', 'translateX(#{functions.size(navPanel)})');
             }
 
             #navPanel {
-                @include vendor('transform', 'translateX(0)');
+                @include vendor.vendor('transform', 'translateX(0)');
             }
         }
     }
@@ -2329,7 +2330,7 @@ body.is-touch {
 
 /* XSmall */
 
-@include breakpoint('<=xsmall') {
+@include breakpoints.breakpoint('<=xsmall') {
 
     $size-wrapper-pad-tb: 3em;
     $size-wrapper-pad-lr: 1.25em;
@@ -2361,14 +2362,14 @@ body.is-touch {
         }
 
         .content {
-            padding: $size-wrapper-pad-tb $size-wrapper-pad-lr ($size-wrapper-pad-tb - _size(element-margin)) $size-wrapper-pad-lr !important;
+            padding: $size-wrapper-pad-tb $size-wrapper-pad-lr ($size-wrapper-pad-tb - functions.size(element-margin)) $size-wrapper-pad-lr !important;
         }
     }
 
     /* Wrapper */
 
     .wrapper {
-        padding: $size-wrapper-pad-tb $size-wrapper-pad-lr ($size-wrapper-pad-tb - _size(element-margin)) $size-wrapper-pad-lr;
+        padding: $size-wrapper-pad-tb $size-wrapper-pad-lr ($size-wrapper-pad-tb - functions.size(element-margin)) $size-wrapper-pad-lr;
     }
 
     /* Banner */
