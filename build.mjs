@@ -26,7 +26,4 @@ do {
     template = template.replaceAll(/<getargv-([^ ]+) \/>/g,content_for);
 } while (old != template);
 
-// optimization, not ready yet
-//template = template.replaceAll(/[\s]{2,}/g,' '); // fucks up <pre> sections
-
 console.log(template);
