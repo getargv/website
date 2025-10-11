@@ -10,7 +10,7 @@
     <link rel="icon" type="image/svg+xml" href="assets/icon/favicon.svg" sizes="any">
     <link rel="apple-touch-icon" type="image/png" href="assets/icon/favicon.png">
     <link rel="mask-icon" href="assets/icon/safari-pinned-tab.svg" color="cf9669">
-    <link rel="canonical" href="https://getargv.narzt.cam/resilient.html" />
+    <link rel="canonical" href="https://getargv.narzt.cam/resilient.html">
     <meta name="color-scheme" content="dark">
     <meta name="theme-color" content="#cf9669">
     <noscript><link rel="stylesheet" href="assets/css/noscript.css"></noscript>
@@ -86,9 +86,9 @@
     </ul>
   </footer>
 </section>
-          <hr />
+          <hr>
           <section>
-  <a href="/interface.html" class="image fit"><img src="assets/images/flags.png" alt="command line showing getargv's flags: v0sh?" /></a>
+  <a href="/interface.html" class="image fit"><img src="assets/images/flags.png" alt="command line showing getargv's flags: v0sh?"></a>
   <h3>Easy to use interface</h3>
   <p>
   <code>getargv</code> has five flags, three of which are purely information about itself. You use the standard <kbd>-0</kbd> flag to print arguments <samp class="nul">␀</samp> separated, the <kbd>-s</kbd> flag to strip leading arguments, the <kbd>-v</kbd> flag to print <code>getargv</code>'s version, and either of <kbd>-h</kbd> or <kbd>-?</kbd> to print a usage string. That's it, that's the whole interface.
@@ -106,10 +106,10 @@
 
         <!-- Content -->
         <section id="content">
-          <a class="image fit"><img src="assets/images/luba-ertel-WlL8aHeMcVM-unsplash.jpg" alt="" /></a>
+          <a class="image fit"><img src="assets/images/luba-ertel-WlL8aHeMcVM-unsplash.jpg" alt=""></a>
           <h3>Correctness as the First Priority</h3>
           <p>My impetus for <abbr title="I wound up adapting it from existing code, but I set out to create a tool">building</abbr> <code>getargv</code> was to parse a <abbr title="Process ID">PID</abbr>'s arguments that I didn't control, in a script; which required me to consider the different ways that the process could have been created. In doing so, I found some surprising edge cases which no-one else seems to have handled correctly, but <code>getargv</code> does.</p>
-          <p>The test suite for <code>getargv</code> is currently <samp>1.311×</samp> <abbr title="as measured in lines">as big</abbr> as the source for the program itself. With <samp>100%</samp> line, function, and branch coverage. And I'm still expanding the test suite.</p>
+          <p>The test suite for <code>getargv</code> is currently <samp>1.309×</samp> <abbr title="as measured in lines">as big</abbr> as the source for the program itself. With <samp>100%</samp> line, function, and branch coverage. And I'm still expanding the test suite.</p>
           <p>Out of curiosity I went and looked for every use of <var>KERN_PROCARGS2</var> I could find on the internet. Every single case where the arguments are considered, is incorrect. <a href="/hallofshame.html">92 projects</a>, and every project that uses them as dependencies, all wrong.</p>
           <h3>Hall of Fame</h3>
           <p>The following projects are using <var>KERN_PROCARGS2</var> correctly to view processes' arguments, if you'd like to be on the list, might I suggest using <a href="/dylib.html"><code>libgetargv</code></a>, alternatively you can point me to your repo so that I can verify and add you to the list.</p>
