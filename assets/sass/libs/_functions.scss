@@ -26,7 +26,7 @@
 	@else {
 
 		$result: ();
-		$index: if($index < 0, list.length($list) + $index + 1, $index);
+		$index: if(sass($index < 0): list.length($list) + $index + 1; else: $index);
 
 		@for $i from 1 through list.length($list) {
 
