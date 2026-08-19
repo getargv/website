@@ -95,7 +95,7 @@
             <code>ps</code> is often good enough, it can show you what you want unless the
             process was started with <var>argv[0]</var> set to an empty string, which
             is unusual, though still supported by the kernel. In the case where <var>argv[0]</var>
-            is an empty string, <code>ps</code> (from <a href="https://github.com/apple-oss-distributions/adv_cmds/blob/adv_cmds-63/ps.tproj/print.c#L184-L190">10.3</a>-<a href="https://github.com/apple-oss-distributions/adv_cmds/blob/adv_cmds-237/ps/print.c#L211-L217">26.0</a>) will emit one or more environment variables
+            is an empty string, <code>ps</code> (from <a href="https://github.com/apple-oss-distributions/adv_cmds/blob/adv_cmds-63/ps.tproj/print.c#L184-L190">10.3</a>-<a href="https://github.com/apple-oss-distributions/adv_cmds/blob/adv_cmds-237/ps/print.c#L211-L217">26.5</a>) will emit one or more environment variables
             which were not part of the process' arguments (one for each leading empty argument).
           </p>
         </div>
@@ -143,7 +143,7 @@
       <p>By doing one thing, and doing it well, <code>getargv</code> is as fast as it can be</p>
     </header>
     <p>
-  <code>getargv</code> runs in approx <samp>0.6 ㎳</samp> on an M2 MacBook Air as measured by <code>hyperfine</code>. It does this by utilizing a zero-copy single-scan algorithm to run in <code>O(n)</code> time where <var>n</var> is the length of the arguments passed to the process you are inspecting, in Bytes. <code>getargv</code> allocates <abbr title="if the kern.argmax sysctl <= ARG_MAX a static buffer is used so no allocation is done">at-most</abbr> one <abbr title="usually ~1MiB">relatively small</abbr> block of memory, and stops reading the buffer once it finds the end of the process' arguments. <code>getargv</code> also prints the arguments to <var>stdout</var> using pointers back to the original buffer, without copying.
+  <code>getargv</code> runs in approx <samp>1.89㎳</samp> on an MacBook Pro with M4 Max as measured by <code>hyperfine</code>. It does this by utilizing a zero-copy single-scan algorithm to run in <code>O(n)</code> time where <var>n</var> is the length of the arguments passed to the process you are inspecting, in Bytes. <code>getargv</code> allocates <abbr title="if the kern.argmax sysctl <= ARG_MAX a static buffer is used so no allocation is done">at-most</abbr> one <abbr title="usually ~1MiB">relatively small</abbr> block of memory, and stops reading the buffer once it finds the end of the process' arguments. <code>getargv</code> also prints the arguments to <var>stdout</var> using pointers back to the original buffer, without copying.
 </p>
     <ul class="actions">
       <li><a href="/fast.html" class="button">Learn More</a></li>
