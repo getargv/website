@@ -55,10 +55,10 @@
     "author": "Camden Narzt",
     "license": "SEE LICENSE IN LICENSE.txt",
     "dependencies": {
-        "@tsconfig/recommended": "^1.0.8",
-        "chokidar": "^4.0.3",
-        "sass": "^1.87.0",
-        "typescript": "^5.8.3",
+        "@tsconfig/recommended": "^1.0.13",
+        "chokidar": "^5.0.0",
+        "sass": "^1.102.0",
+        "typescript": "^7.0.2",
         "uglify-js": "^3.19.3"
     }
 }
